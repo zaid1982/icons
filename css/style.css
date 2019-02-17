@@ -1,0 +1,21 @@
+/* Your custom styles */
+.pl-4_1 {
+    padding-left: 2.1rem !important;
+}
+.pl-4_5 {
+    padding-left: 2.5rem !important;
+}
+.mb-4_5 {
+    margin-bottom: 27px !important;
+}
+.th-strong th {
+    font-weight: 900 !important; 
+}
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    //max-height: calc(100vh - 300px);
+    //overflow-y: auto;
+}
+            
