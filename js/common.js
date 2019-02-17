@@ -305,7 +305,7 @@ function mzAjaxRequest(url, type, data, functionStr) {
 
     let errMsg = '';
     $.ajax({
-        url: 'api/' + url,
+        url: 'http://localhost/icon/'+url,
         type: type,
         //contentType: 'application/json',
         headers: header,

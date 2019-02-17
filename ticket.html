@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Sistem Seminar JPDP</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="css/mdb.min.css">
+    <!-- DataTables.net -->
+    <link rel="stylesheet" type="text/css" href="js/vendor/datatables/css/dataTables.bootstrap4.min.css"/>
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <style>
+
+    </style>
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+</head>
+
+<body class="fixed-sn white-skin">
+<!--Main Navigation-->
+<header>
+    <!-- Sidebar navigation -->
+    <div class="includeHtml" id="h-nav_left"></div>
+    <!-- Navbar -->
+    <div class="includeHtml" id="h-nav_top"></div>
+</header>
+<!--Main layout-->
+<main>
+    <div class="container-fluid">
+        <!--Section: Main panel-->
+        <section class="mb-5 mt-lg-5">
+            <div class="card card-cascade narrower">
+                <!--Section: Search Function & Chart-->
+                <section>
+                    <div class="row">
+                        <!--Search Function-->
+                        <div class="col-xl-5 col-lg-12 mr-0">
+                            <div class="view view-cascade gradient-card-header light-blue lighten-1 z-depth-4">
+                                <h2 class="h2-responsive mb-0">Ticket</h2>
+                            </div>
+                            <div class="card-body card-body-cascade">
+                                <div class="card-body pt-3">
+                                    <div class="mt-1 pb-2">
+                                        <small>Ticket Status:</small>
+                                        <ul class="striped list-unstyled pl-2">
+                                            <li><span class="bullet red"></span> New Tickets <span class="badge red float-right">14</span></li>
+                                            <li><span class="bullet blue-grey"></span> Processing <span class="badge blue-grey float-right">15</span></li>
+                                            <li><span class="bullet orange"></span> KIV <span class="badge orange float-right">1</span></li>
+                                            <li><span class="bullet green"></span> Closed Tickets <span class="badge green float-right">3</span></li>
+                                        </ul>
+                                    </div>
+                                    <!--Negeri-->
+                                    <div class="md-form mb-0">
+                                        <input type="text" id="s" class="form-control" placeholder=" ">
+                                        <label for="s" class="active">Kerword Search</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <select id="optCpnStsateId" class="mdb-select colorful-select dropdown-info md-form mb-0" searchable="Carian"></select>
+                                            <label>Category</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <select id="optCpnStateId" class="mdb-select colorful-select dropdown-info md-form mb-0" searchable="Carian"></select>
+                                            <label>Sub-Category</label>
+                                        </div>
+                                    </div>
+                                    <!--Jenis Perniagaan-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="md-form mt-3 mb-0">
+                                                <input id="txtSmnDateFrom" placeholder=" " type="text" class="form-control datepicker">
+                                                <label for="txtSmnDateFrom">Date Created from</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="md-form mt-3 mb-0">
+                                                <input id="txtSmnDateTo" placeholder=" " type="text" class="form-control datepicker">
+                                                <label for="txtSmnDateTo">Date Created to</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Chart-->
+                        <div class="col-xl-7 col-lg-12 mb-4">
+                            <div class="view view-cascade z-depth-4">
+                                <div id="chartCpnCompanyByState" style="height: 620px; margin: 0 "></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--Section: Table-->
+                <section>
+                    <!--<div class="table-ui p-2 mb-3 mx-4 mb-5">
+                        <div class="row">
+                            &lt;!&ndash;Search Wildcard&ndash;&gt;
+                            <div class="col-xl-6 col-lg-6 col-md-12">
+                                <div class="md-form mx-2 mb-0">
+                                    <input type="text" id="txtCpnCompanySeacrh" class="form-control" >
+                                    <label for="txtCpnCompanySeacrh" >Carian</label>
+                                </div>
+                            </div>
+                            &lt;!&ndash;Status&ndash;&gt;
+                            <div class="col-xl-3 col-lg-3 col-md-6">
+                                <select id="optCpnCompanyStatus" class="mdb-select colorful-select dropdown-success md-form mx-2 mb-0">
+                                    <option value="" selected>Semua Status</option>
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Tidak aktif">Tidak Aktif</option>
+                                </select>
+                                <label class="mx-2">Status</label>
+                            </div>
+                            &lt;!&ndash;Rows per entry&ndash;&gt;
+                            <div class="col-xl-3 col-lg-3 col-md-6">
+                                <select id="optCpnCompanyRows" class="mdb-select md-form colorful-select dropdown-danger mx-2 mb-0">
+                                    <option value="10" selected>10 baris per muka</option>
+                                    <option value="25">25 baris per muka</option>
+                                    <option value="50">50 baris per muka</option>
+                                    <option value="100">100 baris per muka</option>
+                                </select>
+                                <label class="mx-2">Baris per muka</label>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="card card-cascade narrower z-depth-0">
+                        <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center z-depth-4">
+                            <div>
+                                <a tabindex="0" role="button" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                   data-toggle="popover" data-trigger="focus" title="Senarai Syarikat"
+                                   data-content="Senarai ini terdiri daripada kesemua syarikat sama ada berdaftar dengan SPDP atau ditambah baharu."><i class="fas fa-info mt-0 mx-1"></i></a>
+                                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0" onclick="genTableCpn(1);"></i></button>
+                                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" onclick="loadModalCompanyAdd('Cpn', '', '');" data-toggle="tooltip" data-placement="top" title="Tambah Syarikat"><i class="fas fa-plus mt-0"></i></button>
+                            </div>
+                            <a href="javascript:void(0);" class="white-text mx-3">New Tickets</a>
+                            <div>
+                                <div id="btnDtCpnCompanyExport"></div>
+                            </div>
+                        </div>
+                        <div class="px-4 pb-4">
+                            <div class="table-responsive">
+                                <!--Table-->
+                                <table id="dtCpnCompany" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
+                                    <thead>
+                                    <tr class="th-strong">
+                                        <th width="4%">Bil</th>
+                                        <th>Nama Syarikat</th>
+                                        <th width="13%">No Pendaftaran</th>
+                                        <th width="10%">Jenis Perniagaan</th>
+                                        <th width="10%">Negeri</th>
+                                        <th width="18%">Email</th>
+                                        <th width="8%">Status</th>
+                                        <th width="32px"></th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </div>
+
+    <div class="includeHtml" id="h-modal_profile"></div>
+    <div class="includeHtml" id="h-modal_change_password"></div>
+
+</main>
+
+<!-- SCRIPTS -->
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="js/mdb.min.js"></script>
+<!-- DataTables.net -->
+<script type="text/javascript" src="js/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="js/vendor/datatables/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="js/vendor/datatables/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="js/vendor/datatables/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="js/vendor/datatables/js/jszip.min.js"></script>
+<script type="text/javascript" src="js/vendor/datatables/js/pdfmake.min.js"></script>
+<script type="text/javascript" src="js/vendor/datatables/js/vfs_fonts.js"></script>
+<!-- Highchart -->
+<script type="text/javascript" src="js/vendor/highcharts/highcharts.js"></script>
+<script type="text/javascript" src="js/vendor/highcharts/modules/exporting.js"></script>
+<script type="text/javascript" src="js/vendor/highcharts/modules/export-data.js"></script>
+<script type="text/javascript" src="js/vendor/highcharts/themes/dark-blue.js"></script>
+
+<!--Custom scripts-->
+<script type="text/javascript">
+    $('.includeHtml').each(function () {
+        const divId = $(this).attr('id');
+        $('#'+divId).load('html/'+divId.substr(2)+'.html');
+    });
+    document.write('<scr' + 'ipt src="js/common.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
+
+    let oTableCpnCompany;
+    let versionLocal;
+    let refStatus;
+    let refJenisPerniagaan;
+    let refState;
+    let rawCompany = '';
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        ShowLoader();
+
+        setTimeout(function () {
+            try {
+                initiatePages();
+
+                //mzChartOption();
+                versionLocal = mzGetDataVersion();
+                //refStatus = mzGetLocalArray('status', versionLocal, 'statusId');
+                //refState = mzGetLocalArray('state', versionLocal, 'stateId');
+                //refJenisPerniagaan = mzGetLocalArray('jenisPerniagaan', versionLocal, 'jenisPerniagaanId');
+
+                //mzOption('optCpnStateId', refState, 'Semua Negeri', 'stateId', 'stateDesc');
+                //mzOption('optCpnJenisPerniagaanId', refJenisPerniagaan, 'Semua Jenis Perniagaan', 'jenisPerniagaanId', 'jenisPerniagaanDesc');
+
+                //mzAjaxRequest('company.php', 'GET', {Reportid: '2'}, 'displayStats()');
+                //mzAjaxRequest('company.php', 'GET', {Reportid: '1', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
+
+                $('#btnCpnReset').on('click', function () {
+                    $('#optCpnStateId').val('');
+                    $('#optCpnJenisPerniagaanId').val('');
+                    //$('#optCpnStateId').prevAll('.select-dropdown').children('li:eq()').trigger('click');
+                    //$('#optCpnJenisPerniagaanId').prevAll('.select-dropdown').children('li:eq()').trigger('click');
+                });
+
+                // table Senarai Company
+                oTableCpnCompany = $('#dtCpnCompany').DataTable({
+                    bLengthChange: false,
+                    bFilter: true,
+                    "aaSorting": [1, 'asc'],
+                    fnRowCallback : function(nRow, aData, iDisplayIndex){
+                        const info = oTableCpnCompany.page.info();
+                        $('td', nRow).eq(0).html(info.page * info.length + (iDisplayIndex + 1));
+                    },
+                    drawCallback: function () {
+                        $('[data-toggle="tooltip"]').tooltip();
+                    },
+                    language: _DATATABLE_LANGUAGE,
+                    aoColumns:
+                        [
+                            {mData: null, bSortable: false},
+                            {mData: 'companyName'},
+                            {mData: 'companyNoDaftar'},
+                            {mData: null, mRender: function (data, type, row){
+                                    return row.jenisPerniagaanId !== '' ? refJenisPerniagaan[row.jenisPerniagaanId]['jenisPerniagaanDesc'] : '';
+                                }},
+                            {mData: null, mRender: function (data, type, row){
+                                    return row.stateId !== '' ? refState[row.stateId]['stateDesc'] : '';
+                                }},
+                            {mData: 'companyEmail', mRender: function (data){ return mzEmailShort(data); }},
+                            {mData: 'statusId',
+                                mRender: function (data) {
+                                    return '<h6><span class="badge badge-pill badge-'+refStatus[data]['statusColor']+' z-depth-2">'+refStatus[data]['statusDesc']+'</span></h6>';
+                                }
+                            },
+                            {mData: null, bSortable: false, sClass: 'text-center',
+                                mRender: function (data, type, row, meta) {
+                                    //$label = '<a><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Maklumat Tambahan"></i></a>'+
+                                    return '<a><i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Kemaskini" onclick="loadModalCompanyAdd(\'Cpn\', ' + row.companyId + ', ' + meta.row + ')"></i></a>';
+                                    //'<a><i class="fas fa-toggle-off" data-toggle="tooltip" data-placement="top" title="Nyahaktifkan"></i></a>';
+                                }
+                            },
+                            {mData: 'companyId', visible: false},
+                            {mData: 'jenisPerniagaanId', visible: false},
+                            {mData: 'stateId', visible: false}
+                        ]
+                });
+                $("#dtCpnCompany_filter").hide();
+                $('#txtCpnCompanySeacrh').on('keyup change', function () {
+                    oTableCpnCompany.search($(this).val()).draw();
+                });
+                $('#optCpnCompanyRows').on('change', function () {
+                    oTableCpnCompany.page.len($(this).val()).draw();
+                });
+                $('#optCpnCompanyStatus').on('change', function () {
+                    oTableCpnCompany.column(6).search($(this).val(), false, true, false).draw();
+                });
+
+                let cntCpnCompany = 1;
+                let btnCpnCompanyOpt = {
+                    exportOptions: {
+                        columns: [ 0, 1, 2, 3, 4, 5, 6 ],
+                        format: {
+                            body: function ( data, row, column ) {
+                                if (column === 5) {
+                                    return data.replace('<br>','');
+                                } else if (column === 6) {
+                                    const n = data.search('">');
+                                    const k = data.substr(n+2);
+                                    return k.replace('</span></h6>','');
+                                }
+                                return column === 0 ? cntCpnCompany++ : data;
+                            }
+                        }
+                    }
+                };
+
+                new $.fn.dataTable.Buttons(oTableCpnCompany, {
+                    buttons: [
+                        $.extend( true, {}, btnCpnCompanyOpt, {
+                            extend:    'print',
+                            text:      '<i class="fas fa-print"></i>',
+                            titleAttr: 'Print',
+                            className: 'btn btn-outline-white btn-rounded btn-sm px-2'
+                        }),
+                        $.extend( true, {}, btnCpnCompanyOpt, {
+                            extend:    'excelHtml5',
+                            text:      '<i class="fas fa-file-excel"></i>',
+                            titleAttr: 'Excel',
+                            className: 'btn btn-outline-white btn-rounded btn-sm px-2'
+                        }),
+                        $.extend( true, {}, btnCpnCompanyOpt, {
+                            extend:    'pdfHtml5',
+                            text:      '<i class="fas fa-file-pdf"></i>',
+                            titleAttr: 'Pdf',
+                            orientation: 'landscape',
+                            className: 'btn btn-outline-white btn-rounded btn-sm px-2'
+                        })
+                    ]
+                }).container().appendTo($('#btnDtCpnCompanyExport'));
+
+                //genTableCpn(0);
+
+                $('#btnCpnSearch').on('click', function () {
+                    const jenisPerniagaanId = $('#optCpnJenisPerniagaanId').val();
+                    const stateId = $('#optCpnStateId').val();
+                    jenisPerniagaanId === '' ? oTableCpnCompany.column(9).search(jenisPerniagaanId) : oTableCpnCompany.column(9).search('^'+jenisPerniagaanId+'$', true, false, true);
+                    stateId === '' ? oTableCpnCompany.column(10).search(stateId).draw() : oTableCpnCompany.column(10).search('^'+stateId+'$', true, false, true).draw();
+                });
+
+            } catch (e) {
+                toastr['error'](e.message, _ALERT_TITLE_ERROR);
+            }
+
+            HideLoader();
+        }, 400);
+    });
+
+    function genTableCpn(refresh) {
+        if (refresh === 1) {
+            ShowLoader();
+            setTimeout(function () {
+                try {
+                    versionLocal = mzGetDataVersion();
+                    rawCompany = mzGetLocalRaw('company', versionLocal);
+                } catch (e) {
+                    toastr['error'](e.message, _ALERT_TITLE_ERROR);
+                }
+                HideLoader();
+            }, 400);
+        } else if (rawCompany === '') {
+            rawCompany = mzGetLocalRaw('company', versionLocal);
+        }
+        oTableCpnCompany.clear().rows.add(rawCompany).draw();
+    }
+
+    function displayStats(result) {
+        result = JSON.parse(result);
+        $('#lblCpnTotalCompanyAll').html(mzFormatNumber(result['total']));
+        $('#lblCpnTotalCompanyActive').html(mzFormatNumber(result['total_active']));
+        $('#lblCpnTotalCompanySpdp').html(mzFormatNumber(result['total_spdp']));
+    }
+
+    function displayChart(result) {
+        result = JSON.parse(result);
+        let chartData = [];
+        $.each(result, function (n, u) {
+            chartData.push({name:refState[u.state_id].stateDesc, y:parseInt(u.total)});
+        });
+
+        Highcharts.chart('chartCpnCompanyByState', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Jumlah Syarikat mengikut Negeri'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y} ({point.percentage:.1f}%)</b>'
+            },
+            credits:{
+                enabled:false
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: 'Negeri',
+                data: chartData
+            }]
+        });
+    }
+
+    function smnUnused() {
+        displayStats();
+        displayChart();
+    }
+
+</script>
+
+<script type="text/javascript" src="js/pages/modal_profile.js"></script>
+<script type="text/javascript" src="js/pages/modal_change_password.js"></script>
+
+</body>
+
+</html>

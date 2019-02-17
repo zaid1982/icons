@@ -64,15 +64,6 @@
                             <label for="txtLgnPassword">Password</label>
                             <p class="font-small text-danger pl-4_5" id="txtLgnPasswordErr"></p>
                         </div>
-                        <div class="md-form">
-                            <i class="fas fa-user-tag prefix text-black-50"></i>
-                            <select id="optLgnRoleId" class="mdb-select md-form colorful-select dropdown-info pl-4_5">
-                                <option value="" selected>Log In as</option>
-                                <option value="">Cleck</option>
-                                <option value="">Contractor</option>
-                            </select>
-                            <label for="optLgnRoleId" id="lblLgnRoleId"></label>
-                        </div>
                         <div class="text-center pt-2">
                             <button type="button" id="btnLgnSignIn" class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-1a">Log In</button>
                         </div>
@@ -162,8 +153,7 @@
                 name: 'User ID',
                 validator: {
                     notEmpty: true,
-                    maxLength: 100,
-                    email: true
+                    maxLength: 100
                 }
             },
             {
@@ -174,14 +164,6 @@
                     notEmpty: true,
                     maxLength: 20,
                     minLength: 6
-                }
-            },
-            {
-                field_id: 'optLgnRoleId',
-                type: 'select',
-                name: 'Syarikat',
-                validator: {
-                    notEmpty: true
                 }
             }
         ];
@@ -201,6 +183,7 @@
                         throw new Error(_ALERT_MSG_VALIDATION);
                     }
                     const data = {
+                        action: 'login_web',
                         username: $('#txtLgnUsername').val(),
                         password: $('#txtLgnPassword').val()
                     };
