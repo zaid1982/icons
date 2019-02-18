@@ -7,7 +7,7 @@ function initiateModalChangePassword() {
         {
             field_id: 'txtOldPassword',
             type: 'text',
-            name: 'Kata Laluan Asal',
+            name: 'Current Password',
             validator: {
                 notEmpty: true,
                 maxLength: 20,
@@ -17,7 +17,7 @@ function initiateModalChangePassword() {
         {
             field_id: 'txtNewPassword',
             type: 'text',
-            name: 'Kata Laluan Baru',
+            name: 'New Password',
             validator: {
                 notEmpty: true,
                 maxLength: 20,
@@ -27,14 +27,14 @@ function initiateModalChangePassword() {
         {
             field_id: 'txtConfirmPassword',
             type: 'text',
-            name: 'Kata Laluan Pengesahan',
+            name: 'Confirm New Password',
             validator: {
                 notEmpty: true,
                 maxLength: 20,
                 minLength: 6,
                 similar: {
                     id: "txtNewPassword",
-                    label: "Kata Laluan Baru"
+                    label: "New Password"
                 }
             }
         }
@@ -74,7 +74,6 @@ function initiateModalChangePassword() {
                         newPassword: $('#txtConfirmPassword').val()
                     };
                     mzAjaxRequest('profile.php?userId='+mpwUserId, 'PUT', data);
-                    toastr['success'](_ALERT_MSG_SUCCESS_CHANGE_PASSWORD, _ALERT_TITLE_SUCCESS);
                 } else {
                     throw new Error(_ALERT_MSG_ERROR_DEFAULT);
                 }

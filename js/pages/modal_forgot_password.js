@@ -37,9 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 };
                 mzAjaxRequest('login.php', 'POST', data);
                 $('#modalForgotPassword').modal('hide');
-                toastr['success'](_ALERT_MSG_SUCCESS_FORGOT_PASSWORD, _ALERT_TITLE_SUCCESS_FORGOT_PASSWORD);
             } catch (e) {
-                toastr['error'](e.message, _ALERT_TITLE_ERROR_FORGOT_PASSWORD);
+                toastr['error'](e.message, _ALERT_TITLE_ERROR);
             }
             HideLoader();
         }, 300);

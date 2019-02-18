@@ -11,17 +11,12 @@ const _ALERT_TITLE_ERROR_TIMEOUT = "SESSION TIMEOUT";
 const _ALERT_MSG_ERROR_TIMEOUT = "Session expired. Please try sign in again.";
 
 const _ALERT_TITLE_ERROR_LOGIN = "SIGN IN ERROR";
-const _ALERT_TITLE_ERROR_REGISTER = "REGISTRATION ERROR";
 const _ALERT_TITLE_SUCCESS_REGISTER = "REGISTRATION SUCCESS";
 const _ALERT_MSG_SUCCESS_REGISTER = "You have successfully registered. Please activate via link sent to your email.";
 const _ALERT_TITLE_ERROR_ACTIVATE = "ACTIVATION ERROR";
 const _ALERT_TITLE_SUCCESS_ACTIVATE = "ACTIVATION SUCCESS";
 const _ALERT_MSG_SUCCESS_ACTIVATE = "Your account has successfully activated. Please login with email as user ID and your registered password.";
-const _ALERT_TITLE_ERROR_FORGOT_PASSWORD = "RESET PASSWORD ERROR";
-const _ALERT_TITLE_SUCCESS_FORGOT_PASSWORD = "RESET PASSWORD SUCCESS";
-const _ALERT_MSG_SUCCESS_FORGOT_PASSWORD = "Your password successfully reset. Please login with temporary password sent to your email.";
 const _ALERT_MSG_SUCCESS_UPDATE_USER = "Your information successfully updated";
-const _ALERT_MSG_SUCCESS_CHANGE_PASSWORD = "Your password successfully changed";
 
 const _DATATABLE_LANGUAGE =  {
 };
@@ -321,7 +316,10 @@ function mzAjaxRequest(url, type, data, functionStr) {
                     } else {
                         eval(functionStr.slice(0, -1) + ',\'' + JSON.stringify(returnVal) + '\');');
                     }                    
-                }                
+                }
+                if (resp['errmsg'] !== '') {
+                    toastr['success'](resp['errmsg'], _ALERT_TITLE_SUCCESS);
+                }
             } else if (resp.error === 'Expired token') {
                 window.location.href = 'login.html?f=2';
             } else {
@@ -457,7 +455,7 @@ function initiatePages() {
     $('#pBasePageTitle').append(titleHtml);
     $('.collapsible').collapsible();
     
-    initiateModalProfile();
+    //initiateModalProfile();
     initiateModalChangePassword();
 }
 
