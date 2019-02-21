@@ -210,6 +210,7 @@
     let refJenisPerniagaan;
     let refState;
     let rawCompany = '';
+    let changePasswordClass;
 
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -218,6 +219,7 @@
         setTimeout(function () {
             try {
                 initiatePages();
+                changePasswordClass = new ModalChangePassword();
 
                 //mzChartOption();
                 versionLocal = mzGetDataVersion();
@@ -341,6 +343,10 @@
                     const stateId = $('#optCpnStateId').val();
                     jenisPerniagaanId === '' ? oTableCpnCompany.column(9).search(jenisPerniagaanId) : oTableCpnCompany.column(9).search('^'+jenisPerniagaanId+'$', true, false, true);
                     stateId === '' ? oTableCpnCompany.column(10).search(stateId).draw() : oTableCpnCompany.column(10).search('^'+stateId+'$', true, false, true).draw();
+                });
+
+                $('#btnChangePassword').on('click', function () {
+                    changePasswordClass.load('Top');
                 });
 
             } catch (e) {

@@ -454,9 +454,6 @@ function initiatePages() {
     
     $('#pBasePageTitle').append(titleHtml);
     $('.collapsible').collapsible();
-    
-    //initiateModalProfile();
-    initiateModalChangePassword();
 }
 
 function mzProfile() {
