@@ -435,7 +435,7 @@ function initiatePages() {
             }
             $.each(navSeconds, function (n2, nav2nd) {
                 const strHighlight = navSecondId === nav2nd['navSecondId'] ? 'font-weight-bold' : '';
-                menuHtml += '<li><a href="' + nav2nd['navSecondPage'] + '" class="waves-effect ' + strHighlight + '">' + nav2nd['navSecondDesc'] + '</a></li>';
+                menuHtml += '<li><a href="' + nav2nd['navSecondPage'] + '" class="waves-effect ' + strHighlight + '" onclick="mzGoToMenu(\'' + nav['navPage'] + '\', \'' + nav['navId'] + '\', \'' + nav2nd['navSecondId'] + '\');">' + nav2nd['navSecondDesc'] + '</a></li>';
                 if (navSecondId === nav2nd['navSecondId']) {
                     titleHtml += '<span class="font-small"> / ' + nav2nd['navSecondDesc'] + '</span>';
                 }
