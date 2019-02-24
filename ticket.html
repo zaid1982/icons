@@ -50,40 +50,40 @@
                                     <div class="mt-1 pb-2">
                                         <small>Ticket Status:</small>
                                         <ul class="striped list-unstyled pl-2">
-                                            <li><a href="javascript:void(0);"><span class="bullet red"></span> New Tickets <span class="badge red float-right">14</span></a></li>
-                                            <li><a href="javascript:void(0);"><span class="bullet blue-grey"></span> Processing <span class="badge blue-grey float-right">15</span></a></li>
-                                            <li><a href="javascript:void(0);"><span class="bullet orange"></span> KIV <span class="badge orange float-right">1</span></a></li>
+                                            <li><a href="javascript:void(0);" id="linkTckNew"><span class="bullet red"></span> New Tickets <span class="badge red float-right">14</span></a></li>
+                                            <li><a href="javascript:void(0);" id="linkTckProcessing"><span class="bullet blue-grey"></span> Processing <span class="badge blue-grey float-right">15</span></a></li>
+                                            <li><a href="javascript:void(0);" id="linkTckKiv"><span class="bullet orange"></span> KIV <span class="badge orange float-right">1</span></a></li>
                                         </ul>
                                     </div>
                                     <!--Negeri-->
                                     <div class="md-form mb-0">
-                                        <input type="text" id="s" class="form-control" placeholder=" ">
-                                        <label for="s" class="active">Kerword Search</label>
+                                        <input type="text" id="txtTckTicketSearch" class="form-control" placeholder=" ">
+                                        <label for="txtTckTicketSearch" class="active">Kerword Search</label>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <select id="optCpnStsateId" class="mdb-select colorful-select dropdown-info md-form mb-0" searchable="Carian"></select>
-                                            <label>Category</label>
+                                            <select id="optTckProblemtypeId" class="mdb-select colorful-select dropdown-info md-form mb-0" searchable="Carian"></select>
+                                            <label>Problem Type</label>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <select id="optCpnStateId" class="mdb-select colorful-select dropdown-info md-form mb-0" searchable="Carian"></select>
-                                            <label>Sub-Category</label>
+                                            <select id="optTckWorktypeId" class="mdb-select colorful-select dropdown-info md-form mb-0" searchable="Carian"></select>
+                                            <label>Work Type</label>
                                         </div>
                                     </div>
                                     <!--Jenis Perniagaan-->
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mt-3 mb-0">
-                                                <input id="txtSmnDateFrom" placeholder=" " type="text" class="form-control datepicker">
-                                                <label for="txtSmnDateFrom">Date Created from</label>
+                                                <input id="txtTckDateFrom" placeholder=" " type="text" class="form-control datepicker">
+                                                <label for="txtTckDateFrom">Date Created from</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="md-form mt-3 mb-0">
-                                                <input id="txtSmnDateTo" placeholder=" " type="text" class="form-control datepicker">
-                                                <label for="txtSmnDateTo">Date Created to</label>
+                                                <input id="txtTckDateTo" placeholder=" " type="text" class="form-control datepicker">
+                                                <label for="txtTckDateTo">Date Created to</label>
                                             </div>
                                         </div>
                                     </div>
@@ -93,7 +93,7 @@
                         <!--Chart-->
                         <div class="col-xl-7 col-lg-12 mb-4">
                             <div class="view view-cascade z-depth-4">
-                                <div id="chartCpnCompanyByState" style="height: 570px; margin: 0 "></div>
+                                <div id="chartTckCompanyByState" style="height: 570px; margin: 0 "></div>
                             </div>
                         </div>
                     </div>
@@ -105,13 +105,13 @@
                             &lt;!&ndash;Search Wildcard&ndash;&gt;
                             <div class="col-xl-6 col-lg-6 col-md-12">
                                 <div class="md-form mx-2 mb-0">
-                                    <input type="text" id="txtCpnCompanySeacrh" class="form-control" >
-                                    <label for="txtCpnCompanySeacrh" >Carian</label>
+                                    <input type="text" id="txtTckCompanySeacrh" class="form-control" >
+                                    <label for="txtTckCompanySeacrh" >Carian</label>
                                 </div>
                             </div>
                             &lt;!&ndash;Status&ndash;&gt;
                             <div class="col-xl-3 col-lg-3 col-md-6">
-                                <select id="optCpnCompanyStatus" class="mdb-select colorful-select dropdown-success md-form mx-2 mb-0">
+                                <select id="optTckCompanyStatus" class="mdb-select colorful-select dropdown-success md-form mx-2 mb-0">
                                     <option value="" selected>Semua Status</option>
                                     <option value="Aktif">Aktif</option>
                                     <option value="Tidak aktif">Tidak Aktif</option>
@@ -120,7 +120,7 @@
                             </div>
                             &lt;!&ndash;Rows per entry&ndash;&gt;
                             <div class="col-xl-3 col-lg-3 col-md-6">
-                                <select id="optCpnCompanyRows" class="mdb-select md-form colorful-select dropdown-danger mx-2 mb-0">
+                                <select id="optTckTicketRows" class="mdb-select md-form colorful-select dropdown-danger mx-2 mb-0">
                                     <option value="10" selected>10 baris per muka</option>
                                     <option value="25">25 baris per muka</option>
                                     <option value="50">50 baris per muka</option>
@@ -134,28 +134,28 @@
                         <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center z-depth-4">
                             <div>
                                 <a tabindex="0" role="button" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                   data-toggle="popover" data-trigger="focus" title="Senarai Syarikat"
-                                   data-content="Senarai ini terdiri daripada kesemua syarikat sama ada berdaftar dengan SPDP atau ditambah baharu."><i class="fas fa-info mt-0 mx-1"></i></a>
-                                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0" onclick="genTableCpn(1);"></i></button>
-                                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" onclick="loadModalCompanyAdd('Cpn', '', '');" data-toggle="tooltip" data-placement="top" title="Tambah Syarikat"><i class="fas fa-plus mt-0"></i></button>
+                                   data-toggle="popover" data-trigger="focus" title="Ticket List"
+                                   data-content="This list contains of all tickets received from complainer."><i class="fas fa-info mt-0 mx-1"></i></a>
+                                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0" onclick="genTableTck(1);"></i></button>
+                                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" onclick="loadModalCompanyAdd('Tck', '', '');" data-toggle="tooltip" data-placement="top" title="Tambah Syarikat"><i class="fas fa-plus mt-0"></i></button>
                             </div>
                             <a href="javascript:void(0);" class="white-text mx-3">New Tickets</a>
                             <div>
-                                <div id="btnDtCpnCompanyExport"></div>
+                                <div id="btnDtTckTicketExport"></div>
                             </div>
                         </div>
                         <div class="px-4 pb-4">
                             <div class="table-responsive">
                                 <!--Table-->
-                                <table id="dtCpnCompany" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
+                                <table id="dtTckTicket" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
                                     <thead>
                                     <tr class="th-strong">
-                                        <th width="4%">Bil</th>
-                                        <th>Nama Syarikat</th>
-                                        <th width="13%">No Pendaftaran</th>
-                                        <th width="10%">Jenis Perniagaan</th>
-                                        <th width="10%">Negeri</th>
-                                        <th width="18%">Email</th>
+                                        <th width="4%">No</th>
+                                        <th>Ticket No</th>
+                                        <th width="15%">Problem Type</th>
+                                        <th width="15%">Work Type</th>
+                                        <th width="24%">Work Category</th>
+                                        <th width="15%">Received Time</th>
                                         <th width="8%">Status</th>
                                         <th width="32px"></th>
                                     </tr>
@@ -203,12 +203,14 @@
     });
     document.write('<scr' + 'ipt src="js/common.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
-    let oTableCpnCompany;
+    let oTableTckTicket;
+    let dataTckTicket;
     let versionLocal;
     let refStatus;
-    let refJenisPerniagaan;
-    let refState;
-    let rawCompany = '';
+    let refProblemtype;
+    let refWorktype;
+    let refWorkcategory;
+
     let changePasswordClass;
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -222,30 +224,25 @@
 
                 //mzChartOption();
                 versionLocal = mzGetDataVersion();
-                //refStatus = mzGetLocalArray('status', versionLocal, 'statusId');
-                //refState = mzGetLocalArray('state', versionLocal, 'stateId');
-                //refJenisPerniagaan = mzGetLocalArray('jenisPerniagaan', versionLocal, 'jenisPerniagaanId');
+                refStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
+                refProblemtype = mzGetLocalArray('icon_problemtype', versionLocal, 'problemtypeId');
+                refWorktype = mzGetLocalArray('icon_worktype', versionLocal, 'worktypeId');
+                refWorkcategory = mzGetLocalArray('icon_workcategory', versionLocal, 'workcategoryId');
 
-                //mzOption('optCpnStateId', refState, 'Semua Negeri', 'stateId', 'stateDesc');
-                //mzOption('optCpnJenisPerniagaanId', refJenisPerniagaan, 'Semua Jenis Perniagaan', 'jenisPerniagaanId', 'jenisPerniagaanDesc');
+                mzOption('optTckProblemtypeId', refProblemtype, 'All Problem Type', 'problemtypeId', 'problemtypeDesc');
+                mzOption('optTckWorktypeId', refWorktype, 'All Work Type', 'worktypeId', 'worktypeDesc');
+                mzDateFromTo('txtTckDateFrom', 'txtTckDateTo');
 
                 //mzAjaxRequest('company.php', 'GET', {Reportid: '2'}, 'displayStats()');
                 //mzAjaxRequest('company.php', 'GET', {Reportid: '1', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
 
-                $('#btnCpnReset').on('click', function () {
-                    $('#optCpnStateId').val('');
-                    $('#optCpnJenisPerniagaanId').val('');
-                    //$('#optCpnStateId').prevAll('.select-dropdown').children('li:eq()').trigger('click');
-                    //$('#optCpnJenisPerniagaanId').prevAll('.select-dropdown').children('li:eq()').trigger('click');
-                });
-
-                // table Senarai Company
-                oTableCpnCompany = $('#dtCpnCompany').DataTable({
+                // table Ticket List
+                oTableTckTicket = $('#dtTckTicket').DataTable({
                     bLengthChange: false,
                     bFilter: true,
-                    "aaSorting": [1, 'asc'],
+                    "aaSorting": [5, 'desc'],
                     fnRowCallback : function(nRow, aData, iDisplayIndex){
-                        const info = oTableCpnCompany.page.info();
+                        const info = oTableTckTicket.page.info();
                         $('td', nRow).eq(0).html(info.page * info.length + (iDisplayIndex + 1));
                     },
                     drawCallback: function () {
@@ -255,45 +252,65 @@
                     aoColumns:
                         [
                             {mData: null, bSortable: false},
-                            {mData: 'companyName'},
-                            {mData: 'companyNoDaftar'},
+                            {mData: 'ticketNo'},
                             {mData: null, mRender: function (data, type, row){
-                                    return row.jenisPerniagaanId !== '' ? refJenisPerniagaan[row.jenisPerniagaanId]['jenisPerniagaanDesc'] : '';
+                                    return row['problemtypeId'] !== '' ? refProblemtype[row['problemtypeId']]['problemtypeDesc'] : '';
                                 }},
                             {mData: null, mRender: function (data, type, row){
-                                    return row.stateId !== '' ? refState[row.stateId]['stateDesc'] : '';
+                                    return row['workcategoryId'] !== '' ? refWorktype[refWorkcategory[row['workcategoryId']]['worktypeId']]['worktypeDesc'] : '';
                                 }},
-                            {mData: 'companyEmail', mRender: function (data){ return mzEmailShort(data); }},
-                            {mData: 'statusId',
-                                mRender: function (data) {
-                                    return '<h6><span class="badge badge-pill badge-'+refStatus[data]['statusColor']+' z-depth-2">'+refStatus[data]['statusDesc']+'</span></h6>';
+                            {mData: null, mRender: function (data, type, row){
+                                    return row['workcategoryId'] !== '' ? refWorkcategory[row['workcategoryId']]['workcategoryDesc'] : '';
+                                }},
+                            {mData: 'ticketTimeSubmit'},
+                            {mData: null,
+                                mRender: function (data, type, row) {
+                                    return '<h6><span class="badge badge-pill '+refStatus[row['ticketStatus']]['statusColor']+' z-depth-2">'+refStatus[row['ticketStatus']]['statusDesc']+'</span></h6>';
                                 }
                             },
                             {mData: null, bSortable: false, sClass: 'text-center',
-                                mRender: function (data, type, row, meta) {
+                                mRender: function (data, type, row) {
                                     //$label = '<a><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Maklumat Tambahan"></i></a>'+
-                                    return '<a><i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Kemaskini" onclick="loadModalCompanyAdd(\'Cpn\', ' + row.companyId + ', ' + meta.row + ')"></i></a>';
+                                    return '<a><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Details"></i></a>';
                                     //'<a><i class="fas fa-toggle-off" data-toggle="tooltip" data-placement="top" title="Nyahaktifkan"></i></a>';
                                 }
                             },
-                            {mData: 'companyId', visible: false},
-                            {mData: 'jenisPerniagaanId', visible: false},
-                            {mData: 'stateId', visible: false}
+                            {mData: 'ticketId', visible: false},
+                            {mData: 'problemtypeId', visible: false},
+                            {mData: 'workcategoryId', visible: false},
+                            {mData: 'worktypeId', visible: false, mRender: function (data, type, row){
+                                    return row['workcategoryId'] !== '' ? refWorkcategory[row['workcategoryId']]['worktypeId'] : '';
+                                }},
+                            {mData: 'ticketStatus', visible: false}
                         ]
                 });
-                $("#dtCpnCompany_filter").hide();
-                $('#txtCpnCompanySeacrh').on('keyup change', function () {
-                    oTableCpnCompany.search($(this).val()).draw();
+                $("#dtTckTicket_filter").hide();
+                $('#txtTckTicketSearch').on('keyup change', function () {
+                    oTableTckTicket.search($(this).val()).draw();
                 });
-                $('#optCpnCompanyRows').on('change', function () {
-                    oTableCpnCompany.page.len($(this).val()).draw();
+                $('#optTckTicketStatus').on('change', function () {
+                    oTableTckTicket.column(6).search($(this).val(), false, true, false).draw();
                 });
-                $('#optCpnCompanyStatus').on('change', function () {
-                    oTableCpnCompany.column(6).search($(this).val(), false, true, false).draw();
+                $('#optTckProblemtypeId').on('change', function () {
+                    const problemtypeId = $(this).val();
+                    $(this).val() === '' ? oTableTckTicket.column(9).search(problemtypeId).draw() : oTableTckTicket.column(9).search('^'+problemtypeId+'$', true, false, true).draw();
+                });
+                $('#optTckWorktypeId').on('change', function () {
+                    const worktypeId = $(this).val();
+                    $(this).val() === '' ? oTableTckTicket.column(11).search(worktypeId).draw() : oTableTckTicket.column(11).search('^'+worktypeId+'$', true, false, true).draw();
+                });
+                $('#linkTckNew').on('click', function () {
+                    oTableTckTicket.column(12).search('11', false, true, false).draw();
+                });
+                $('#linkTckProcessing').on('click', function () {
+                    oTableTckTicket.column(12).search('^(12|13|14)$', true, true, false).draw();
+                });
+                $('#linkTckKiv').on('click', function () {
+                    oTableTckTicket.column(12).search('10', false, true, false).draw();
                 });
 
-                let cntCpnCompany = 1;
-                let btnCpnCompanyOpt = {
+                let cntTckTicket = 1;
+                let btnTckTicketOpt = {
                     exportOptions: {
                         columns: [ 0, 1, 2, 3, 4, 5, 6 ],
                         format: {
@@ -305,27 +322,27 @@
                                     const k = data.substr(n+2);
                                     return k.replace('</span></h6>','');
                                 }
-                                return column === 0 ? cntCpnCompany++ : data;
+                                return column === 0 ? cntTckTicket++ : data;
                             }
                         }
                     }
                 };
 
-                new $.fn.dataTable.Buttons(oTableCpnCompany, {
+                new $.fn.dataTable.Buttons(oTableTckTicket, {
                     buttons: [
-                        $.extend( true, {}, btnCpnCompanyOpt, {
+                        $.extend( true, {}, btnTckTicketOpt, {
                             extend:    'print',
                             text:      '<i class="fas fa-print"></i>',
                             titleAttr: 'Print',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         }),
-                        $.extend( true, {}, btnCpnCompanyOpt, {
+                        $.extend( true, {}, btnTckTicketOpt, {
                             extend:    'excelHtml5',
                             text:      '<i class="fas fa-file-excel"></i>',
                             titleAttr: 'Excel',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         }),
-                        $.extend( true, {}, btnCpnCompanyOpt, {
+                        $.extend( true, {}, btnTckTicketOpt, {
                             extend:    'pdfHtml5',
                             text:      '<i class="fas fa-file-pdf"></i>',
                             titleAttr: 'Pdf',
@@ -333,16 +350,10 @@
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         })
                     ]
-                }).container().appendTo($('#btnDtCpnCompanyExport'));
+                }).container().appendTo($('#btnDtTckTicketExport'));
 
-                //genTableCpn(0);
-
-                $('#btnCpnSearch').on('click', function () {
-                    const jenisPerniagaanId = $('#optCpnJenisPerniagaanId').val();
-                    const stateId = $('#optCpnStateId').val();
-                    jenisPerniagaanId === '' ? oTableCpnCompany.column(9).search(jenisPerniagaanId) : oTableCpnCompany.column(9).search('^'+jenisPerniagaanId+'$', true, false, true);
-                    stateId === '' ? oTableCpnCompany.column(10).search(stateId).draw() : oTableCpnCompany.column(10).search('^'+stateId+'$', true, false, true).draw();
-                });
+                genTableTck(0);
+                oTableTckTicket.column(12).search('11', false, true, false).draw();
 
                 $('#btnChangePassword').on('click', function () {
                     changePasswordClass.load('Top');
@@ -356,29 +367,16 @@
         }, 400);
     });
 
-    function genTableCpn(refresh) {
-        if (refresh === 1) {
-            ShowLoader();
-            setTimeout(function () {
-                try {
-                    versionLocal = mzGetDataVersion();
-                    rawCompany = mzGetLocalRaw('company', versionLocal);
-                } catch (e) {
-                    toastr['error'](e.message, _ALERT_TITLE_ERROR);
-                }
-                HideLoader();
-            }, 400);
-        } else if (rawCompany === '') {
-            rawCompany = mzGetLocalRaw('company', versionLocal);
-        }
-        oTableCpnCompany.clear().rows.add(rawCompany).draw();
+    function genTableTck() {
+        dataTckTicket = mzAjaxRequest('ticket.php', 'GET', {Simple: '1'});
+        oTableTckTicket.clear().rows.add(dataTckTicket).draw();
     }
 
     function displayStats(result) {
         result = JSON.parse(result);
-        $('#lblCpnTotalCompanyAll').html(mzFormatNumber(result['total']));
-        $('#lblCpnTotalCompanyActive').html(mzFormatNumber(result['total_active']));
-        $('#lblCpnTotalCompanySpdp').html(mzFormatNumber(result['total_spdp']));
+        $('#lblTckTotalCompanyAll').html(mzFormatNumber(result['total']));
+        $('#lblTckTotalCompanyActive').html(mzFormatNumber(result['total_active']));
+        $('#lblTckTotalCompanySpdp').html(mzFormatNumber(result['total_spdp']));
     }
 
     function displayChart(result) {
@@ -388,7 +386,7 @@
             chartData.push({name:refState[u['state_id']]['stateDesc'], y:parseInt(u.total)});
         });
 
-        Highcharts.chart('chartCpnCompanyByState', {
+        Highcharts.chart('chartTckCompanyByState', {
             chart: {
                 type: 'pie'
             },
