@@ -443,7 +443,7 @@ function initiatePages() {
             menuHtml += '</ul>';
             menuHtml += '</div>';
         } else {
-            menuHtml += '<a class="collapsible-header waves-effect ' + strBold + '" href="#" onclick="mzGoToMenu(\'' + nav['navPage'] + '\', \'' + nav['navId'] + '\', \'0\');"><i class="fa fa-' + nav['navIcon'] + '"></i> ' + nav['navDesc'] + '</a>';
+            menuHtml += '<a class="collapsible-header waves-effect ' + strBold + '" href="#" onclick="mzGoToMenu(\'' + nav['navPage'] + '\', \'' + nav['navId'] + '\', \'0\');"><i class="fas fa-' + nav['navIcon'] + '"></i> ' + nav['navDesc'] + '</a>';
             if (navId === nav['navId']) {
                 titleHtml += nav['navDesc'];
             }

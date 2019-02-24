@@ -35,7 +35,7 @@
 <main>
     <div class="container-fluid">
         <!--Section: Main panel-->
-        <section class="mb-5 mt-lg-5">
+        <section class="mb-5 mt-lg-5 sectionTckMain">
             <div class="card card-cascade narrower">
                 <!--Section: Search Function & Chart-->
                 <section>
@@ -50,9 +50,9 @@
                                     <div class="mt-1 pb-2">
                                         <small>Ticket Status:</small>
                                         <ul class="striped list-unstyled pl-2">
-                                            <li><a href="javascript:void(0);" id="linkTckNew"><span class="bullet red"></span> New Tickets <span class="badge red float-right">14</span></a></li>
-                                            <li><a href="javascript:void(0);" id="linkTckProcessing"><span class="bullet blue-grey"></span> Processing <span class="badge blue-grey float-right">15</span></a></li>
-                                            <li><a href="javascript:void(0);" id="linkTckKiv"><span class="bullet orange"></span> KIV <span class="badge orange float-right">1</span></a></li>
+                                            <li><a href="javascript:void(0);" id="linkTckNew"><span class="bullet red"></span> New Tickets <span class="badge red float-right">32</span></a></li>
+                                            <li><a href="javascript:void(0);" id="linkTckProcessing"><span class="bullet blue-grey"></span> Processing <span class="badge blue-grey float-right">38</span></a></li>
+                                            <li><a href="javascript:void(0);" id="linkTckKiv"><span class="bullet orange"></span> KIV <span class="badge orange float-right">2</span></a></li>
                                         </ul>
                                     </div>
                                     <!--Negeri-->
@@ -93,43 +93,13 @@
                         <!--Chart-->
                         <div class="col-xl-7 col-lg-12 mb-4">
                             <div class="view view-cascade z-depth-4">
-                                <div id="chartTckCompanyByState" style="height: 570px; margin: 0 "></div>
+                                <div id="chartTckOpenByStatus" style="height: 570px; margin: 0 "></div>
                             </div>
                         </div>
                     </div>
                 </section>
                 <!--Section: Table-->
                 <section>
-                    <!--<div class="table-ui p-2 mb-3 mx-4 mb-5">
-                        <div class="row">
-                            &lt;!&ndash;Search Wildcard&ndash;&gt;
-                            <div class="col-xl-6 col-lg-6 col-md-12">
-                                <div class="md-form mx-2 mb-0">
-                                    <input type="text" id="txtTckCompanySeacrh" class="form-control" >
-                                    <label for="txtTckCompanySeacrh" >Carian</label>
-                                </div>
-                            </div>
-                            &lt;!&ndash;Status&ndash;&gt;
-                            <div class="col-xl-3 col-lg-3 col-md-6">
-                                <select id="optTckCompanyStatus" class="mdb-select colorful-select dropdown-success md-form mx-2 mb-0">
-                                    <option value="" selected>Semua Status</option>
-                                    <option value="Aktif">Aktif</option>
-                                    <option value="Tidak aktif">Tidak Aktif</option>
-                                </select>
-                                <label class="mx-2">Status</label>
-                            </div>
-                            &lt;!&ndash;Rows per entry&ndash;&gt;
-                            <div class="col-xl-3 col-lg-3 col-md-6">
-                                <select id="optTckTicketRows" class="mdb-select md-form colorful-select dropdown-danger mx-2 mb-0">
-                                    <option value="10" selected>10 baris per muka</option>
-                                    <option value="25">25 baris per muka</option>
-                                    <option value="50">50 baris per muka</option>
-                                    <option value="100">100 baris per muka</option>
-                                </select>
-                                <label class="mx-2">Baris per muka</label>
-                            </div>
-                        </div>
-                    </div>-->
                     <div class="card card-cascade narrower z-depth-0">
                         <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center z-depth-4">
                             <div>
@@ -167,6 +137,9 @@
                 </section>
             </div>
         </section>
+
+        <div class="includeHtml" id="h-section_ticket_details"></div>
+
     </div>
 
     <div class="includeHtml" id="h-modal_change_password"></div>
@@ -194,6 +167,8 @@
 <script type="text/javascript" src="js/vendor/highcharts/modules/exporting.js"></script>
 <script type="text/javascript" src="js/vendor/highcharts/modules/export-data.js"></script>
 <script type="text/javascript" src="js/vendor/highcharts/themes/dark-blue.js"></script>
+<!--Google Maps-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCe-2LZ0JETWPTXcBkdnz8LuMltiTIhbyE"></script>
 
 <!--Custom scripts-->
 <script type="text/javascript">
@@ -212,6 +187,7 @@
     let refWorkcategory;
 
     let changePasswordClass;
+    let ticketDetailsClass;
 
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -221,6 +197,7 @@
             try {
                 initiatePages();
                 changePasswordClass = new ModalChangePassword();
+                ticketDetailsClass = new SectionTicketDetails();
 
                 //mzChartOption();
                 versionLocal = mzGetDataVersion();
@@ -235,6 +212,7 @@
 
                 //mzAjaxRequest('company.php', 'GET', {Reportid: '2'}, 'displayStats()');
                 //mzAjaxRequest('company.php', 'GET', {Reportid: '1', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
+                displayChart('1');
 
                 // table Ticket List
                 oTableTckTicket = $('#dtTckTicket').DataTable({
@@ -271,7 +249,7 @@
                             {mData: null, bSortable: false, sClass: 'text-center',
                                 mRender: function (data, type, row) {
                                     //$label = '<a><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Maklumat Tambahan"></i></a>'+
-                                    return '<a><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Details"></i></a>';
+                                    return '<a><i class="fas fa-info-circle" onclick="ticketDetailsClass.load(\'tck\', '+row['ticketId']+')" data-toggle="tooltip" data-placement="top" title="Details"></i></a>';
                                     //'<a><i class="fas fa-toggle-off" data-toggle="tooltip" data-placement="top" title="Nyahaktifkan"></i></a>';
                                 }
                             },
@@ -380,18 +358,24 @@
     }
 
     function displayChart(result) {
-        result = JSON.parse(result);
-        let chartData = [];
-        $.each(result, function (n, u) {
-            chartData.push({name:refState[u['state_id']]['stateDesc'], y:parseInt(u.total)});
-        });
+        //result = JSON.parse(result);
+        let chartData = [
+            {name:'New', y:32, color:'#ff4444'},
+            {name:'Assigned to Contractor', y:20, color:'#3F729B'},
+            {name:'Perform Work', y:12, color:'#aa66cc'},
+            {name:'Verify Work', y:6, color:'#00C851'},
+            {name:'KIV', y:2, color:'#ffbb33'}
+        ];
+        //$.each(result, function (n, u) {
+        //    chartData.push({name:refState[u['state_id']]['stateDesc'], y:parseInt(u.total)});
+        //});
 
-        Highcharts.chart('chartTckCompanyByState', {
+        Highcharts.chart('chartTckOpenByStatus', {
             chart: {
                 type: 'pie'
             },
             title: {
-                text: 'Jumlah Syarikat mengikut Negeri'
+                text: 'Total Open Ticket by Status'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y} ({point.percentage:.1f}%)</b>'
@@ -405,12 +389,13 @@
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        format: '<b>{point.name}</b>: {point.y}',
+                        color: 'white'
                     }
                 }
             },
             series: [{
-                name: 'Negeri',
+                name: 'Status',
                 data: chartData
             }]
         });
@@ -422,6 +407,7 @@
     }
 
     document.write('<scr' + 'ipt src="js/pages/modal_change_password.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt src="js/pages/section_ticket_details.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
 </script>
 
