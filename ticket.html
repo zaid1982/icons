@@ -137,8 +137,65 @@
                 </section>
             </div>
         </section>
+        <section class="section mb-5 sectionTkdDetails">
+            <div class="row mb-0 pb-0">
+                <div class="col-md-12">
+                    <button type="button" class="btn peach-gradient btn-rounded float-right" id="btnTcdBack"><i class="fas fa-arrow-left"></i> Back to Main Page</button>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-12 col-xl-7 mb-4">
+                    <div class="includeHtml" id="h-section_ticket_details"></div>
+                </div>
+                <div class="col-lg-12 col-xl-5 mb-4">
+                    <div class="card profile-card mt-4">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h5 class="mt-4 font-weight-bold mb-0">Ticket Images</h5>
+                            </div>
+                        </div>
+                        <div class="card-body text-center">
+                            <!--Google map-->
+                            <!--Carousel Wrapper-->
+                            <div id="carousel-with-lb" class="carousel slide carousel-multi-item" data-ride="carousel">
 
-        <div class="includeHtml" id="h-section_ticket_details"></div>
+                                <!--Controls-->
+                                <div class="controls-top">
+                                    <a class="btn-floating btn-secondary" href="#carousel-with-lb" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
+                                    <a class="btn-floating btn-secondary" href="#carousel-with-lb" data-slide="next"><i class="fas fa-chevron-right"></i></a>
+                                </div>
+                                <!--/.Controls-->
+
+
+                                <!--Slides and lightbox-->
+
+                                <div class="carousel-inner mdb-lightbox" role="listbox">
+                                    <div id="mdb-lightbox-ui"></div>
+                                    <div id="xxx"></div>
+
+
+                                </div>
+                                <!--/.Slides-->
+
+                            </div>
+                            <!--/.Carousel Wrapper-->
+                        </div>
+                    </div>
+                    <div class="card profile-card mt-4">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h5 class="mt-4 font-weight-bold">Complaint Location</h5>
+                                <h6 class="mb-0"><span class="text-muted">Presint 2, Putrajaya</span></h6>
+                            </div>
+                        </div>
+                        <div class="card-body text-center">
+                            <!--Google map-->
+                            <div id="mapTkdLocation" class="z-depth-1" style="height: 535px"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     </div>
 
@@ -147,6 +204,13 @@
 </main>
 
 <!-- SCRIPTS -->
+<script type="text/javascript">
+    $('.includeHtml').each(function () {
+        const divId = $(this).attr('id');
+        $('#'+divId).load('html/'+divId.substr(2)+'.html?' + new Date().valueOf());
+    });
+</script>
+
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="js/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
@@ -172,10 +236,6 @@
 
 <!--Custom scripts-->
 <script type="text/javascript">
-    $('.includeHtml').each(function () {
-        const divId = $(this).attr('id');
-        $('#'+divId).load('html/'+divId.substr(2)+'.html?' + new Date().valueOf());
-    });
     document.write('<scr' + 'ipt src="js/common.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
     let oTableTckTicket;

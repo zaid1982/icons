@@ -388,6 +388,7 @@ function initiatePages() {
     // Material Select Initialization
     $(document).ready(function () {
         $('.mdb-select').material_select();
+        $("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
     });
 
     // Tooltips Initialization
