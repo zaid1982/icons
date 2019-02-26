@@ -58,7 +58,7 @@
                                     <!--Negeri-->
                                     <div class="md-form mb-0">
                                         <input type="text" id="txtTckTicketSearch" class="form-control" placeholder=" ">
-                                        <label for="txtTckTicketSearch" class="active">Kerword Search</label>
+                                        <label for="txtTckTicketSearch" class="active">Keyword Search</label>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -106,7 +106,7 @@
                                 <a tabindex="0" role="button" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                    data-toggle="popover" data-trigger="focus" title="Ticket List"
                                    data-content="This list contains of all tickets received from complainer."><i class="fas fa-info mt-0 mx-1"></i></a>
-                                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0" onclick="genTableTck(1);"></i></button>
+                                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0" onclick="genTableTck();"></i></button>
                                 <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" onclick="loadModalCompanyAdd('Tck', '', '');" data-toggle="tooltip" data-placement="top" title="Tambah Syarikat"><i class="fas fa-plus mt-0"></i></button>
                             </div>
                             <a href="javascript:void(0);" class="white-text mx-3">New Tickets</a>
@@ -116,19 +116,18 @@
                         </div>
                         <div class="px-4 pb-4">
                             <div class="table-responsive">
-                                <!--Table-->
                                 <table id="dtTckTicket" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
                                     <thead>
-                                    <tr class="th-strong">
-                                        <th width="4%">No</th>
-                                        <th>Ticket No</th>
-                                        <th width="15%">Problem Type</th>
-                                        <th width="15%">Work Type</th>
-                                        <th width="24%">Work Category</th>
-                                        <th width="15%">Received Time</th>
-                                        <th width="8%">Status</th>
-                                        <th width="32px"></th>
-                                    </tr>
+                                        <tr class="th-strong">
+                                            <th width="4%">No</th>
+                                            <th>Ticket No</th>
+                                            <th width="15%">Problem Type</th>
+                                            <th width="15%">Work Type</th>
+                                            <th width="24%">Work Category</th>
+                                            <th width="15%">Received Time</th>
+                                            <th width="8%">Status</th>
+                                            <th width="32px"></th>
+                                        </tr>
                                     </thead>
                                 </table>
                             </div>
@@ -155,28 +154,20 @@
                             </div>
                         </div>
                         <div class="card-body text-center">
-                            <!--Google map-->
                             <!--Carousel Wrapper-->
                             <div id="carousel-with-lb" class="carousel slide carousel-multi-item" data-ride="carousel">
-
                                 <!--Controls-->
                                 <div class="controls-top">
                                     <a class="btn-floating btn-secondary" href="#carousel-with-lb" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
                                     <a class="btn-floating btn-secondary" href="#carousel-with-lb" data-slide="next"><i class="fas fa-chevron-right"></i></a>
                                 </div>
                                 <!--/.Controls-->
-
-
                                 <!--Slides and lightbox-->
-
                                 <div class="carousel-inner mdb-lightbox" role="listbox">
                                     <div id="mdb-lightbox-ui"></div>
                                     <div id="xxx"></div>
-
-
                                 </div>
                                 <!--/.Slides-->
-
                             </div>
                             <!--/.Carousel Wrapper-->
                         </div>
@@ -347,12 +338,15 @@
                     oTableTckTicket.column(12).search('10', false, true, false).draw();
                 });
 
-                let cntTckTicket = 1;
+                let cntTckTicket;
                 let btnTckTicketOpt = {
                     exportOptions: {
                         columns: [ 0, 1, 2, 3, 4, 5, 6 ],
                         format: {
                             body: function ( data, row, column ) {
+                                if (row === 0) {
+                                    cntTckTicket = 1;
+                                }
                                 if (column === 5) {
                                     return data.replace('<br>','');
                                 } else if (column === 6) {
@@ -390,7 +384,7 @@
                     ]
                 }).container().appendTo($('#btnDtTckTicketExport'));
 
-                genTableTck(0);
+                genTableTck();
                 oTableTckTicket.column(12).search('11', false, true, false).draw();
 
                 $('#btnChangePassword').on('click', function () {
