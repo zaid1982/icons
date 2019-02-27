@@ -455,6 +455,10 @@ function initiatePages() {
     
     $('#pBasePageTitle').append(titleHtml);
     $('.collapsible').collapsible();
+
+    $('#btnChangePassword').on('click', function () {
+        changePasswordClass.edit('Top', userInfo['userId']);
+    });
 }
 
 function mzProfile() {

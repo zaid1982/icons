@@ -87,10 +87,17 @@ function ModalChangePassword() {
         });
     };
 
-    this.load = function loadModalChangePassword(callFrom, userId) {
+    this.edit = function (callFrom, userId) {
+        if (typeof callFrom === 'undefined' || callFrom == '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof userId === 'undefined' || userId == '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
         mpwCallFrom = callFrom;
         mpwUserId = typeof userId === 'undefined' ? '' : userId;
-
         $('#modal_change_password').modal({backdrop: 'static', keyboard: false});
         $('#modal_change_password').scrollTop(0);
     };

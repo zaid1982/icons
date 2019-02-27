@@ -150,8 +150,12 @@
                             },
                             {mData: null, bSortable: false, sClass: 'text-center',
                                 mRender: function (data, type, row, meta) {
-                                    let label = '<a><i class="fas fa-edit" onclick="loadModalCompanyAdd(\'Smn\', ' + row.companyId + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Kemaskini"></i></a>&nbsp;&nbsp;';
-                                    label += '<a><i class="fas fa-toggle-off" data-toggle="tooltip" data-placement="top" title="Deactivate"></i></a>&nbsp;&nbsp;';
+                                    let label = '<a><i class="fas fa-edit" onclick="problemTypeClass.edit(\'Pbt\', ' + row['problemtypeId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Kemaskini"></i></a>&nbsp;&nbsp;';
+                                    if (row['problemtypeStatus'] === '1') {
+                                        label += '<a><i class="fas fa-toggle-off" data-toggle="tooltip" data-placement="top" title="Deactivate"></i></a>&nbsp;&nbsp;';
+                                    } else {
+                                        label += '<a><i class="fas fa-toggle-on" data-toggle="tooltip" data-placement="top" title="Activate"></i></a>&nbsp;&nbsp;';
+                                    }
                                     label += '<a><i class="fas fa-trash-alt" onclick="removeSyarikat('+row['seminarCompanyId']+', 1);" data-toggle="tooltip" data-placement="top" title="Hapus"></i></a>';
                                     return label;
                                 }
@@ -211,11 +215,7 @@
                 genTablePbt(0);
 
                 $('#btnPbtProblemTypeAdd').on('click', function () {
-                    problemTypeClass.load('Pbt');
-                });
-
-                $('#btnChangePassword').on('click', function () {
-                    changePasswordClass.load('Top');
+                    problemTypeClass.add('Pbt');
                 });
 
             } catch (e) {

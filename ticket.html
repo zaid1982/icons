@@ -387,10 +387,6 @@
                 genTableTck();
                 oTableTckTicket.column(12).search('11', false, true, false).draw();
 
-                $('#btnChangePassword').on('click', function () {
-                    changePasswordClass.load('Top');
-                });
-
             } catch (e) {
                 toastr['error'](e.message, _ALERT_TITLE_ERROR);
             }

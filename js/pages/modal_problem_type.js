@@ -2,6 +2,7 @@ function ModalProblemType() {
 
     let mptCallFrom = '';
     let mptProblemtypeId = '';
+    let mptRowRefresh = '';
 
     this.init = function () {
         const vDataMpt = [
@@ -37,8 +38,8 @@ function ModalProblemType() {
         $('#modal_problem_type').on('shown.bs.modal', function(){
             $('#btnMptSubmit').attr('disabled', true);
             if (mptProblemtypeId !== '') {
-                $('#lblMctTitle').html('<i class="far fa-edit"></i> Edit Problem Type');
-                $('#btnMctSubmit').html('<i class="fas fa-highlighter"></i> Update');
+                $('#lblMptTitle').html('<i class="far fa-edit"></i> Edit Problem Type');
+                $('#btnMptSubmit').html('<i class="fas fa-highlighter"></i> Update');
                 ShowLoader();
                 setTimeout(function () {
                     try {
@@ -52,8 +53,8 @@ function ModalProblemType() {
                     HideLoader();
                 }, 300);
             } else {
-                $('#lblMctTitle').html('<i class="fas fa-plus"></i> Add Problem Type');
-                $('#btnMctSubmit').html('<i class="far fa-paper-plane ml-1"></i> Submit');
+                $('#lblMptTitle').html('<i class="fas fa-plus"></i> Add Problem Type');
+                $('#btnMptSubmit').html('<i class="far fa-paper-plane ml-1"></i> Submit');
             }
         });
 
@@ -69,7 +70,20 @@ function ModalProblemType() {
                         problemtypeDesc: $('#txtMptDesc').val(),
                         problemtypeStatus: statusVal
                     };
-                    mzAjaxRequest('problem_type.php?problemtypeId='+mptProblemtypeId, 'PUT', data);
+
+                    let tempRow = {};
+                    if (mptCallFrom === 'Pbt') {
+                        tempRow['problemtypeDesc'] = $('#txtMptDesc').val();
+                        tempRow['problemtypeStatus'] = statusVal;
+                        if (mptProblemtypeId === '') {
+                            tempRow['problemtypeId'] = mzAjaxRequest('problem_type.php?problemtypeId='+mptProblemtypeId, 'POST', data);
+                            oTablePbtProblemType.row.add(tempRow).draw();
+                        } else {
+                            tempRow['problemtypeId'] = mptProblemtypeId;
+                            mzAjaxRequest('problem_type.php?problemtypeId='+mptProblemtypeId, 'PUT', data);
+                            oTablePbtProblemType.row(mptRowRefresh).data(tempRow).draw();
+                        }
+                    }
                     $('#modal_problem_type').modal('hide');
                 } catch (e) {
                     toastr['error'](e.message, _ALERT_TITLE_ERROR);
@@ -79,10 +93,30 @@ function ModalProblemType() {
         });
     };
 
-    this.load = function (callFrom, problemtypeId) {
+    this.add = function (callFrom) {
+        if (typeof callFrom === 'undefined' || callFrom == '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
         mptCallFrom = callFrom;
-        mptProblemtypeId = typeof problemtypeId === 'undefined' ? '' : problemtypeId;
+        mptProblemtypeId = '';
+        mptRowRefresh = '';
+        $('#btnMptSubmit').attr('disabled', true);
+        $('#modal_problem_type').modal({backdrop: 'static', keyboard: false});
+    };
 
+    this.edit = function (callFrom, problemtypeId, rowRefresh) {
+        if (typeof callFrom === 'undefined' || callFrom == '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof problemtypeId === 'undefined' || problemtypeId == '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        mptCallFrom = callFrom;
+        mptProblemtypeId = problemtypeId;
+        mptRowRefresh = typeof rowRefresh === 'undefined' ? '' : rowRefresh;
         $('#btnMptSubmit').attr('disabled', true);
         $('#modal_problem_type').modal({backdrop: 'static', keyboard: false});
     };

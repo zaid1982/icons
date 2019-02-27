@@ -41,12 +41,12 @@ function SectionTicketDetails() {
 
         mzSetFieldValue('TkdDetSeminarTitle', 'Hsjfdklsd', 'text');
 
+       $('#xxx').html('<div class=" carousel-item active text-center"><figure class="col-md-12 d-md-inline-block"><a href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(2).jpg" data-size="1600x1067"> <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(2).jpg" class="img-fluid"> </a> </figure></div><div class="carousel-item text-center"><figure class="col-md-12 d-md-inline-block"><a href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(22).jpg" data-size="1600x1067"> <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(22).jpg" class="img-fluid"> </a></figure></div>');
+
         if (tkdCallFrom === 'tck') {
             $('.sectionTckMain').hide();
         }
         $('.sectionTkdDetails').show();
-
-       $('#xxx').html('<div class=" carousel-item active text-center"><figure class="col-md-12 d-md-inline-block"><a href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(2).jpg" data-size="1600x1067"> <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(2).jpg" class="img-fluid"> </a> </figure></div><div class="carousel-item text-center"><figure class="col-md-12 d-md-inline-block"><a href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(22).jpg" data-size="1600x1067"> <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(22).jpg" class="img-fluid"> </a></figure></div>');
 
         $(window).scrollTop(0);
     };
