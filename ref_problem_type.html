@@ -39,11 +39,11 @@
             <div class="card card-cascade narrower">
                 <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
                     <div>
+                        <button type="button" id="btnPbtProblemTypeAdd" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" data-toggle="tooltip" data-placement="top" title="Add Problem Type"><i class="fas fa-plus mt-0"></i></button>
                         <a tabindex="0" role="button" class="btn btn-outline-white btn-rounded btn-sm px-2"
                            data-toggle="popover" data-trigger="focus" title="Problem Type List"
                            data-content="This list contains of all problem type as a ticket category for complainer to choose."><i class="fas fa-info mt-0 mx-1"></i></a>
                         <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0" onclick="genTablePbt(1);"></i></button>
-                        <button type="button" id="btnPbtProblemTypeAdd" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" data-toggle="tooltip" data-placement="top" title="Add Problem Type"><i class="fas fa-plus mt-0"></i></button>
                     </div>
                     <a href="javascript:void(0);" class="white-text mx-3">Problem Type</a>
                     <div>
@@ -75,6 +75,7 @@
 
     <div class="includeHtml" id="h-modal_change_password"></div>
     <div class="includeHtml" id="h-modal_problem_type"></div>
+    <div class="includeHtml" id="h-modal_confirm_delete"></div>
 
 </main>
 
@@ -112,6 +113,7 @@
 
     let changePasswordClass;
     let problemTypeClass;
+    let confirmDeleteClass;
 
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -122,6 +124,7 @@
                 initiatePages();
                 changePasswordClass = new ModalChangePassword();
                 problemTypeClass = new ModalProblemType();
+                confirmDeleteClass = new ModalConfirmDelete('problem_type');
 
                 versionLocal = mzGetDataVersion();
                 refStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
@@ -152,11 +155,11 @@
                                 mRender: function (data, type, row, meta) {
                                     let label = '<a><i class="fas fa-edit" onclick="problemTypeClass.edit(\'Pbt\', ' + row['problemtypeId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Kemaskini"></i></a>&nbsp;&nbsp;';
                                     if (row['problemtypeStatus'] === '1') {
-                                        label += '<a><i class="fas fa-toggle-off" data-toggle="tooltip" data-placement="top" title="Deactivate"></i></a>&nbsp;&nbsp;';
+                                        label += '<a><i class="fas fa-toggle-off" onclick="problemTypeClass.deactivate(\'Pbt\', ' + row['problemtypeId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Deactivate"></i></a>&nbsp;&nbsp;';
                                     } else {
-                                        label += '<a><i class="fas fa-toggle-on" data-toggle="tooltip" data-placement="top" title="Activate"></i></a>&nbsp;&nbsp;';
+                                        label += '<a><i class="fas fa-toggle-on" onclick="problemTypeClass.activate(\'Pbt\', ' + row['problemtypeId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Activate"></i></a>&nbsp;&nbsp;';
                                     }
-                                    label += '<a><i class="fas fa-trash-alt" onclick="removeSyarikat('+row['seminarCompanyId']+', 1);" data-toggle="tooltip" data-placement="top" title="Hapus"></i></a>';
+                                    label += '<a><i class="fas fa-trash-alt" onclick="confirmDeleteClass.delete(\'Pbt\', '+row['problemtypeId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Hapus"></i></a>';
                                     return label;
                                 }
                             },
@@ -236,6 +239,6 @@
 
     document.write('<scr' + 'ipt src="js/pages/modal_change_password.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/modal_problem_type.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
-
+    document.write('<scr' + 'ipt src="js/pages/modal_confirm_delete.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
 </script>

@@ -80,6 +80,7 @@ function ModalProblemType() {
                             oTablePbtProblemType.row.add(tempRow).draw();
                         } else {
                             tempRow['problemtypeId'] = mptProblemtypeId;
+                            data['action'] = 'update';
                             mzAjaxRequest('problem_type.php?problemtypeId='+mptProblemtypeId, 'PUT', data);
                             oTablePbtProblemType.row(mptRowRefresh).data(tempRow).draw();
                         }
@@ -94,7 +95,7 @@ function ModalProblemType() {
     };
 
     this.add = function (callFrom) {
-        if (typeof callFrom === 'undefined' || callFrom == '') {
+        if (typeof callFrom === 'undefined' || callFrom === '') {
             toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
             return false;
         }
@@ -106,19 +107,114 @@ function ModalProblemType() {
     };
 
     this.edit = function (callFrom, problemtypeId, rowRefresh) {
-        if (typeof callFrom === 'undefined' || callFrom == '') {
+        if (typeof callFrom === 'undefined' || callFrom === '') {
             toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
             return false;
         }
-        if (typeof problemtypeId === 'undefined' || problemtypeId == '') {
+        if (typeof problemtypeId === 'undefined' || problemtypeId === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof rowRefresh === 'undefined' || rowRefresh === '') {
             toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
             return false;
         }
         mptCallFrom = callFrom;
         mptProblemtypeId = problemtypeId;
-        mptRowRefresh = typeof rowRefresh === 'undefined' ? '' : rowRefresh;
+        mptRowRefresh = rowRefresh;
         $('#btnMptSubmit').attr('disabled', true);
         $('#modal_problem_type').modal({backdrop: 'static', keyboard: false});
+    };
+
+    this.deactivate = function (callFrom, problemtypeId, rowRefresh) {
+        if (typeof callFrom === 'undefined' || callFrom === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof problemtypeId === 'undefined' || problemtypeId === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof rowRefresh === 'undefined' || rowRefresh === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        ShowLoader();
+        setTimeout(function () {
+            try {
+                mzAjaxRequest('problem_type.php?problemtypeId='+problemtypeId, 'PUT', {action: 'deactivate'});
+                const currentRow = oTablePbtProblemType.row(rowRefresh).data();
+                let tempRow = {};
+                tempRow['problemtypeId'] = problemtypeId;
+                tempRow['problemtypeDesc'] = currentRow['problemtypeDesc'];
+                tempRow['problemtypeStatus'] = '2';
+                if (callFrom === 'Pbt') {
+                    oTablePbtProblemType.row(rowRefresh).data(tempRow).draw();
+                }
+            } catch (e) {
+                toastr['error'](e.message, _ALERT_TITLE_ERROR);
+            }
+            HideLoader();
+        }, 300);
+    };
+
+    this.activate = function (callFrom, problemtypeId, rowRefresh) {
+        if (typeof callFrom === 'undefined' || callFrom === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof problemtypeId === 'undefined' || problemtypeId === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof rowRefresh === 'undefined' || rowRefresh === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        ShowLoader();
+        setTimeout(function () {
+            try {
+                mzAjaxRequest('problem_type.php?problemtypeId='+problemtypeId, 'PUT', {action: 'activate'});
+                const currentRow = oTablePbtProblemType.row(rowRefresh).data();
+                let tempRow = {};
+                tempRow['problemtypeId'] = problemtypeId;
+                tempRow['problemtypeDesc'] = currentRow['problemtypeDesc'];
+                tempRow['problemtypeStatus'] = '1';
+                if (callFrom === 'Pbt') {
+                    oTablePbtProblemType.row(rowRefresh).data(tempRow).draw();
+                }
+            } catch (e) {
+                toastr['error'](e.message, _ALERT_TITLE_ERROR);
+            }
+            HideLoader();
+        }, 300);
+    };
+
+    this.delete = function (callFrom, problemtypeId, rowRefresh) {
+        if (typeof callFrom === 'undefined' || callFrom === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof problemtypeId === 'undefined' || problemtypeId === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof rowRefresh === 'undefined' || rowRefresh === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        ShowLoader();
+        setTimeout(function () {
+            try {
+                mzAjaxRequest('problem_type.php?problemtypeId='+problemtypeId, 'DELETE');
+                if (callFrom === 'Pbt') {
+                    oTablePbtProblemType.row(rowRefresh).remove().draw();
+                }
+            } catch (e) {
+                toastr['error'](e.message, _ALERT_TITLE_ERROR);
+            }
+            HideLoader();
+        }, 300);
     };
 
     this.init();
