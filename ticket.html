@@ -104,7 +104,7 @@
                                 <a tabindex="0" role="button" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                    data-toggle="popover" data-trigger="focus" title="Ticket List"
                                    data-content="This list contains of all tickets received from complainer."><i class="fas fa-info mt-0 mx-1"></i></a>
-                                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0" onclick="genTableTck();"></i></button>
+                                <button type="button" id="btnDtTckTicketRefresh" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0"></i></button>
                             </div>
                             <a href="javascript:void(0);" class="white-text mx-3">New Tickets</a>
                             <div>
@@ -240,7 +240,6 @@
     document.addEventListener('DOMContentLoaded', function () {
 
         ShowLoader();
-
         setTimeout(function () {
             try {
                 initiatePages();
@@ -356,18 +355,21 @@
                         $.extend( true, {}, btnTckTicketOpt, {
                             extend:    'print',
                             text:      '<i class="fas fa-print"></i>',
+                            title:     'ICONS System - Ticket',
                             titleAttr: 'Print',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         }),
                         $.extend( true, {}, btnTckTicketOpt, {
                             extend:    'excelHtml5',
                             text:      '<i class="fas fa-file-excel"></i>',
+                            title:     'ICONS System - Ticket',
                             titleAttr: 'Excel',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         }),
                         $.extend( true, {}, btnTckTicketOpt, {
                             extend:    'pdfHtml5',
                             text:      '<i class="fas fa-file-pdf"></i>',
+                            title:     'ICONS System - Ticket',
                             titleAttr: 'Pdf',
                             orientation: 'landscape',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
@@ -379,11 +381,21 @@
                 genTableTck();
                 oTableTckTicket.column(12).search('11', false, true, false).draw();
 
+                $('#btnDtTckTicketRefresh').on('click', function () {
+                    ShowLoader();
+                    setTimeout(function () {
+                        try {
+                            genTableTck();
+                        } catch (e) {
+                            toastr['error'](e.message, _ALERT_TITLE_ERROR);
+                        }
+                        HideLoader();
+                    }, 300);
+                });
 
             } catch (e) {
                 toastr['error'](e.message, _ALERT_TITLE_ERROR);
             }
-
             HideLoader();
         }, 400);
     });

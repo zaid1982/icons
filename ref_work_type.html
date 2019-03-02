@@ -35,35 +35,35 @@
 <main>
     <div class="container-fluid">
         <!--Section: Main panel-->
-        <section class="mb-5 mt-lg-5 sectionPbtMain">
+        <section class="mb-5 mt-lg-5 sectionWktMain">
             <div class="card card-cascade narrower">
                 <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
                     <div>
-                        <button type="button" id="btnPbtProblemTypeAdd" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" data-toggle="tooltip" data-placement="top" title="Add Problem Type"><i class="fas fa-plus mt-0"></i></button>
+                        <button type="button" id="btnWktWorkTypeAdd" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" data-toggle="tooltip" data-placement="top" title="Add Work Type"><i class="fas fa-plus mt-0"></i></button>
                         <a tabindex="0" role="button" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                           data-toggle="popover" data-trigger="focus" title="Problem Type List"
-                           data-content="This list contains of all problem type as a ticket category for complainer to choose."><i class="fas fa-info mt-0 mx-1"></i></a>
-                        <button type="button" id="btnDtPbtProblemTypeRefresh" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0"></i></button>
+                           data-toggle="popover" data-trigger="focus" title="Work Type List"
+                           data-content="This list contains of all work type as a ticket category for complainer to choose."><i class="fas fa-info mt-0 mx-1"></i></a>
+                        <button type="button" id="btnDtWktWorkTypeRefresh" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0"></i></button>
                     </div>
-                    <a href="javascript:void(0);" class="white-text mx-3">Problem Type</a>
+                    <a href="javascript:void(0);" class="white-text mx-3">Work Type</a>
                     <div>
-                        <div id="btnDtPbtProblemTypeExport"></div>
+                        <div id="btnDtWktWorkTypeExport"></div>
                     </div>
                 </div>
                 <div class="px-4 pb-4">
                     <div class="md-form mb-0 float-right pr-3" style="width: 300px">
-                        <input type="text" id="txtPbtProblemTypeSearch" class="form-control">
-                        <label for="txtPbtProblemTypeSearch">Keyword Search</label>
+                        <input type="text" id="txtWktWorkTypeSearch" class="form-control">
+                        <label for="txtWktWorkTypeSearch">Keyword Search</label>
                     </div>
                     <div class="table-responsive">
-                        <table id="dtPbtProblemType" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
+                        <table id="dtWktWorkType" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
                             <thead>
-                                <tr class="th-strong">
-                                    <th width="8%">No</th>
-                                    <th>Problem Type</th>
-                                    <th width="15%">Status</th>
-                                    <th width="80px"></th>
-                                </tr>
+                            <tr class="th-strong">
+                                <th width="8%">No</th>
+                                <th>Work Type</th>
+                                <th width="15%">Status</th>
+                                <th width="80px"></th>
+                            </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
@@ -74,7 +74,7 @@
     </div>
 
     <div class="includeHtml" id="h-modal_change_password"></div>
-    <div class="includeHtml" id="h-modal_problem_type"></div>
+    <div class="includeHtml" id="h-modal_work_type"></div>
     <div class="includeHtml" id="h-modal_confirm_delete"></div>
 
 </main>
@@ -107,35 +107,34 @@
 <script type="text/javascript">
     document.write('<scr' + 'ipt src="js/common.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
-    let oTablePbtProblemType;
+    let oTableWktWorkType;
     let versionLocal;
     let refStatus;
 
     let changePasswordClass;
-    let problemTypeClass;
+    let workTypeClass;
     let confirmDeleteClass;
 
     document.addEventListener('DOMContentLoaded', function () {
 
         ShowLoader();
-
         setTimeout(function () {
             try {
                 initiatePages();
                 changePasswordClass = new ModalChangePassword();
-                problemTypeClass = new ModalProblemType();
-                confirmDeleteClass = new ModalConfirmDelete('problem_type');
+                workTypeClass = new ModalWorkType();
+                confirmDeleteClass = new ModalConfirmDelete('work_type');
 
                 versionLocal = mzGetDataVersion();
                 refStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
 
-                // table Problem Type List
-                oTablePbtProblemType =  $('#dtPbtProblemType').DataTable({
+                // table Work Type List
+                oTableWktWorkType =  $('#dtWktWorkType').DataTable({
                     bLengthChange: false,
                     bFilter: true,
                     "aaSorting": [1, 'asc'],
                     fnRowCallback : function(nRow, aData, iDisplayIndex){
-                        const info = oTablePbtProblemType.page.info();
+                        const info = oTableWktWorkType.page.info();
                         $('td', nRow).eq(0).html(info.page * info.length + (iDisplayIndex + 1));
                     },
                     drawCallback: function () {
@@ -145,90 +144,90 @@
                     aoColumns:
                         [
                             {mData: null, bSortable: false},
-                            {mData: 'problemtypeDesc'},
+                            {mData: 'worktypeDesc'},
                             {mData: null,
                                 mRender: function (data, type, row) {
-                                    return '<h6><span class="badge badge-pill '+refStatus[row['problemtypeStatus']]['statusColor']+' z-depth-2">'+refStatus[row['problemtypeStatus']]['statusDesc']+'</span></h6>';
+                                    return '<h6><span class="badge badge-pill '+refStatus[row['worktypeStatus']]['statusColor']+' z-depth-2">'+refStatus[row['worktypeStatus']]['statusDesc']+'</span></h6>';
                                 }
                             },
                             {mData: null, bSortable: false, sClass: 'text-center',
                                 mRender: function (data, type, row, meta) {
-                                    let label = '<a><i class="fas fa-edit" onclick="problemTypeClass.edit(\'Pbt\', ' + row['problemtypeId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Kemaskini"></i></a>&nbsp;&nbsp;';
-                                    if (row['problemtypeStatus'] === '1') {
-                                        label += '<a><i class="fas fa-toggle-off" onclick="problemTypeClass.deactivate(\'Pbt\', ' + row['problemtypeId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Deactivate"></i></a>&nbsp;&nbsp;';
+                                    let label = '<a><i class="fas fa-edit" onclick="workTypeClass.edit(\'Wkt\', ' + row['worktypeId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Kemaskini"></i></a>&nbsp;&nbsp;';
+                                    if (row['worktypeStatus'] === '1') {
+                                        label += '<a><i class="fas fa-toggle-off" onclick="workTypeClass.deactivate(\'Wkt\', ' + row['worktypeId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Deactivate"></i></a>&nbsp;&nbsp;';
                                     } else {
-                                        label += '<a><i class="fas fa-toggle-on" onclick="problemTypeClass.activate(\'Pbt\', ' + row['problemtypeId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Activate"></i></a>&nbsp;&nbsp;';
+                                        label += '<a><i class="fas fa-toggle-on" onclick="workTypeClass.activate(\'Wkt\', ' + row['worktypeId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Activate"></i></a>&nbsp;&nbsp;';
                                     }
-                                    label += '<a><i class="fas fa-trash-alt" onclick="confirmDeleteClass.delete(\'Pbt\', '+row['problemtypeId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Hapus"></i></a>';
+                                    label += '<a><i class="fas fa-trash-alt" onclick="confirmDeleteClass.delete(\'Wkt\', '+row['worktypeId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Hapus"></i></a>';
                                     return label;
                                 }
                             },
-                            {mData: 'problemtypeId', visible: false},
-                            {mData: 'problemtypeStatus', visible: false}
+                            {mData: 'worktypeId', visible: false},
+                            {mData: 'worktypeStatus', visible: false}
                         ]
                 });
-                $("#dtPbtProblemType_filter").hide();
-                $('#txtPbtProblemTypeSearch').on('keyup change', function () {
-                    oTablePbtProblemType.search($(this).val()).draw();
+                $("#dtWktWorkType_filter").hide();
+                $('#txtWktWorkTypeSearch').on('keyup change', function () {
+                    oTableWktWorkType.search($(this).val()).draw();
                 });
 
-                let cntPbtProblemType;
-                let btnPbtProblemTypeOpt = {
+                let cntWktWorkType;
+                let btnWktWorkTypeOpt = {
                     exportOptions: {
                         columns: [ 0, 1, 2],
                         format: {
                             body: function ( data, row, column ) {
                                 if (row === 0) {
-                                    cntPbtProblemType = 1;
+                                    cntWktWorkType = 1;
                                 }
                                 if (column === 2) {
                                     const n = data.search('">');
                                     const k = data.substr(n+2);
                                     return k.replace('</span></h6>','');
                                 }
-                                return column === 0 ? cntPbtProblemType++ : data;
+                                return column === 0 ? cntWktWorkType++ : data;
                             }
                         }
                     }
                 };
 
-                new $.fn.dataTable.Buttons(oTablePbtProblemType, {
+                new $.fn.dataTable.Buttons(oTableWktWorkType, {
                     buttons: [
-                        $.extend( true, {}, btnPbtProblemTypeOpt, {
+                        $.extend( true, {}, btnWktWorkTypeOpt, {
                             extend:    'print',
                             text:      '<i class="fas fa-print"></i>',
-                            title:     'ICONS System - Problem Type',
+                            title:     'ICONS System - Work Type',
                             titleAttr: 'Print',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         }),
-                        $.extend( true, {}, btnPbtProblemTypeOpt, {
+                        $.extend( true, {}, btnWktWorkTypeOpt, {
                             extend:    'excelHtml5',
                             text:      '<i class="fas fa-file-excel"></i>',
-                            title:     'ICONS System - Problem Type',
+                            title:     'ICONS System - Work Type',
                             titleAttr: 'Excel',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         }),
-                        $.extend( true, {}, btnPbtProblemTypeOpt, {
+                        $.extend( true, {}, btnWktWorkTypeOpt, {
                             extend:    'pdfHtml5',
                             text:      '<i class="fas fa-file-pdf"></i>',
-                            title:     'ICONS System - Problem Type',
+                            title:     'ICONS System - Work Type',
                             titleAttr: 'Pdf',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         })
                     ]
-                }).container().appendTo($('#btnDtPbtProblemTypeExport'));
+                }).container().appendTo($('#btnDtWktWorkTypeExport'));
 
-                genTablePbt(0);
+                genTableWkt(0);
 
-                $('#btnPbtProblemTypeAdd').on('click', function () {
-                    problemTypeClass.add('Pbt');
+                $('#btnWktWorkTypeAdd').on('click', function () {
+                    workTypeClass.add('Wkt');
                 });
 
-                $('#btnDtPbtProblemTypeRefresh').on('click', function () {
+                $('#btnDtWktWorkTypeRefresh').on('click', function () {
                     ShowLoader();
                     setTimeout(function () {
                         try {
-                            genTablePbt(1);
+                            genTableWkt(1);
                         } catch (e) {
                             toastr['error'](e.message, _ALERT_TITLE_ERROR);
                         }
@@ -244,16 +243,16 @@
         }, 400);
     });
 
-    function genTablePbt(type) {
+    function genTableWkt(type) {
         if (type === 1) {
             versionLocal = mzGetDataVersion();
         }
-        const refProblemtype = mzGetLocalRaw('icon_problemtype', versionLocal);
-        oTablePbtProblemType.clear().rows.add(refProblemtype).draw();
+        const refWorktype = mzGetLocalRaw('icon_worktype', versionLocal);
+        oTableWktWorkType.clear().rows.add(refWorktype).draw();
     }
 
     document.write('<scr' + 'ipt src="js/pages/modal_change_password.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
-    document.write('<scr' + 'ipt src="js/pages/modal_problem_type.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt src="js/pages/modal_work_type.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/modal_confirm_delete.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
 </script>

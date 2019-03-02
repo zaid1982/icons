@@ -377,8 +377,8 @@ function initiatePages() {
 
     // Data Picker Initialization
     $('.datepicker').pickadate({
-        monthsFull: ['Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'July', 'Ogos', 'September', 'October',
-            'November', 'Disember'],
+        monthsFull: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+            'November', 'December'],
         weekdaysShort: ['Ahd', 'Isn', 'Sel', 'Rab', 'Kha', 'Jum', 'Sab'],
         today: 'Hari ini',
         clear: 'Padam',
@@ -557,29 +557,29 @@ function mzConvertDateDisplay(dateInput) {
 
 function mzConvertMonth(monthInput) {
     switch (monthInput) {
-        case 'Januari':
+        case 'January':
             return '01';
-        case 'Februari':
+        case 'February':
             return '02';
-        case 'Mac':
+        case 'March':
             return '03';
         case 'April':
             return '04';
-        case 'Mei':
+        case 'May':
             return '05';
-        case 'Jun':
+        case 'June':
             return '06';
-        case 'Julai':
+        case 'July':
             return '07';
-        case 'Ogos':
+        case 'August':
             return '08';
         case 'September':
             return '09';
-        case 'Oktober':
+        case 'October':
             return '10';
         case 'November':
             return '11';
-        case 'Disember':
+        case 'December':
             return '12';
         default:
             return '';

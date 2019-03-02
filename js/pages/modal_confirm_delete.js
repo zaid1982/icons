@@ -12,10 +12,17 @@ function ModalConfirmDelete(type) {
 
     this.init = function () {
         $('#btnMcdSubmit').on('click', function () {
-            if (mcdType === 'problem_type') {
-                problemTypeClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
-            } else {
-                toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            switch (mcdType) {
+                case 'problem_type':
+                    problemTypeClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
+                    break;
+                case 'work_type':
+                    workTypeClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
+                    break;
+                case 'work_category':
+                    workCategoryClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
+                default:
+                    toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
             }
             $('#modal_confirm_delete').modal('hide');
         });
