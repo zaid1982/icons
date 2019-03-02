@@ -9,75 +9,70 @@
         <div class="card-body card-body-cascade">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="md-form form-sm mb-0">
-                        <input type="text" id="txtTkdDetSeminarTitle" class="form-control form-control-sm" disabled="">
-                        <label for="txtTkdDetSeminarTitle" id="lblTkdDetSeminarTitle">Ticket Number</label>
+                    <div class="md-form mb-0">
+                        <input type="text" id="txtTkdDetTicketNo" class="form-control" disabled="">
+                        <label for="txtTkdDetTicketNo" id="lblTkdDetTicketNo">Ticket Number</label>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="md-form form-sm mb-0">
-                        <input type="text" id="txtTkdDetSeminarTitles" class="form-control form-control-sm" disabled="">
-                        <label for="txtTkdDetSeminarTitle" id="lblTkdDetSeminarTitles">Problem Type</label>
+                    <div class="md-form mb-0">
+                        <input type="text" id="txtTkdDetProblemType" class="form-control" disabled="">
+                        <label for="txtTkdDetProblemType" id="lblTkdDetProblemType">Problem Type</label>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="md-form form-sm mb-0">
-                        <input type="text" id="txtTkdDetSeminarTitlesse" class="form-control form-control-sm" disabled="">
-                        <label for="txtTkdDetSeminarTitle" id="lblTkdDetSeminarTitlesse">Work Type</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="md-form form-sm mb-0">
-                        <input type="text" id="txtTkdDetSeminarTitless" class="form-control form-control-sm" disabled="">
-                        <label for="txtTkdDetSeminarTitle" id="lblTkdDetSeminarTitless">Work Category</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="md-form form-sm mb-0">
-                        <input type="text" id="txtTkdDetCreatedBy" class="form-control form-control-sm" disabled="">
-                        <label for="txtTkdDetCreatedBy" id="lblTkdDetCreatedBy">Issued By</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="md-form form-sm mb-0">
-                        <input type="text" id="txtTkdDetSeminarDate" class="form-control form-control-sm" disabled="">
-                        <label for="txtTkdDetSeminarDate" id="lblTkdDetSeminarDate">Date Submitted</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="md-form form-sm mb-0">
-                        <input type="text" id="txtTkdDetSeminarTimeFrom" class="form-control form-control-sm" disabled="">
-                        <label for="txtTkdDetSeminarTimeFrom" id="lblTkdDetSeminarTimeFrom">Time Submimtted</label>
+                    <div class="md-form mb-0">
+                        <input type="text" id="txtTkdDetWorkType" class="form-control" disabled="">
+                        <label for="txtTkdDetWorkType" id="lblTkdDetWorkType">Work Type</label>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="md-form mb-0">
-                        <textarea id="txaTkdDetSeminarDesc" class="md-textarea form-control pt-1" rows="1" disabled=""></textarea>
-                        <label for="txaTkdDetSeminarDesc" id="lblTkdDetSeminarDesc" class="text-muted">Complaint</label>
+                        <input type="text" id="txtTkdDetWorkCategory" class="form-control" disabled="">
+                        <label for="txtTkdDetWorkCategory" id="lblTkdDetWorkCategory">Work Category</label>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="md-form form-sm mb-0">
-                        <input type="text" id="txtTkdDetSeminarStatus" class="form-control form-control-sm" disabled="">
-                        <label for="txtTkdDetSeminarStatus" id="lblTkdDetSeminarStatus">Status</label>
+                    <div class="md-form mb-0">
+                        <input type="text" id="txtTkdDetCreatedBy" class="form-control" disabled="">
+                        <label for="txtTkdDetCreatedBy" id="lblTkdDetCreatedBy">Issued By</label>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="button" id="butTkdDetTentative" class="btn btn-outline-red btn-rounded waves-effect btn-sm float-right"><i class="fas fa-file-invoice"></i> Create Work Order</button>
+                    <div class="md-form mb-0">
+                        <input type="text" id="txtTkdDetTicketDate" class="form-control" disabled="">
+                        <label for="txtTkdDetTicketDate" id="lblTkdDetTicketDate">Date Submitted</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-left">
+                    <h6 class="mt-1 mb-1">
+                        <small class="text-muted">Complaint</small>
+                    </h6>
+                    <label id="txaTkdDetTicketComplaint"></label>
+                    <hr class="hr-bold mt-0 mb-1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="md-form mb-0">
+                        <input type="text" id="txtTkdDetTicketStatus" class="form-control" disabled="">
+                        <label for="txtTkdDetTicketStatus" id="lblTkdDetTicketStatus">Status</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" id="butTkdCreateWorkOrder" class="btn btn-outline-red btn-rounded waves-effect btn-sm float-right"><i class="fas fa-file-invoice"></i> Create Work Order</button>
                 </div>
             </div>
         </div>

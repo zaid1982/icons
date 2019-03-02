@@ -50,15 +50,10 @@
                                     <div class="mt-1 pb-2">
                                         <small>Ticket Status:</small>
                                         <ul class="striped list-unstyled pl-2">
-                                            <li><a href="javascript:void(0);" id="linkTckNew"><span class="bullet red"></span> New Tickets <span class="badge red float-right">32</span></a></li>
+                                            <li><a href="javascript:void(0);" id="linkTckNew"><span class="bullet red accent-2"></span> New Tickets <span class="badge red accent-2 float-right">32</span></a></li>
                                             <li><a href="javascript:void(0);" id="linkTckProcessing"><span class="bullet blue-grey"></span> Processing <span class="badge blue-grey float-right">38</span></a></li>
-                                            <li><a href="javascript:void(0);" id="linkTckKiv"><span class="bullet orange"></span> KIV <span class="badge orange float-right">2</span></a></li>
+                                            <li><a href="javascript:void(0);" id="linkTckKiv"><span class="bullet amber"></span> KIV <span class="badge amber float-right">2</span></a></li>
                                         </ul>
-                                    </div>
-                                    <!--Negeri-->
-                                    <div class="md-form mb-0">
-                                        <input type="text" id="txtTckTicketSearch" class="form-control" placeholder=" ">
-                                        <label for="txtTckTicketSearch" class="active">Keyword Search</label>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -72,7 +67,6 @@
                                             <label>Work Type</label>
                                         </div>
                                     </div>
-                                    <!--Jenis Perniagaan-->
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mt-3 mb-0">
@@ -86,6 +80,10 @@
                                                 <label for="txtTckDateTo">Date Created to</label>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="md-form mb-0">
+                                        <input type="text" id="txtTckTicketSearch" class="form-control" placeholder=" ">
+                                        <label for="txtTckTicketSearch" class="active">Keyword Search</label>
                                     </div>
                                 </div>
                             </div>
@@ -152,19 +150,19 @@
                                 <h5 class="mt-4 font-weight-bold mb-0">Ticket Images</h5>
                             </div>
                         </div>
-                        <div class="card-body text-center">
+                        <div class="card-body text-center pt-1">
                             <!--Carousel Wrapper-->
                             <div id="carousel-with-lb" class="carousel slide carousel-multi-item" data-ride="carousel">
                                 <!--Controls-->
                                 <div class="controls-top">
-                                    <a class="btn-floating btn-secondary" href="#carousel-with-lb" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
-                                    <a class="btn-floating btn-secondary" href="#carousel-with-lb" data-slide="next"><i class="fas fa-chevron-right"></i></a>
+                                    <a class="btn-floating btn-secondary btn-sm" href="#carousel-with-lb" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
+                                    <a class="btn-floating btn-secondary btn-sm" href="#carousel-with-lb" data-slide="next"><i class="fas fa-chevron-right"></i></a>
                                 </div>
                                 <!--/.Controls-->
                                 <!--Slides and lightbox-->
                                 <div class="carousel-inner mdb-lightbox" role="listbox">
                                     <div id="mdb-lightbox-ui"></div>
-                                    <div id="xxx"></div>
+                                    <div id="divTkdTicketImages"></div>
                                 </div>
                                 <!--/.Slides-->
                             </div>
@@ -260,10 +258,6 @@
                 mzOption('optTckWorktypeId', refWorktype, 'All Work Type', 'worktypeId', 'worktypeDesc');
                 mzDateFromTo('txtTckDateFrom', 'txtTckDateTo');
 
-                //mzAjaxRequest('company.php', 'GET', {Reportid: '2'}, 'displayStats()');
-                //mzAjaxRequest('company.php', 'GET', {Reportid: '1', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
-                displayChart('1');
-
                 // table Ticket List
                 oTableTckTicket = $('#dtTckTicket').DataTable({
                     bLengthChange: false,
@@ -298,9 +292,7 @@
                             },
                             {mData: null, bSortable: false, sClass: 'text-center',
                                 mRender: function (data, type, row) {
-                                    //$label = '<a><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Maklumat Tambahan"></i></a>'+
                                     return '<a><i class="fas fa-info-circle" onclick="ticketDetailsClass.load(\'tck\', '+row['ticketId']+')" data-toggle="tooltip" data-placement="top" title="Details"></i></a>';
-                                    //'<a><i class="fas fa-toggle-off" data-toggle="tooltip" data-placement="top" title="Nyahaktifkan"></i></a>';
                                 }
                             },
                             {mData: 'ticketId', visible: false},
@@ -383,8 +375,10 @@
                     ]
                 }).container().appendTo($('#btnDtTckTicketExport'));
 
+                mzAjaxRequest('ticket.php', 'GET', {Reportid: '1', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
                 genTableTck();
                 oTableTckTicket.column(12).search('11', false, true, false).draw();
+
 
             } catch (e) {
                 toastr['error'](e.message, _ALERT_TITLE_ERROR);
@@ -395,7 +389,7 @@
     });
 
     function genTableTck() {
-        dataTckTicket = mzAjaxRequest('ticket.php', 'GET', {Simple: '1'});
+        dataTckTicket = mzAjaxRequest('ticket.php', 'GET', {'Cache-Control': 'no-cache, no-transform'});
         oTableTckTicket.clear().rows.add(dataTckTicket).draw();
     }
 
@@ -407,17 +401,26 @@
     }
 
     function displayChart(result) {
-        //result = JSON.parse(result);
-        let chartData = [
-            {name:'New', y:32, color:'#ff4444'},
-            {name:'Assigned to Contractor', y:20, color:'#3F729B'},
-            {name:'Perform Work', y:12, color:'#aa66cc'},
-            {name:'Verify Work', y:6, color:'#00C851'},
-            {name:'KIV', y:2, color:'#ffbb33'}
-        ];
-        //$.each(result, function (n, u) {
-        //    chartData.push({name:refState[u['state_id']]['stateDesc'], y:parseInt(u.total)});
-        //});
+        result = JSON.parse(result);
+
+        let chartData = [];
+        let totalNew = 0;
+        let totalProcessing = 0;
+        let totalKiv = 0;
+
+        $.each(result, function (n, u) {
+            chartData.push({name:refStatus[u['ticketStatus']]['statusDesc'], y:parseInt(u.total), color:refStatus[u['ticketStatus']]['statusColorCode']});
+            if (u['ticketStatus'] === '11') {
+                totalNew = parseInt(u.total);
+            } else if (u['ticketStatus'] === '10') {
+                totalKiv = parseInt(u.total);
+            } else {
+                totalProcessing += parseInt(u.total);
+            }
+        });
+        $('#linkTckNew').html('<span class="bullet '+refStatus[11]['statusColor']+'"></span> New Tickets <span class="badge '+refStatus[11]['statusColor']+' float-right">'+totalNew+'</span>');
+        $('#linkTckProcessing').html('<span class="bullet blue-grey"></span> Processing <span class="badge blue-grey float-right">'+totalProcessing+'</span>');
+        $('#linkTckKiv').html('<span class="bullet '+refStatus[10]['statusColor']+'"></span> KIV <span class="badge '+refStatus[10]['statusColor']+' float-right">'+totalKiv+'</span>');
 
         Highcharts.chart('chartTckOpenByStatus', {
             chart: {

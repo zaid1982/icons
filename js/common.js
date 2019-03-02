@@ -534,8 +534,8 @@ function mzConvertDateDisplay(dateInput) {
     }
     let fullDateStr = '';
     let timeNew = '';
-    const monthsFull = ['', 'Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'July', 'Ogos', 'September', 'October',
-            'November', 'Disember'];
+    const monthsFull = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+            'November', 'December'];
         
     const datePart = dateInput.substr(0, 10);
     const dateSplit = datePart.split("/");
@@ -548,7 +548,7 @@ function mzConvertDateDisplay(dateInput) {
     let dateNew = parseInt(day) + ' ' + monthsFull[parseInt(month)] + ', ' + year;
     if (dateInput.length === 19) {
         timeNew = dateInput.substr(11);
-        fullDateStr = timeNew + ', ' + dateNew;
+        fullDateStr = dateNew + ', ' + timeNew;
     } else {
         fullDateStr = dateNew;
     }    

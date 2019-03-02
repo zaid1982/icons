@@ -19,8 +19,7 @@ function SectionTicketDetails() {
     let map = new google.maps.Map(document.getElementById("mapTkdLocation"), mapOptions);
     let mapMarker = new google.maps.Marker({
         position: new google.maps.LatLng(2.904485,101.681497),
-        map: map,
-        title: "Title"
+        map: map
     });
 
     this.init = function () {
@@ -36,19 +35,60 @@ function SectionTicketDetails() {
     };
 
     this.load = function (callFrom, ticketId) {
-        tkdCallFrom = callFrom;
-        tkdTicketId = typeof ticketId === 'undefined' ? '' : ticketId;
-
-        mzSetFieldValue('TkdDetSeminarTitle', 'Hsjfdklsd', 'text');
-
-       $('#xxx').html('<div class=" carousel-item active text-center"><figure class="col-md-12 d-md-inline-block"><a href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(2).jpg" data-size="1600x1067"> <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(2).jpg" class="img-fluid"> </a> </figure></div><div class="carousel-item text-center"><figure class="col-md-12 d-md-inline-block"><a href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(22).jpg" data-size="1600x1067"> <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(22).jpg" class="img-fluid"> </a></figure></div>');
-
-        if (tkdCallFrom === 'tck') {
-            $('.sectionTckMain').hide();
+        if (typeof callFrom === 'undefined' || callFrom === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
         }
-        $('.sectionTkdDetails').show();
+        if (typeof ticketId === 'undefined' || ticketId === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        tkdCallFrom = callFrom;
+        tkdTicketId = ticketId;
 
-        $(window).scrollTop(0);
+        ShowLoader();
+        setTimeout(function () {
+            try {
+                const dataTkdDetTicket = mzAjaxRequest('ticket.php?ticketId='+tkdTicketId, 'GET');
+                mzSetFieldValue('TkdDetTicketNo', dataTkdDetTicket['ticketNo'], 'text');
+                mzSetFieldValue('TkdDetProblemType', refProblemtype[dataTkdDetTicket['problemtypeId']]['problemtypeDesc'], 'text');
+                mzSetFieldValue('TkdDetWorkType', refWorktype[refWorkcategory[dataTkdDetTicket['workcategoryId']]['worktypeId']]['worktypeDesc'], 'text');
+                mzSetFieldValue('TkdDetWorkCategory', refWorkcategory[dataTkdDetTicket['workcategoryId']]['workcategoryDesc'], 'text');
+                mzSetFieldValue('TkdDetCreatedBy', dataTkdDetTicket['createdBy'], 'text');
+                mzSetFieldValue('TkdDetTicketDate', mzConvertDateDisplay(dataTkdDetTicket['ticketTimeSubmit']), 'text');
+                mzSetFieldValue('TkdDetTicketStatus', refStatus[dataTkdDetTicket['ticketStatus']]['statusDesc'], 'text');
+                $('#txaTkdDetTicketComplaint').html(dataTkdDetTicket['ticketComplaint']);
+
+                const ticketImages = dataTkdDetTicket['ticketImages'];
+                let html = '';
+                $.each(ticketImages, function (n, u) {
+                    html += '<div class=" carousel-item '+(n==0?'active':'')+' text-center">' +
+                            '<figure class="col-md-12 d-md-inline-block">' +
+                                '<a href="'+u['documentSrc']+'" data-size="1600x1067">' +
+                                '<img src="'+u['documentSrc']+'" class="img-fluid">' +
+                                '</a> ' +
+                            '</figure>' +
+                        '</div>';
+                });
+                $('#divTkdTicketImages').html(html);
+
+                const mapLongitude = parseFloat(dataTkdDetTicket['ticketLongitude']);
+                const mapLatitude = parseFloat(dataTkdDetTicket['ticketLatitude']);
+                const mapLocation = new google.maps.LatLng(mapLongitude, mapLatitude);
+                map.setCenter(mapLocation);
+                mapMarker.setPosition(mapLocation);
+
+                if (tkdCallFrom === 'tck') {
+                    $('.sectionTckMain').hide();
+                }
+                $('.sectionTkdDetails').show();
+
+                $(window).scrollTop(0);
+            } catch (e) {
+                toastr['error'](e.message, _ALERT_TITLE_ERROR);
+            }
+            HideLoader();
+        }, 300);
     };
 
     this.init();
