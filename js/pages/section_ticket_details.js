@@ -5,7 +5,7 @@ function SectionTicketDetails() {
     let mapOptions = {
         center: new google.maps.LatLng(2.904485,101.681497),
         zoom: 13,
-        mapTypeId: 'hybrid',
+        //mapTypeId: 'hybrid',
         styles:[
             {
                 featureType: "all",

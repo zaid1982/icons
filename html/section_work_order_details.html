@@ -1,0 +1,444 @@
+<section class="section mb-5 sectionWorkOrderDetails">
+    <div class="row">
+        <div class="col-md-12 mb-2">
+            <div class="card card-cascade cascading-admin-card user-card mt-5">
+                <div class="admin-up d-flex justify-content-start">
+                    <i class="fa fas fa-headset warning-color py-4"></i>
+                    <div class="data">
+                        <h3 class="font-weight-bold dark-grey-text">Work Order Details</h3>
+                    </div>
+                </div>
+                <div class="card-body card-body-cascade text-left">
+                    <form id="formTkdWorkOrder">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoTicketNo" class="form-control mb-0"
+                                           value="Tungkus Lumus Sdn Bhd (1015972-K)">
+                                    <label for="txtTkdWkoTicketNo" id="lblTkdWkoTicketNo" class="active">Company
+                                        Name</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNoErr"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoTicketNo2" class="form-control mb-0"
+                                           value="Kuarters Kerajaan Pangsapuri 17RK2">
+                                    <label for="txtTkdWkoTicketNo2" id="lblTkdWkoTicketNo2" class="active">Site</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo2Err"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoTicketNo4" class="form-control mb-0"
+                                           value="Presint 17">
+                                    <label for="txtTkdWkoTicketNo4" id="lblTkdWkoTicketNo4" class="active">Area</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo4Err"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoTicketNo3" class="form-control mb-0"
+                                           value="Putrajaya">
+                                    <label for="txtTkdWkoTicketNo2" id="lblTkdWkoTicketNo3" class="active">City</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo3Err"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoTicketNo5" class="form-control mb-0"
+                                           value="TLSB/WO/17RK-p17/">
+                                    <label for="txtTkdWkoTicketNo5" id="lblTkdWkoTicketNo5" class="active">Work Order
+                                        No.</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo5Err"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoTicketNo7" class="form-control mb-0"
+                                           value="Umi Kalsom Abdul Rahman">
+                                    <label for="txtTkdWkoTicketNo7" id="lblTkdWkoTicketNo7"
+                                           class="active">Requester</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo7Err"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoTicketNo9" class="form-control mb-0"
+                                           value="0126043002">
+                                    <label for="txtTkdWkoTicketNo9" id="lblTkdWkoTicketNo9" class="active">Phone
+                                        Number</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo9Err"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoTicketNo6" class="form-control mb-0" value="Draft">
+                                    <label for="txtTkdWkoTicketNo6" id="lblTkdWkoTicketNo6" class="active">Work
+                                        Status</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo6Err"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoTicketNo8" class="form-control mb-0"
+                                           value="10/02/2019">
+                                    <label for="txtTkdWkoTicketNo8" id="lblTkdWkoTicketNo8" class="active">Date</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo8Err"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoTicketNo10" class="form-control mb-0"
+                                           value="10:00 am">
+                                    <label for="txtTkdWkoTicketNo10" id="lblTkdWkoTicketNo10" class="active">Received
+                                        Time</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo10Err"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoTicketNos2" class="form-control mb-0"
+                                           value="Wahabang Contractors Sdn Bhd">
+                                    <label for="txtTkdWkoTicketNos2" id="lblTkdWkoTicketNos2"
+                                           class="active">Vendor</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNos2Err"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoWT1" class="form-control mb-0"
+                                           value="Public Facilities">
+                                    <label for="txtTkdWkoWT1" id="lblTkdWkoWT1" class="active">Site Type</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoWT1Err"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <textarea id="txaMcpAddress" class="md-textarea form-control mb-0"
+                                              style="height: 88px"></textarea>
+                                    <label for="txaMcpAddress" id="lblMcpAddress" class="active">Problem
+                                        Description</label>
+                                    <p class="font-small text-danger mb-0" id="txaMcpAddressErr"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoWT2" class="form-control mb-0" value="Civil">
+                                    <label for="txtTkdWkoWT2" id="lblTkdWkoWT2" class="active">Work Type</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoWT2Err"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtTkdWkoWT3" class="form-control mb-0" value="Civil">
+                                    <label for="txtTkdWkoWT3" id="lblTkdWkoWT3" class="active">Work Category</label>
+                                    <p class="font-small text-danger mb-0" id="txtTkdWkoWT3Err"></p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="md-form mb-0">
+                                            <input type="text" id="txtTkdWkozone2" class="form-control mb-0" value="2">
+                                            <label for="txtTkdWkozone2" id="lblTkdWkozone2" class="active">Block</label>
+                                            <p class="font-small text-danger mb-0" id="txtTkdWkozone2Err"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="md-form mb-0">
+                                            <input type="text" id="txtTkdWkozone3" class="form-control mb-0" value="2">
+                                            <label for="txtTkdWkozone3" id="lblTkdWkozone3" class="active">Level</label>
+                                            <p class="font-small text-danger mb-0" id="txtTkdWkozone3Err"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="md-form mb-0">
+                                            <input type="text" id="txtTkdWkozone4" class="form-control mb-0" value="2">
+                                            <label for="txtTkdWkozone4" id="lblTkdWkozone4" class="active">Unit</label>
+                                            <p class="font-small text-danger mb-0" id="txtTkdWkozone4Err"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <textarea id="txaMcpAddress2" class="md-textarea form-control mb-0"
+                                              rows="1"></textarea>
+                                    <label for="txaMcpAddress2" id="lblMcpAddress2" class="active">Other Location
+                                        Description</label>
+                                    <p class="font-small text-danger mb-0" id="txaMcpAddress2Err"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col-md-12">
+                                <label class="pt-2 font-weight-bold">Part Details :</label>
+                                <button type="button" id="butTkdCreateWorkOrder3"
+                                        class="btn btn-info btn-rounded waves-effect btn-sm float-right"><i
+                                        class="fas fa-plus mr-1"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="px-3">
+                                    <div class="table-responsive">
+                                        <table id="dtTckWorkOrderItem"
+                                               class="table table-hover mb-0 display responsive table-sm"
+                                               cellspacing="0" width="100%">
+                                            <thead>
+                                            <tr class="th-strong">
+                                                <th width="10%">Part No</th>
+                                                <th>Part Description</th>
+                                                <th width="15%">Qty Used</th>
+                                                <th width="20%">Remarks</th>
+                                                <th width="48px"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Ticket No</td>
+                                                <td>3</td>
+                                                <td>This is remarks</td>
+                                                <td>
+                                                    <a><i class="fas fa-edit" data-toggle="tooltip" data-placement="top"
+                                                          title="Edit"></i></a>&nbsp;
+                                                    <a><i class="fas fa-trash-alt" data-toggle="tooltip"
+                                                          data-placement="top" title="Delete"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Ticket No</td>
+                                                <td>1</td>
+                                                <td>This is remarks</td>
+                                                <td>
+                                                    <a><i class="fas fa-edit" data-toggle="tooltip" data-placement="top"
+                                                          title="Edit"></i></a>&nbsp;
+                                                    <a><i class="fas fa-trash-alt" data-toggle="tooltip"
+                                                          data-placement="top" title="Delete"></i></a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="pt-2 font-weight-bold">Labour Details :</label>
+                                <button type="button" id="butTkdCreateWorkOrder4"
+                                        class="btn btn-info btn-rounded waves-effect btn-sm float-right"><i
+                                        class="fas fa-plus mr-1"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="px-3">
+                                    <div class="table-responsive">
+                                        <table id="dtTckWorkOrderItem2"
+                                               class="table table-hover mb-0 display responsive table-sm"
+                                               cellspacing="0" width="100%">
+                                            <thead>
+                                            <tr class="th-strong">
+                                                <th>Employee Name</th>
+                                                <th width="16%">Date</th>
+                                                <th width="8%">Start</th>
+                                                <th width="8%">End</th>
+                                                <th width="8%">Hours</th>
+                                                <th width="48px"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Muhammad Ali Muhammad Zaid</td>
+                                                <td>12/01/2019</td>
+                                                <td>02:30</td>
+                                                <td>13:30</td>
+                                                <td>14.5</td>
+                                                <td>
+                                                    <a><i class="fas fa-edit" data-toggle="tooltip" data-placement="top"
+                                                          title="Edit"></i></a>&nbsp;
+                                                    <a><i class="fas fa-trash-alt" data-toggle="tooltip"
+                                                          data-placement="top" title="Delete"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Muhammad Ali Muhammad Zaid</td>
+                                                <td>12/01/2019</td>
+                                                <td>02:30</td>
+                                                <td>13:30</td>
+                                                <td>14.5</td>
+                                                <td>
+                                                    <a><i class="fas fa-edit" data-toggle="tooltip" data-placement="top"
+                                                          title="Edit"></i></a>&nbsp;
+                                                    <a><i class="fas fa-trash-alt" data-toggle="tooltip"
+                                                          data-placement="top" title="Delete"></i></a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="pt-2 font-weight-bold">Pictures :</label>
+                            </div>
+                        </div>
+                        <div class="row px-3">
+                            <div class="col-md-4 text-center">
+                                <!--Carousel Wrapper-->
+                                <div id="carousel-with-lb3" class="carousel slide carousel-multi-item"
+                                     data-ride="carousel">
+                                    <!--Controls-->
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carousel-with-lb3" data-slide-to="0" class="active"></li>
+                                        <li data-target="#carousel-with-lb3" data-slide-to="1"></li>
+                                    </ol>
+                                    <!--/.Controls-->
+                                    <!--Slides and lightbox-->
+                                    <div class="carousel-inner mdb-lightbox" role="listbox">
+                                        <div class="mdb-lightbox-ui"></div>
+                                        <div id="divTkdTicketImages3">
+                                            <div class=" carousel-item active text-center">
+                                                <figure class="col-md-12 d-md-inline-block">
+                                                    <a href="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20(66).jpg"
+                                                       data-size="1600x1067">
+                                                        <img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(66).jpg"
+                                                             class="img-fluid">
+                                                    </a>
+                                                </figure>
+                                            </div>
+                                            <div class=" carousel-item text-center">
+                                                <figure class="col-md-12 d-md-inline-block">
+                                                    <a href="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20(70).jpg"
+                                                       data-size="1600x1067">
+                                                        <img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(70).jpg"
+                                                             class="img-fluid ">
+                                                    </a>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/.Slides-->
+                                </div>
+                                <!--/.Carousel Wrapper-->
+                                <label class="font-small text-muted">Before Progress</label>
+                            </div>
+
+                            <div class="col-md-4 text-center">
+                                <!--Carousel Wrapper-->
+                                <div id="carousel-with-lb2" class="carousel slide carousel-multi-item"
+                                     data-ride="carousel">
+                                    <!--Indicators-->
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carousel-with-lb2" data-slide-to="0" class="active"></li>
+                                        <li data-target="#carousel-with-lb2" data-slide-to="1"></li>
+                                    </ol>
+                                    <!--/.Indicators-->
+                                    <!--Slides and lightbox-->
+                                    <div class="carousel-inner mdb-lightbox" role="listbox">
+                                        <div class="mdb-lightbox-ui"></div>
+                                        <div class=" carousel-item active text-center">
+                                            <figure class="col-md-12 d-md-inline-block">
+                                                <a href="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20(66).jpg"
+                                                   data-size="1600x1067">
+                                                    <img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(66).jpg"
+                                                         class="img-fluid">
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <div class=" carousel-item text-center">
+                                            <figure class="col-md-12 d-md-inline-block">
+                                                <a href="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20(70).jpg"
+                                                   data-size="1600x1067">
+                                                    <img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(70).jpg"
+                                                         class="img-fluid">
+                                                </a>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                    <!--/.Slides-->
+                                    <!--Controls-->
+                                    <a class="carousel-control-prev" href="#carousel-with-lb2" role="button"
+                                       data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carousel-with-lb2" role="button"
+                                       data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                    <!--/.Controls-->
+                                </div>
+                                <!--/.Carousel Wrapper-->
+                                <label class="font-small text-muted">In Progress</label>
+                            </div>
+
+                            <div class="col-md-4 text-center">
+                                <!--Carousel Wrapper-->
+                                <div id="carousel-example-1z" class="carousel slide carousel-multi-item"
+                                     data-ride="carousel">
+                                    <!--Indicators-->
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
+                                        <li data-target="#carousel-example-1z" data-slide-to="1"></li>
+                                        <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+                                    </ol>
+                                    <!--/.Indicators-->
+                                    <!--Slides-->
+                                    <div class="carousel-inner mdb-lightbox" role="listbox">
+                                        <div class="mdb-lightbox-ui"></div>
+                                        <!--First slide-->
+                                        <div class="carousel-item active">
+                                            <figure class="col-md-12 d-md-inline-block">
+                                                <a href="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg"
+                                                   data-size="1600x1067">
+                                                    <img src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg"
+                                                         class="img-fluid">
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <!--/First slide-->
+                                        <!--Second slide-->
+                                        <div class="carousel-item">
+                                            <figure class="col-md-12 d-md-inline-block">
+                                                <a href="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20(66).jpg"
+                                                   data-size="1600x1067">
+                                                    <img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(66).jpg"
+                                                         class="img-fluid">
+                                                </a>
+                                            </figure>
+                                        </div>
+                                        <!--/Second slide-->
+                                    </div>
+                                    <!--/.Slides-->
+                                    <!--Controls-->
+                                    <a class="carousel-control-prev" href="#carousel-example-1z" role="button"
+                                       data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carousel-example-1z" role="button"
+                                       data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                    <!--/.Controls-->
+                                </div>
+                                <!--/.Carousel Wrapper-->
+                                <label class="font-small text-muted">After Progress</label>
+                            </div>
+                        </div>
+                        <hr class="mb-1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" id="butTkdCreateWorkOrder2"
+                                        class="btn btn-outline-success btn-rounded waves-effect btn-sm float-right"><i
+                                        class="fas fa-paper-plane mr-1"></i> Submit
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

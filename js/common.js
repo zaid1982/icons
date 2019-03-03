@@ -388,7 +388,7 @@ function initiatePages() {
     // Material Select Initialization
     $(document).ready(function () {
         $('.mdb-select').material_select();
-        $("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
+        $(".mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
     });
 
     // Tooltips Initialization
@@ -452,7 +452,7 @@ function initiatePages() {
         menuHtml += '</li>';
         $('#ulNavLeft').append(menuHtml);
     });
-    
+
     $('#pBasePageTitle').append(titleHtml);
     $('.collapsible').collapsible();
 

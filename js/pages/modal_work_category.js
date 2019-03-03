@@ -5,6 +5,10 @@ function ModalWorkCategory() {
     let mwcRowRefresh = '';
 
     this.init = function () {
+        $('#optMwcWorktypeId').on('change', function () {
+            $('#lblMwcWorktypeId').html('Work Type *').addClass('active');
+        });
+
         const vDataMwc = [
             {
                 field_id: 'txtMwcDesc',
@@ -114,7 +118,7 @@ function ModalWorkCategory() {
         mwcWorkcategoryId = '';
         mwcRowRefresh = '';
 
-        mzOption('optMwcWorktypeId', refWorktype, 'Choose Work Type *', 'worktypeId', 'worktypeDesc', {worktypeStatus: '1'});
+        mzOption('optMwcWorktypeId', refWorktype, 'Choose Work Type *', 'worktypeId', 'worktypeDesc', {worktypeStatus: '1'}, 'required');
         $('#btnMwcSubmit').attr('disabled', true);
         $('#modal_work_category').modal({backdrop: 'static', keyboard: false});
     };
@@ -136,7 +140,7 @@ function ModalWorkCategory() {
         mwcWorkcategoryId = workcategoryId;
         mwcRowRefresh = rowRefresh;
 
-        mzOption('optMwcWorktypeId', refWorktype, 'Choose Work Type *', 'worktypeId', 'worktypeDesc');
+        mzOption('optMwcWorktypeId', refWorktype, 'Choose Work Type *', 'worktypeId', 'worktypeDesc', [], 'required');
         $('#btnMwcSubmit').attr('disabled', true);
         $('#modal_work_category').modal({backdrop: 'static', keyboard: false});
     };

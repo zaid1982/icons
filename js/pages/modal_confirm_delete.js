@@ -21,6 +21,7 @@ function ModalConfirmDelete(type) {
                     break;
                 case 'work_category':
                     workCategoryClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
+                    break;
                 default:
                     toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
             }
