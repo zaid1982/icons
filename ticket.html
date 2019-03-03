@@ -135,13 +135,8 @@
             </div>
         </section>
         <div class="includeHtml" id="h-section_ticket_details"></div>
-
-
         <div class="includeHtml" id="h-section_work_order_details"></div>
-
-
     </div>
-
     <div class="includeHtml" id="h-modal_change_password"></div>
 
 </main>
@@ -153,16 +148,11 @@
         while (currentTime + miliseconds >= new Date().getTime()) {
         }
     }
-    let h_wait = 0;
-
     $('.includeHtml').each(function () {
         const divId = $(this).attr('id');
-        $('#'+divId).load('html/'+divId.substr(2)+'.html?' + new Date().valueOf(), function() {
-             h_wait++;
-        });
+        $('#'+divId).load('html/'+divId.substr(2)+'.html?' + new Date().valueOf());
     });
     sleep(500);
-    //alert(h_wait);
 </script>
 
 <!-- Bootstrap tooltips -->
@@ -199,7 +189,6 @@
     let refProblemtype;
     let refWorktype;
     let refWorkcategory;
-
     let changePasswordClass;
     let ticketDetailsClass;
 
@@ -212,7 +201,6 @@
                 changePasswordClass = new ModalChangePassword();
                 ticketDetailsClass = new SectionTicketDetails();
 
-                //mzChartOption();
                 versionLocal = mzGetDataVersion();
                 refStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
                 refProblemtype = mzGetLocalArray('icon_problemtype', versionLocal, 'problemtypeId');
@@ -430,11 +418,6 @@
                 data: chartData
             }]
         });
-    }
-
-    function smnUnused() {
-        displayStats();
-        displayChart();
     }
 
     document.write('<scr' + 'ipt src="js/pages/modal_change_password.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
