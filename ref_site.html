@@ -35,34 +35,35 @@
 <main>
     <div class="container-fluid">
         <!--Section: Main panel-->
-        <section class="mb-5 mt-lg-5 sectionWkcMain">
+        <section class="mb-5 mt-lg-5 sectionSteMain">
             <div class="card card-cascade narrower">
                 <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
                     <div>
-                        <button type="button" id="btnWkcWorkCategoryAdd" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" data-toggle="tooltip" data-placement="top" title="Add Work Category"><i class="fas fa-plus mt-0"></i></button>
+                        <button type="button" id="btnSteSiteAdd" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" data-toggle="tooltip" data-placement="top" title="Add Site"><i class="fas fa-plus mt-0"></i></button>
                         <a tabindex="0" role="button" class="btn btn-outline-white btn-rounded btn-sm px-2"
                            data-toggle="popover" data-trigger="focus" title="Work Category List"
-                           data-content="This list contains of all work category as a ticket category for complainer to choose."><i class="fas fa-info mt-0 mx-1"></i></a>
-                        <button type="button" id="btnDtWkcWorkCategoryRefresh" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0"></i></button>
+                           data-content="This list contains of all sites that should be under maintenance scope."><i class="fas fa-info mt-0 mx-1"></i></a>
+                        <button type="button" id="btnDtSteSiteRefresh" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0"></i></button>
                     </div>
-                    <a href="javascript:void(0);" class="white-text mx-3">Work Category</a>
+                    <a href="javascript:void(0);" class="white-text mx-3">Site</a>
                     <div>
-                        <div id="btnDtWkcWorkCategoryExport"></div>
+                        <div id="btnDtSteSiteExport"></div>
                     </div>
                 </div>
                 <div class="px-4 pb-4">
                     <div class="md-form mb-0 float-right pr-3" style="width: 300px">
-                        <input type="text" id="txtWkcWorkCategorySearch" class="form-control">
-                        <label for="txtWkcWorkCategorySearch">Keyword Search</label>
+                        <input type="text" id="txtSteSiteSearch" class="form-control">
+                        <label for="txtSteSiteSearch">Keyword Search</label>
                     </div>
                     <div class="table-responsive">
-                        <table id="dtWkcWorkCategory" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
+                        <table id="dtSteSite" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
                             <thead>
                             <tr class="th-strong">
                                 <th width="5%">No</th>
-                                <th>Work Category</th>
-                                <th width="25%">Work Type</th>
-                                <th width="15%">Status</th>
+                                <th>Site Name</th>
+                                <th width="15%">Area</th>
+                                <th width="15%">City</th>
+                                <th width="10%">Status</th>
                                 <th width="80px"></th>
                             </tr>
                             </thead>
@@ -75,7 +76,7 @@
     </div>
 
     <div class="includeHtml" id="h-modal_change_password"></div>
-    <div class="includeHtml" id="h-modal_work_category"></div>
+    <div class="includeHtml" id="h-modal_site"></div>
     <div class="includeHtml" id="h-modal_confirm_delete"></div>
 
 </main>
@@ -108,13 +109,14 @@
 <script type="text/javascript">
     document.write('<scr' + 'ipt src="js/common.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
-    let oTableWkcWorkCategory;
+    let oTableSteSite;
     let versionLocal;
     let refStatus;
-    let refWorktype;
+    let refCity;
+    let refArea;
 
     let changePasswordClass;
-    let workCategoryClass;
+    let siteClass;
     let confirmDeleteClass;
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -124,20 +126,21 @@
             try {
                 initiatePages();
                 changePasswordClass = new ModalChangePassword();
-                workCategoryClass = new ModalWorkCategory();
-                confirmDeleteClass = new ModalConfirmDelete('work_category');
+                siteClass = new ModalSite();
+                confirmDeleteClass = new ModalConfirmDelete('site');
 
                 versionLocal = mzGetDataVersion();
                 refStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
-                refWorktype = mzGetLocalArray('icon_worktype', versionLocal, 'worktypeId');
+                refCity = mzGetLocalArray('icon_city', versionLocal, 'cityId');
+                refArea = mzGetLocalArray('icon_area', versionLocal, 'areaId');
 
-                // table Work Category List
-                oTableWkcWorkCategory =  $('#dtWkcWorkCategory').DataTable({
+                // table Site List
+                oTableSteSite =  $('#dtSteSite').DataTable({
                     bLengthChange: false,
                     bFilter: true,
-                    "aaSorting": [[2, 'asc'],[1, 'asc']],
+                    "aaSorting": [[3, 'asc'],[2, 'asc'],[1, 'asc']],
                     fnRowCallback : function(nRow, aData, iDisplayIndex){
-                        const info = oTableWkcWorkCategory.page.info();
+                        const info = oTableSteSite.page.info();
                         $('td', nRow).eq(0).html(info.page * info.length + (iDisplayIndex + 1));
                     },
                     drawCallback: function () {
@@ -147,94 +150,100 @@
                     aoColumns:
                         [
                             {mData: null, bSortable: false},
-                            {mData: 'workcategoryDesc'},
+                            {mData: 'siteDesc'},
                             {mData: null,
                                 mRender: function (data, type, row) {
-                                    return refWorktype[row['worktypeId']]['worktypeDesc'];
+                                    return refArea[row['areaId']]['areaDesc'];
                                 }
                             },
                             {mData: null,
                                 mRender: function (data, type, row) {
-                                    return '<h6><span class="badge badge-pill '+refStatus[row['workcategoryStatus']]['statusColor']+' z-depth-2">'+refStatus[row['workcategoryStatus']]['statusDesc']+'</span></h6>';
+                                    const cityId = refArea[row['areaId']]['cityId'];
+                                    return refCity[cityId]['cityDesc'];
+                                }
+                            },
+                            {mData: null,
+                                mRender: function (data, type, row) {
+                                    return '<h6><span class="badge badge-pill '+refStatus[row['siteStatus']]['statusColor']+' z-depth-2">'+refStatus[row['siteStatus']]['statusDesc']+'</span></h6>';
                                 }
                             },
                             {mData: null, bSortable: false, sClass: 'text-center',
                                 mRender: function (data, type, row, meta) {
-                                    let label = '<a><i class="fas fa-edit" onclick="workCategoryClass.edit(\'Wkc\', ' + row['workcategoryId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>&nbsp;&nbsp;';
-                                    if (row['workcategoryStatus'] === '1') {
-                                        label += '<a><i class="fas fa-toggle-off" onclick="workCategoryClass.deactivate(\'Wkc\', ' + row['workcategoryId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Deactivate"></i></a>&nbsp;&nbsp;';
+                                    let label = '<a><i class="fas fa-edit" onclick="siteClass.edit(\'Ste\', ' + row['siteId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>&nbsp;&nbsp;';
+                                    if (row['siteStatus'] === '1') {
+                                        label += '<a><i class="fas fa-toggle-off" onclick="siteClass.deactivate(\'Ste\', ' + row['siteId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Deactivate"></i></a>&nbsp;&nbsp;';
                                     } else {
-                                        label += '<a><i class="fas fa-toggle-on" onclick="workCategoryClass.activate(\'Wkc\', ' + row['workcategoryId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Activate"></i></a>&nbsp;&nbsp;';
+                                        label += '<a><i class="fas fa-toggle-on" onclick="siteClass.activate(\'Ste\', ' + row['siteId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Activate"></i></a>&nbsp;&nbsp;';
                                     }
-                                    label += '<a><i class="fas fa-trash-alt" onclick="confirmDeleteClass.delete(\'Wkc\', '+row['workcategoryId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
+                                    label += '<a><i class="fas fa-trash-alt" onclick="siteClass.delete(\'Ste\', '+row['siteId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
                                     return label;
                                 }
                             },
-                            {mData: 'workcategoryId', visible: false}
+                            {mData: 'siteId', visible: false}
                         ]
                 });
-                $("#dtWkcWorkCategory_filter").hide();
-                $('#txtWkcWorkCategorySearch').on('keyup change', function () {
-                    oTableWkcWorkCategory.search($(this).val()).draw();
+                $("#dtSteSite_filter").hide();
+                $('#txtSteSiteSearch').on('keyup change', function () {
+                    oTableSteSite.search($(this).val()).draw();
                 });
 
-                let cntWkcWorkCategory;
-                let btnWkcWorkCategoryOpt = {
+                let cntSteSite;
+                let btnSteSiteOpt = {
                     exportOptions: {
-                        columns: [ 0, 1, 2, 3],
+                        columns: [ 0, 1, 2, 3, 4],
                         format: {
                             body: function ( data, row, column ) {
                                 if (row === 0) {
-                                    cntWkcWorkCategory = 1;
+                                    cntSteSite = 1;
                                 }
-                                if (column === 3) {
+                                if (column === 4) {
                                     const n = data.search('">');
                                     const k = data.substr(n+2);
                                     return k.replace('</span></h6>','');
                                 }
-                                return column === 0 ? cntWkcWorkCategory++ : data;
+                                return column === 0 ? cntSteSite++ : data;
                             }
                         }
                     }
                 };
 
-                new $.fn.dataTable.Buttons(oTableWkcWorkCategory, {
+                new $.fn.dataTable.Buttons(oTableSteSite, {
                     buttons: [
-                        $.extend( true, {}, btnWkcWorkCategoryOpt, {
+                        $.extend( true, {}, btnSteSiteOpt, {
                             extend:    'print',
                             text:      '<i class="fas fa-print"></i>',
-                            title:     'ICONS System - Work Category',
+                            title:     'ICONS System - Site',
                             titleAttr: 'Print',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         }),
-                        $.extend( true, {}, btnWkcWorkCategoryOpt, {
+                        $.extend( true, {}, btnSteSiteOpt, {
                             extend:    'excelHtml5',
                             text:      '<i class="fas fa-file-excel"></i>',
-                            title:     'ICONS System - Work Category',
+                            title:     'ICONS System - Site',
                             titleAttr: 'Excel',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         }),
-                        $.extend( true, {}, btnWkcWorkCategoryOpt, {
+                        $.extend( true, {}, btnSteSiteOpt, {
                             extend:    'pdfHtml5',
                             text:      '<i class="fas fa-file-pdf"></i>',
-                            title:     'ICONS System - Work Category',
+                            title:     'ICONS System - Site',
                             titleAttr: 'Pdf',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         })
                     ]
-                }).container().appendTo($('#btnDtWkcWorkCategoryExport'));
+                }).container().appendTo($('#btnDtSteSiteExport'));
 
-                genTableWkc(0);
+                genTableSte(0);
 
-                $('#btnWkcWorkCategoryAdd').on('click', function () {
-                    workCategoryClass.add('Wkc');
+                $('#btnSteSiteAdd').on('click', function () {
+                    siteClass.add('Ste');
                 });
 
-                $('#btnDtWkcWorkCategoryRefresh').on('click', function () {
+                $('#btnDtSteSiteRefresh').on('click', function () {
                     ShowLoader();
                     setTimeout(function () {
                         try {
-                            genTableWkc(1);
+                            genTableSte(1);
                         } catch (e) {
                             toastr['error'](e.message, _ALERT_TITLE_ERROR);
                         }
@@ -250,16 +259,16 @@
         }, 400);
     });
 
-    function genTableWkc(type) {
+    function genTableSte(type) {
         if (type === 1) {
             versionLocal = mzGetDataVersion();
         }
-        const refWorkcategory = mzGetLocalRaw('icon_workcategory', versionLocal);
-        oTableWkcWorkCategory.clear().rows.add(refWorkcategory).draw();
+        const refSite = mzGetLocalRaw('icon_site', versionLocal);
+        oTableSteSite.clear().rows.add(refSite).draw();
     }
 
     document.write('<scr' + 'ipt src="js/pages/modal_change_password.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
-    document.write('<scr' + 'ipt src="js/pages/modal_work_category.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt src="js/pages/modal_site.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/modal_confirm_delete.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
 </script>
