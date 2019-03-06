@@ -155,7 +155,7 @@
             function getDefaults() {
                 return {
                     tapToDismiss: true,
-                    toastClass: 'toast',
+                    toastClass: 'md-toast',
                     containerId: 'toast-container',
                     debug: false,
 
@@ -170,16 +170,16 @@
 
                     extendedTimeOut: 1000,
                     iconClasses: {
-                        error: 'toast-error',
-                        info: 'toast-info',
-                        success: 'toast-success',
-                        warning: 'toast-warning'
+                        error: 'md-toast-error',
+                        info: 'md-toast-info',
+                        success: 'md-toast-success',
+                        warning: 'md-toast-warning'
                     },
-                    iconClass: 'toast-info',
-                    positionClass: 'toast-top-right',
+                    iconClass: 'md-toast-info',
+                    positionClass: 'md-toast-top-right',
                     timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
-                    titleClass: 'toast-title',
-                    messageClass: 'toast-message',
+                    titleClass: 'md-toast-title',
+                    messageClass: 'md-toast-message',
                     target: 'body',
                     closeHtml: '<button type="button">&times;</button>',
                     newestOnTop: true,
@@ -322,14 +322,14 @@
 
                 function setCloseButton() {
                     if (options.closeButton) {
-                        $closeElement.addClass('toast-close-button').attr('role', 'button');
+                        $closeElement.addClass('md-toast-close-button').attr('role', 'button');
                         $toastElement.prepend($closeElement);
                     }
                 }
 
                 function setProgressBar() {
                     if (options.progressBar) {
-                        $progressElement.addClass('toast-progress');
+                        $progressElement.addClass('md-toast-progress');
                         $toastElement.prepend($progressElement);
                     }
                 }

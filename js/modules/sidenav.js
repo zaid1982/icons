@@ -25,11 +25,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       this.defaults = {
         MENU_WIDTH: MENU_WIDTH,
         edge: 'left',
-        closeOnClick: false
+        closeOnClick: false,
+        breakpoint: SN_BREAKPOINT
       };
       this.$element = element;
       this.options = this.assignOptions(options);
       this.menuOut = false;
+      this.lastTouchVelocity = {
+        x: {
+          startPosition: 0,
+          startTime: 0,
+          endPosition: 0,
+          endTime: 0
+        }
+      };
       this.$body = $('body');
       this.$menu = $("#".concat(this.$element.attr('data-activates')));
       this.$sidenavOverlay = $('#sidenav-overlay');
@@ -55,9 +64,46 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.$dragTarget.on('click', function () {
           _this.removeMenu();
         });
-        this.$dragTarget.hammer({
-          prevent_default: false
-        }).bind('pan', this.panEventHandler.bind(this)).bind('panend', this.panendEventHandler.bind(this));
+        this.$dragTarget.on('touchstart', function (e) {
+          _this.lastTouchVelocity.x.startPosition = e.touches[0].clientX;
+          _this.lastTouchVelocity.x.startTime = Date.now();
+        });
+        this.$dragTarget.on('touchmove', this.touchmoveEventHandler.bind(this));
+        this.$dragTarget.on('touchend', this.touchendEventHandler.bind(this));
+      }
+    }, {
+      key: "touchmoveEventHandler",
+      value: function touchmoveEventHandler(e) {
+        if (e.type !== 'touchmove') {
+          return;
+        }
+
+        var touch = e.touches[0];
+        var touchX = touch.clientX; // calculate velocity every 20ms
+
+        if (Date.now() - this.lastTouchVelocity.x.startTime > 20) {
+          this.lastTouchVelocity.x.startPosition = touch.clientX;
+          this.lastTouchVelocity.x.startTime = Date.now();
+        }
+
+        this.disableScrolling();
+        var overlayExists = this.$sidenavOverlay.length !== 0;
+
+        if (!overlayExists) {
+          this.buildSidenavOverlay();
+        } // Keep within boundaries
+
+
+        if (this.options.edge === 'left') {
+          if (touchX > this.options.MENU_WIDTH) {
+            touchX = this.options.MENU_WIDTH;
+          } else if (touchX < 0) {
+            touchX = 0;
+          }
+        }
+
+        this.translateSidenavX(touchX);
+        this.updateOverlayOpacity(touchX);
       }
     }, {
       key: "panEventHandler",
@@ -141,6 +187,74 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         var oldWidth = this.$body.innerWidth();
         this.$body.css('overflow', 'hidden');
         this.$body.width(oldWidth);
+      }
+    }, {
+      key: "touchendEventHandler",
+      value: function touchendEventHandler(e) {
+        if (e.type !== 'touchend') {
+          return;
+        }
+
+        var touch = e.changedTouches[0];
+        this.lastTouchVelocity.x.endTime = Date.now();
+        this.lastTouchVelocity.x.endPosition = touch.clientX;
+        var velocityX = this.calculateTouchVelocityX();
+        var touchX = touch.clientX;
+        var leftPos = touchX - this.options.MENU_WIDTH;
+        var rightPos = touchX - this.options.MENU_WIDTH / MENU_WIDTH_HALF;
+
+        if (leftPos > 0) {
+          leftPos = 0;
+        }
+
+        if (rightPos < 0) {
+          rightPos = 0;
+        }
+
+        if (this.options.edge === 'left') {
+          // If velocityX <= 0.3 then the user is flinging the menu closed so ignore this.menuOut
+          if (this.menuOut && velocityX <= MENU_LEFT_MIN_BORDER || velocityX < MENU_LEFT_MAX_BORDER) {
+            if (leftPos !== 0) {
+              this.translateMenuX([0, leftPos], '300');
+            }
+
+            this.showSidenavOverlay();
+          } else if (!this.menuOut || velocityX > MENU_LEFT_MIN_BORDER) {
+            this.enableScrolling();
+            this.translateMenuX([-1 * this.options.MENU_WIDTH - MENU_VELOCITY_OFFSET, leftPos], '200');
+            this.hideSidenavOverlay();
+          }
+
+          this.$dragTarget.css({
+            width: '10px',
+            right: '',
+            left: 0
+          });
+        } else if (this.menuOut && velocityX >= MENU_RIGHT_MIN_BORDER || velocityX > MENU_RIGHT_MAX_BORDER) {
+          this.translateMenuX([0, rightPos], '300');
+          this.showSidenavOverlay();
+          this.$dragTarget.css({
+            width: '50%',
+            right: '',
+            left: 0
+          });
+        } else if (!this.menuOut || velocityX < MENU_RIGHT_MIN_BORDER) {
+          this.enableScrolling();
+          this.translateMenuX([this.options.MENU_WIDTH + MENU_VELOCITY_OFFSET, rightPos], '200');
+          this.hideSidenavOverlay();
+          this.$dragTarget.css({
+            width: '10px',
+            right: 0,
+            left: ''
+          });
+        }
+      }
+    }, {
+      key: "calculateTouchVelocityX",
+      value: function calculateTouchVelocityX() {
+        var distance = Math.abs(this.lastTouchVelocity.x.endPosition - this.lastTouchVelocity.x.startPosition);
+        var time = Math.abs(this.lastTouchVelocity.x.endTime - this.lastTouchVelocity.x.startTime);
+        return distance / time;
       }
     }, {
       key: "panendEventHandler",
@@ -258,6 +372,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
             _this3.removeMenu();
           } else {
+            _this3.menuOut = true;
             _this3.$sidenavOverlay = $('<div id="sidenav-overlay"></div>');
 
             _this3.$body.append(_this3.$sidenavOverlay);
@@ -313,12 +428,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         if (this.$menu.hasClass('fixed')) {
-          if (window.innerWidth > SN_BREAKPOINT) {
+          if (window.innerWidth > this.options.breakpoint) {
             this.$menu.css('transform', 'translateX(0)');
           }
 
           $(window).resize(function () {
-            if (window.innerWidth > SN_BREAKPOINT) {
+            if (window.innerWidth > _this5.options.breakpoint) {
               if (_this5.$sidenavOverlay.length) {
                 _this5.removeMenu(true);
               } else {
@@ -380,7 +495,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }, {
       key: "hide",
       value: function hide() {
-        this.$sidenavOverlay.trigger('click');
+        this.trigger('click');
       }
     }]);
 
@@ -393,3 +508,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     });
   };
 })(jQuery);
+
+$(function () {
+  $("#toggle").click(function () {
+    if ($("#slide-out").hasClass('slim')) {
+      $("#slide-out").removeClass('slim');
+      $(".sv-slim-icon").removeClass('fa-angle-double-right').addClass('fa-angle-double-left');
+    } else {
+      $("#slide-out").addClass('slim');
+      $(".sv-slim-icon").removeClass('fa-angle-double-left').addClass('fa-angle-double-right');
+    }
+  });
+});

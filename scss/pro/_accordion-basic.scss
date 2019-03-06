@@ -1,6 +1,7 @@
 // Accordion basic
 .md-accordion {
   .card {
+    overflow: visible;
     box-shadow: none;
     border-bottom: 1px solid $grey-lighten-2;
     border-radius: 0;

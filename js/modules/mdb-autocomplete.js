@@ -1,35 +1,50 @@
 "use strict";
 
-$.fn.mdb_autocomplete = function (options) {
-  // Default options
+$.fn.mdbAutocomplete = function (options) {
   var defaults = {
-    data: {}
+    data: {},
+    dataColor: '',
+    xColor: '',
+    xBlurColor: '#ced4da',
+    inputFocus: '1px solid #4285f4',
+    inputBlur: '1px solid #ced4da',
+    inputFocusShadow: '0 1px 0 0 #4285f4',
+    inputBlurShadow: ''
   };
-  var ENTER_CHAR_CODE = 13; // Get options
-
+  var ENTER_CHAR_CODE = 13;
   options = $.extend(defaults, options);
-  return this.each(function () {
-    // text input
-    var $input = $(this);
-    var $autocomplete; // assign data from options
-
+  return this.each(function (index, ev) {
+    var $input = $(ev);
+    var $autocomplete;
     var data = options.data;
+    var dataColor = options.dataColor;
+    var xColor = options.xColor;
+    var xBlurColor = options.xBlurColor;
+    var inputFocus = options.inputFocus;
+    var inputBlur = options.inputBlur;
+    var inputFocusShadow = options.inputFocusShadow;
+    var inputBlurShadow = options.inputBlurShadow;
 
     if (Object.keys(data).length) {
       $autocomplete = $('<ul class="mdb-autocomplete-wrap"></ul>');
-      $autocomplete.insertAfter($(this));
-    } // Listen if key was pressed
+      $autocomplete.insertAfter($input);
+    }
 
-
+    $input.on('focus', function () {
+      $input.css('border-bottom', inputFocus);
+      $input.css('box-shadow', inputFocusShadow);
+    });
+    $input.on('blur', function () {
+      $input.css('border-bottom', inputBlur);
+      $input.css('box-shadow', inputBlurShadow);
+    });
     $input.on('keyup', function (e) {
-      // get value from input
-      var q = $input.val();
-      $autocomplete.empty(); // check if input isn't empty
+      var $inputValue = $input.val();
+      $autocomplete.empty();
 
-      if (q.length) {
+      if ($inputValue.length) {
         for (var item in data) {
-          // check if item contains value that we're looking for
-          if (data[item].toLowerCase().indexOf(q.toLowerCase()) !== -1) {
+          if (data[item].toLowerCase().indexOf($inputValue.toLowerCase()) !== -1) {
             var option = $("<li>".concat(data[item], "</li>"));
             $autocomplete.append(option);
           }
@@ -41,24 +56,35 @@ $.fn.mdb_autocomplete = function (options) {
         $autocomplete.empty();
       }
 
-      if (q.length === 0) {
-        $('.mdb-autocomplete-clear').css('visibility', 'hidden');
+      if ($inputValue.length === 0) {
+        $input.parent().find('.mdb-autocomplete-clear').css('visibility', 'hidden');
       } else {
-        $('.mdb-autocomplete-clear').css('visibility', 'visible');
+        $input.parent().find('.mdb-autocomplete-clear').css('visibility', 'visible');
       }
-    });
-    $autocomplete.on('click', 'li', function () {
-      // Set input value after click
-      $input.val($(this).text()); // Clear autocomplete
 
+      $('.mdb-autocomplete-wrap li').css('color', dataColor);
+    });
+    $autocomplete.on('click', 'li', function (e) {
+      $input.val($(e.target).text());
       $autocomplete.empty();
     });
     $('.mdb-autocomplete-clear').on('click', function (e) {
       e.preventDefault();
-      $input.val('');
-      $(this).css('visibility', 'hidden');
+      var $this = $(e.currentTarget);
+      $this.parent().find('.mdb-autocomplete').val('');
+      $this.css('visibility', 'hidden');
       $autocomplete.empty();
-      $(this).parent().find('label').removeClass('active');
+      $this.parent().find('label').removeClass('active');
+    });
+    $('.mdb-autocomplete').on('click keyup', function (e) {
+      e.preventDefault();
+      $(e.target).parent().find('.mdb-autocomplete-clear').find('svg').css('fill', xColor);
+    });
+    $('.mdb-autocomplete').on('blur', function (e) {
+      e.preventDefault();
+      $(e.target).parent().find('.mdb-autocomplete-clear').find('svg').css('fill', xBlurColor);
     });
   });
 };
+
+$.fn.mdb_autocomplete = $.fn.mdbAutocomplete;
