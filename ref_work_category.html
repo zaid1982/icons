@@ -131,6 +131,8 @@
                 refStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
                 refWorktype = mzGetLocalArray('icon_worktype', versionLocal, 'worktypeId');
 
+                workCategoryClass.setRefWorktype(refWorktype);
+
                 // table Work Category List
                 oTableWkcWorkCategory =  $('#dtWkcWorkCategory').DataTable({
                     bLengthChange: false,

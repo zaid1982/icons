@@ -3,8 +3,15 @@ function ModalSite() {
     let mstCallFrom = '';
     let mstSiteId = '';
     let mstRowRefresh = '';
+    let mstRefArea;
+    let mstRefCity;
 
     this.init = function () {
+        $('#optMstCityId').on('change', function () {
+            $('#lblMstCityId').html('City *').addClass('active');
+            mzOption('optMstAreaId', mstRefArea, 'Choose Area *', 'areaId', 'areaDesc', {cityId: $(this).val(), areaStatus: '1'}, 'required');
+        });
+
         $('#optMstAreaId').on('change', function () {
             $('#lblMstAreaId').html('Area *').addClass('active');
         });
@@ -16,7 +23,15 @@ function ModalSite() {
                 name: 'Site Name',
                 validator: {
                     notEmpty: true,
-                    maxLength: 100
+                    maxLength: 255
+                }
+            },
+            {
+                field_id: 'optMstCityId',
+                type: 'select',
+                name: 'City',
+                validator: {
+                    notEmpty: true
                 }
             },
             {
@@ -29,7 +44,7 @@ function ModalSite() {
             },
             {
                 field_id: 'chkMstStatus',
-                type: 'chkMstStatus',
+                type: 'checkSingle',
                 name: 'Status',
                 validator: {
                 }
@@ -56,7 +71,11 @@ function ModalSite() {
                 setTimeout(function () {
                     try {
                         const dataMst = mzAjaxRequest('site.php?siteId='+mstSiteId, 'GET');
+                        const cityId = mstRefArea[dataMst['areaId']]['cityId'];
+
+                        mzOption('optMstAreaId', mstRefArea, 'Choose Area *', 'areaId', 'areaDesc', {cityId: cityId}, 'required');
                         mzSetFieldValue('MstDesc', dataMst['siteDesc'], 'text');
+                        mzSetFieldValue('MstCityId', cityId, 'select', 'Area');
                         mzSetFieldValue('MstAreaId', dataMst['areaId'], 'select', 'Area');
                         mzSetFieldValue('MstStatus', dataMst['siteStatus'], 'checkSingle', '1');
                     } catch (e) {
@@ -91,7 +110,7 @@ function ModalSite() {
                         tempRow['areaId'] = $('#optMstAreaId').val();
                         tempRow['siteStatus'] = statusVal;
                         if (mstSiteId === '') {
-                            tempRow['siteId'] = mzAjaxRequest('site.php?siteId='+mstSiteId, 'POST', data);
+                            tempRow['siteId'] = mzAjaxRequest('site.php', 'POST', data);
                             oTableSteSite.row.add(tempRow).draw();
                         } else {
                             tempRow['siteId'] = mstSiteId;
@@ -109,6 +128,15 @@ function ModalSite() {
         });
     };
 
+    this.setRefArea = function (refAreaSet) {
+        mstRefArea = refAreaSet;
+    };
+
+    this.setRefCity = function (refCitySet) {
+        mstRefCity = refCitySet;
+        mzOption('optMstCityId', mstRefCity, 'Choose City *', 'cityId', 'cityDesc', {cityStatus: '1'}, 'required');
+    };
+
     this.add = function (callFrom) {
         if (typeof callFrom === 'undefined' || callFrom === '') {
             toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
@@ -118,7 +146,6 @@ function ModalSite() {
         mstSiteId = '';
         mstRowRefresh = '';
 
-        mzOption('optMstAreaId', refArea, 'Choose Area *', 'areaId', 'areaDesc', {areaStatus: '1'}, 'required');
         $('#btnMstSubmit').attr('disabled', true);
         $('#modal_site').modal({backdrop: 'static', keyboard: false});
     };
@@ -140,7 +167,6 @@ function ModalSite() {
         mstSiteId = siteId;
         mstRowRefresh = rowRefresh;
 
-        mzOption('optMstAreaId', refArea, 'Choose Area *', 'areaId', 'areaDesc', [], 'required');
         $('#btnMstSubmit').attr('disabled', true);
         $('#modal_site').modal({backdrop: 'static', keyboard: false});
     };

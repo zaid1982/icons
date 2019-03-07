@@ -17,7 +17,7 @@ function ModalWorkType() {
             },
             {
                 field_id: 'chkMwtStatus',
-                type: 'chkMwtStatus',
+                type: 'checkSingle',
                 name: 'Status',
                 validator: {
                 }
@@ -76,7 +76,7 @@ function ModalWorkType() {
                         tempRow['worktypeDesc'] = $('#txtMwtDesc').val();
                         tempRow['worktypeStatus'] = statusVal;
                         if (mwtWorktypeId === '') {
-                            tempRow['worktypeId'] = mzAjaxRequest('work_type.php?worktypeId='+mwtWorktypeId, 'POST', data);
+                            tempRow['worktypeId'] = mzAjaxRequest('work_type.php', 'POST', data);
                             oTableWktWorkType.row.add(tempRow).draw();
                         } else {
                             tempRow['worktypeId'] = mwtWorktypeId;

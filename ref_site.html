@@ -76,8 +76,9 @@
     </div>
 
     <div class="includeHtml" id="h-modal_change_password"></div>
-    <div class="includeHtml" id="h-modal_site"></div>
     <div class="includeHtml" id="h-modal_confirm_delete"></div>
+    <div class="includeHtml" id="h-modal_site"></div>
+    <div class="includeHtml" id="h-modal_area"></div>
 
 </main>
 
@@ -116,8 +117,9 @@
     let refArea;
 
     let changePasswordClass;
-    let siteClass;
     let confirmDeleteClass;
+    let siteClass;
+    let areaClass;
 
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -126,13 +128,18 @@
             try {
                 initiatePages();
                 changePasswordClass = new ModalChangePassword();
-                siteClass = new ModalSite();
                 confirmDeleteClass = new ModalConfirmDelete('site');
+                siteClass = new ModalSite();
+                areaClass = new ModalArea();
 
                 versionLocal = mzGetDataVersion();
                 refStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
                 refCity = mzGetLocalArray('icon_city', versionLocal, 'cityId');
                 refArea = mzGetLocalArray('icon_area', versionLocal, 'areaId');
+
+                siteClass.setRefArea(refArea);
+                siteClass.setRefCity(refCity);
+                areaClass.setRefCity(refCity);
 
                 // table Site List
                 oTableSteSite =  $('#dtSteSite').DataTable({
@@ -175,7 +182,7 @@
                                     } else {
                                         label += '<a><i class="fas fa-toggle-on" onclick="siteClass.activate(\'Ste\', ' + row['siteId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Activate"></i></a>&nbsp;&nbsp;';
                                     }
-                                    label += '<a><i class="fas fa-trash-alt" onclick="siteClass.delete(\'Ste\', '+row['siteId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
+                                    label += '<a><i class="fas fa-trash-alt" onclick="confirmDeleteClass.delete(\'Ste\', '+row['siteId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
                                     return label;
                                 }
                             },
@@ -269,6 +276,7 @@
 
     document.write('<scr' + 'ipt src="js/pages/modal_change_password.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/modal_site.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt src="js/pages/modal_area.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/modal_confirm_delete.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
 </script>

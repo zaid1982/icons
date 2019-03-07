@@ -17,7 +17,16 @@
                         <label for="txtMstDesc" id="lblMstDesc">Site Name *</label>
                         <p class="font-small text-danger" id="txtMstDescErr"></p>
                     </div>
-                    <div class="md-form">
+                    <a href="javascript:void(0);" onclick="areaClass.add('Mst');"><i class="fas fa-plus-square fa-lg float-right pt-2 grey-ic"></i></a>
+                    <div class="md-form" style="width: 90%">
+                        <select id="optMstCityId" name="optMstCityId" class="mdb-select md-form colorful-select dropdown-info">
+                            <option value="" selected>Choose City *</option>
+                        </select>
+                        <label for="optMstCityId" id="lblMstCityId"></label>
+                        <p class="font-small text-danger" id="optMstCityIdErr"></p>
+                    </div>
+                    <a href="javascript:void(0);" onclick="areaClass.add('Mst', optMstCityId.value);"><i class="fas fa-plus-square fa-lg float-right pt-2 grey-ic"></i></a>
+                    <div class="md-form" style="width: 90%">
                         <select id="optMstAreaId" class="mdb-select md-form colorful-select dropdown-info">
                             <option value="" selected>Choose Area *</option>
                         </select>

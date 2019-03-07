@@ -3,6 +3,7 @@ function ModalWorkCategory() {
     let mwcCallFrom = '';
     let mwcWorkcategoryId = '';
     let mwcRowRefresh = '';
+    let mwcRefWorktype;
 
     this.init = function () {
         $('#optMwcWorktypeId').on('change', function () {
@@ -29,7 +30,7 @@ function ModalWorkCategory() {
             },
             {
                 field_id: 'chkMwcStatus',
-                type: 'chkMwcStatus',
+                type: 'checkSingle',
                 name: 'Status',
                 validator: {
                 }
@@ -91,7 +92,7 @@ function ModalWorkCategory() {
                         tempRow['worktypeId'] = $('#optMwcWorktypeId').val();
                         tempRow['workcategoryStatus'] = statusVal;
                         if (mwcWorkcategoryId === '') {
-                            tempRow['workcategoryId'] = mzAjaxRequest('work_category.php?workcategoryId='+mwcWorkcategoryId, 'POST', data);
+                            tempRow['workcategoryId'] = mzAjaxRequest('work_category.php', 'POST', data);
                             oTableWkcWorkCategory.row.add(tempRow).draw();
                         } else {
                             tempRow['workcategoryId'] = mwcWorkcategoryId;
@@ -109,6 +110,10 @@ function ModalWorkCategory() {
         });
     };
 
+    this.setRefWorktype = function (refWorktype) {
+        mwcRefWorktype = refWorktype;
+    };
+
     this.add = function (callFrom) {
         if (typeof callFrom === 'undefined' || callFrom === '') {
             toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
@@ -118,7 +123,7 @@ function ModalWorkCategory() {
         mwcWorkcategoryId = '';
         mwcRowRefresh = '';
 
-        mzOption('optMwcWorktypeId', refWorktype, 'Choose Work Type *', 'worktypeId', 'worktypeDesc', {worktypeStatus: '1'}, 'required');
+        mzOption('optMwcWorktypeId', mwcRefWorktype, 'Choose Work Type *', 'worktypeId', 'worktypeDesc', {worktypeStatus: '1'}, 'required');
         $('#btnMwcSubmit').attr('disabled', true);
         $('#modal_work_category').modal({backdrop: 'static', keyboard: false});
     };
@@ -140,7 +145,7 @@ function ModalWorkCategory() {
         mwcWorkcategoryId = workcategoryId;
         mwcRowRefresh = rowRefresh;
 
-        mzOption('optMwcWorktypeId', refWorktype, 'Choose Work Type *', 'worktypeId', 'worktypeDesc', [], 'required');
+        mzOption('optMwcWorktypeId', mwcRefWorktype, 'Choose Work Type *', 'worktypeId', 'worktypeDesc', [], 'required');
         $('#btnMwcSubmit').attr('disabled', true);
         $('#modal_work_category').modal({backdrop: 'static', keyboard: false});
     };

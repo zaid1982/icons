@@ -17,6 +17,7 @@ const _ALERT_TITLE_ERROR_ACTIVATE = "ACTIVATION ERROR";
 const _ALERT_TITLE_SUCCESS_ACTIVATE = "ACTIVATION SUCCESS";
 const _ALERT_MSG_SUCCESS_ACTIVATE = "Your account has successfully activated. Please login with email as user ID and your registered password.";
 const _ALERT_MSG_SUCCESS_UPDATE_USER = "Your information successfully updated";
+const _ALERT_MSG_ERROR_SITE_NOCITY = "Please select city first";
 
 const _DATATABLE_LANGUAGE =  {
 };
@@ -365,7 +366,6 @@ function mzGoToMenu(url, navId, navSecondId) {
 }
 
 function initiatePages() {
-
     $(".button-collapse").sideNav();
 
     let container = document.querySelector('.custom-scrollbar');

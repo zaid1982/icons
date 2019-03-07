@@ -17,7 +17,7 @@ function ModalProblemType() {
             },
             {
                 field_id: 'chkMcpStatus',
-                type: 'chkMptStatus',
+                type: 'checkSingle',
                 name: 'Status',
                 validator: {
                 }
@@ -76,7 +76,7 @@ function ModalProblemType() {
                         tempRow['problemtypeDesc'] = $('#txtMptDesc').val();
                         tempRow['problemtypeStatus'] = statusVal;
                         if (mptProblemtypeId === '') {
-                            tempRow['problemtypeId'] = mzAjaxRequest('problem_type.php?problemtypeId='+mptProblemtypeId, 'POST', data);
+                            tempRow['problemtypeId'] = mzAjaxRequest('problem_type.php', 'POST', data);
                             oTablePbtProblemType.row.add(tempRow).draw();
                         } else {
                             tempRow['problemtypeId'] = mptProblemtypeId;
