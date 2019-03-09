@@ -81,11 +81,7 @@ function ModalArea() {
                     if (mraCallFrom === 'Mst') {
                         if (mraAreaId === '') {
                             const areaId = mzAjaxRequest('area.php', 'POST', data);
-                            versionLocal = mzGetDataVersion();
-                            refArea = mzGetLocalArray('icon_area', versionLocal, 'areaId');
-                            siteClass.setRefArea(refArea);
-                            mzOption('optMstAreaId', refArea, 'Choose Area *', 'areaId', 'areaDesc', {cityId: mraCityId}, 'required');
-                            mzSetFieldValue('MstAreaId', areaId, 'select', 'Area');
+                            siteClass.afterAddArea(areaId, mraCityId);
                         }
                     }
                     $('#modal_area').modal('hide');

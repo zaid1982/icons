@@ -79,6 +79,7 @@
     <div class="includeHtml" id="h-modal_confirm_delete"></div>
     <div class="includeHtml" id="h-modal_site"></div>
     <div class="includeHtml" id="h-modal_area"></div>
+    <div class="includeHtml" id="h-modal_city"></div>
 
 </main>
 
@@ -113,13 +114,14 @@
     let oTableSteSite;
     let versionLocal;
     let refStatus;
-    let refCity;
     let refArea;
+    let refCity;
 
     let changePasswordClass;
     let confirmDeleteClass;
     let siteClass;
     let areaClass;
+    let cityClass;
 
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -129,13 +131,14 @@
                 initiatePages();
                 changePasswordClass = new ModalChangePassword();
                 confirmDeleteClass = new ModalConfirmDelete('site');
-                siteClass = new ModalSite();
                 areaClass = new ModalArea();
+                cityClass = new ModalCity();
+                siteClass = new ModalSite(areaClass, cityClass);
 
                 versionLocal = mzGetDataVersion();
                 refStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
-                refCity = mzGetLocalArray('icon_city', versionLocal, 'cityId');
                 refArea = mzGetLocalArray('icon_area', versionLocal, 'areaId');
+                refCity = mzGetLocalArray('icon_city', versionLocal, 'cityId');
 
                 siteClass.setRefArea(refArea);
                 siteClass.setRefCity(refCity);
@@ -275,8 +278,9 @@
     }
 
     document.write('<scr' + 'ipt src="js/pages/modal_change_password.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt src="js/pages/modal_confirm_delete.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/modal_site.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/modal_area.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
-    document.write('<scr' + 'ipt src="js/pages/modal_confirm_delete.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt src="js/pages/modal_city.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
 </script>

@@ -1,0 +1,39 @@
+<div class="modal fade" id="modal_city" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal mt-5 pt-5 mb-5" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header warning-color white-text">
+                <h4 class="mb-0" id="lblMctTitle">City</h4>
+                <button type="button" class="close waves-effect waves-light mr-0" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-3">
+                <form id="formMct">
+                    <div class="md-form">
+                        <input type="text" id="txtMctDesc" class="form-control">
+                        <label for="txtMctDesc" id="lblMctDesc">City Name *</label>
+                        <p class="font-small text-danger" id="txtMctDescErr"></p>
+                    </div>
+                    <div class="md-form">
+                        <select id="optMctStateId" class="mdb-select md-form colorful-select dropdown-info">
+                            <option value="" selected>Choose State *</option>
+                        </select>
+                        <label for="optMctStateId" id="lblMctStateId"></label>
+                        <p class="font-small text-danger" id="optMctStateIdErr"></p>
+                    </div>
+                    <div class="form-check pl-0 ml-0">
+                        <input type="checkbox" class="form-check-input" id="chkMctStatus" name="chkMctStatus" value="1">
+                        <label class="form-check-label" for="chkMctStatus">Active</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer flex-center">
+                <button class="btn btn-outline-warning waves-effect" data-dismiss="modal"><i class="fas fa-undo-alt ml-1"></i> Close</button>
+                <button id="btnMctSubmit" class="btn btn-warning waves-effect"><i class="fas fa-highlighter"></i> Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

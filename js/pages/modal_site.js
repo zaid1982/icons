@@ -1,10 +1,19 @@
-function ModalSite() {
+function ModalSite(_areaClass, _cityClass) {
+
+    if (typeof _areaClass !== 'object') {
+        throw new Error(_ALERT_MSG_ERROR_DEFAULT);
+    }
+    if (typeof _cityClass !== 'object') {
+        throw new Error(_ALERT_MSG_ERROR_DEFAULT);
+    }
 
     let mstCallFrom = '';
     let mstSiteId = '';
     let mstRowRefresh = '';
     let mstRefArea;
     let mstRefCity;
+    let mstAreaClass = _areaClass;
+    let mstCityClass = _cityClass;
 
     this.init = function () {
         $('#optMstCityId').on('change', function () {
@@ -56,6 +65,14 @@ function ModalSite() {
 
         $('#formMst').on('keyup change', function () {
             $('#btnMstSubmit').attr('disabled', !formMstValidate.validateForm());
+        });
+
+        $('#lnkMstAddCity').on('click', function () {
+            mstCityClass.add('Mst');
+        });
+
+        $('#lnkMstAddArea').on('click', function () {
+            mstAreaClass.add('Mst', $('#optMstCityId').val());
         });
 
         $('#modal_site').on('hidden.bs.modal', function(){
@@ -262,6 +279,21 @@ function ModalSite() {
             }
             HideLoader();
         }, 300);
+    };
+
+    this.afterAddArea = function (areaId, cityId) {
+        refArea = mzGetLocalArray('icon_area', mzGetDataVersion(), 'areaId');
+        this.setRefArea(refArea);
+        mzOption('optMstAreaId', mstRefArea, 'Choose Area *', 'areaId', 'areaDesc', {cityId: cityId}, 'required');
+        mzSetFieldValue('MstAreaId', areaId, 'select', 'Area');
+    };
+
+    this.afterAddCity = function (cityId) {
+        refCity = mzGetLocalArray('icon_city', mzGetDataVersion(), 'cityId');
+        this.setRefCity(refCity);
+        _areaClass.setRefCity(refCity);
+        mzOption('optMstCityId', mstRefCity, 'Choose City *', 'cityId', 'cityDesc', {cityStatus: '1'}, 'required');
+        mzSetFieldValue('MstCityId', cityId, 'select', 'City');
     };
 
     this.init();
