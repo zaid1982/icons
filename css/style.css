@@ -5,6 +5,12 @@
 .pl-4_5 {
     padding-left: 2.5rem !important;
 }
+.pb-1_2 {
+    padding-bottom: 1px !important;
+}
+.pb-1_3 {
+    padding-bottom: 8px !important;
+}
 .mb-4_5 {
     margin-bottom: 27px !important;
 }

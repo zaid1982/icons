@@ -954,3 +954,21 @@ function mzSetObjectToArray(objects, id) {
     });    
     return returnVal;
 }
+
+function mzIsRoleExist(roleId) {
+    let userInfo = sessionStorage.getItem('userInfo');
+    userInfo = JSON.parse(userInfo);
+    const roles = userInfo['roles'];
+    for (let i=0; i<roles.length; i++) {
+        if (roles[i]['roleId'] === roleId) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function mzDisableSelect(fieldId, disable) {
+    $('#'+fieldId).material_select('destroy');
+    $('#'+fieldId).attr('disabled', disable);
+    $('#'+fieldId).material_select();
+}

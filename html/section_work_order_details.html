@@ -1,165 +1,152 @@
 <section class="section mb-5 sectionWorkOrderDetails">
     <div class="row">
         <div class="col-md-12 mb-2">
-            <div class="card card-cascade cascading-admin-card user-card mt-5">
+            <div class="card card-cascade cascading-admin-card user-card mt-0">
                 <div class="admin-up d-flex justify-content-start">
-                    <i class="fa fas fa-headset warning-color py-4"></i>
+                    <i class="fa fas fa-file-invoice danger-color-dark py-4"></i>
                     <div class="data">
                         <h3 class="font-weight-bold dark-grey-text">Work Order Details</h3>
                     </div>
                 </div>
                 <div class="card-body card-body-cascade text-left">
-                    <form id="formTkdWorkOrder">
+                    <form id="formWkd">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoTicketNo" class="form-control mb-0"
-                                           value="Tungkus Lumus Sdn Bhd (1015972-K)">
-                                    <label for="txtTkdWkoTicketNo" id="lblTkdWkoTicketNo" class="active">Company
-                                        Name</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNoErr"></p>
+                                    <input type="text" id="txtWkdOwnerName" class="form-control" value="Tungkus Lumus Sdn Bhd (1015972-K)">
+                                    <label for="txtWkdOwnerName" id="lblWkdOwnerName" class="active">Company Name</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoTicketNo2" class="form-control mb-0"
-                                           value="Kuarters Kerajaan Pangsapuri 17RK2">
-                                    <label for="txtTkdWkoTicketNo2" id="lblTkdWkoTicketNo2" class="active">Site</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo2Err"></p>
+                                    <select id="optWkdSiteId" class="mdb-select md-form colorful-select dropdown-info mb-0" searchable="Search">
+                                        <option value="" selected>Choose Site *</option>
+                                    </select>
+                                    <label for="optWkdSiteId" id="lblWkdSiteId"></label>
+                                    <p class="font-small text-danger" id="optWkdSiteIdErr"></p>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoTicketNo4" class="form-control mb-0"
-                                           value="Presint 17">
-                                    <label for="txtTkdWkoTicketNo4" id="lblTkdWkoTicketNo4" class="active">Area</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo4Err"></p>
+                                    <select id="optWkdAreaId" class="mdb-select md-form colorful-select dropdown-info mb-0" searchable="Search">
+                                        <option value="" selected>Choose Area *</option>
+                                    </select>
+                                    <label for="optWkdAreaId" id="lblWkdAreaId"></label>
+                                    <p class="font-small text-danger" id="optWkdAreaIdErr"></p>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoTicketNo3" class="form-control mb-0"
-                                           value="Putrajaya">
-                                    <label for="txtTkdWkoTicketNo2" id="lblTkdWkoTicketNo3" class="active">City</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo3Err"></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoTicketNo5" class="form-control mb-0"
-                                           value="TLSB/WO/17RK-p17/">
-                                    <label for="txtTkdWkoTicketNo5" id="lblTkdWkoTicketNo5" class="active">Work Order
-                                        No.</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo5Err"></p>
-                                </div>
-                                <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoTicketNo7" class="form-control mb-0"
-                                           value="Umi Kalsom Abdul Rahman">
-                                    <label for="txtTkdWkoTicketNo7" id="lblTkdWkoTicketNo7"
-                                           class="active">Requester</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo7Err"></p>
-                                </div>
-                                <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoTicketNo9" class="form-control mb-0"
-                                           value="0126043002">
-                                    <label for="txtTkdWkoTicketNo9" id="lblTkdWkoTicketNo9" class="active">Phone
-                                        Number</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo9Err"></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoTicketNo6" class="form-control mb-0" value="Draft">
-                                    <label for="txtTkdWkoTicketNo6" id="lblTkdWkoTicketNo6" class="active">Work
-                                        Status</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo6Err"></p>
-                                </div>
-                                <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoTicketNo8" class="form-control mb-0"
-                                           value="10/02/2019">
-                                    <label for="txtTkdWkoTicketNo8" id="lblTkdWkoTicketNo8" class="active">Date</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo8Err"></p>
-                                </div>
-                                <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoTicketNo10" class="form-control mb-0"
-                                           value="10:00 am">
-                                    <label for="txtTkdWkoTicketNo10" id="lblTkdWkoTicketNo10" class="active">Received
-                                        Time</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNo10Err"></p>
+                                    <select id="optWkdCityId" class="mdb-select md-form colorful-select dropdown-info mb-0" searchable="Search">
+                                        <option value="" selected>Choose City *</option>
+                                    </select>
+                                    <label for="optWkdCityId" id="lblWkdCityId"></label>
+                                    <p class="font-small text-danger" id="optWkdCityIdErr"></p>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoTicketNos2" class="form-control mb-0"
-                                           value="Wahabang Contractors Sdn Bhd">
-                                    <label for="txtTkdWkoTicketNos2" id="lblTkdWkoTicketNos2"
-                                           class="active">Vendor</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoTicketNos2Err"></p>
+                                    <input type="text" id="txtWkdWorkorderNo" class="form-control">
+                                    <label for="txtWkdWorkorderNo" id="lblWkdWorkorderNo">Work Order No.</label>
+                                    <p class="font-small text-danger pb-1_3" id="txtWkdWorkorderNoErr"></p>
                                 </div>
                                 <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoWT1" class="form-control mb-0"
-                                           value="Public Facilities">
-                                    <label for="txtTkdWkoWT1" id="lblTkdWkoWT1" class="active">Site Type</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoWT1Err"></p>
+                                    <input type="text" id="txtWkdRequesterName" class="form-control">
+                                    <label for="txtWkdRequesterName" id="lblWkdRequesterName">Requester</label>
+                                    <p class="font-small text-danger pb-1_3" id="txtWkdRequesterNameErr"></p>
                                 </div>
                                 <div class="md-form mb-0">
-                                    <textarea id="txaMcpAddress" class="md-textarea form-control mb-0"
-                                              style="height: 88px"></textarea>
-                                    <label for="txaMcpAddress" id="lblMcpAddress" class="active">Problem
-                                        Description</label>
-                                    <p class="font-small text-danger mb-0" id="txaMcpAddressErr"></p>
+                                    <input type="text" id="txtTkdWkoTicketNo9" class="form-control">
+                                    <label for="txtTkdWkoTicketNo9" id="lblTkdWkoTicketNo9" class="active">Phone Number</label>
+                                    <p class="font-small text-danger pb-1_3" id="txtTkdWkoTicketNo9Err"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <select id="optWkdContractorId" class="mdb-select md-form colorful-select dropdown-info mb-0">
+                                        <option value="" selected>Choose Contractor *</option>
+                                    </select>
+                                    <label for="optWkdContractorId" id="lblWkdContractorId"></label>
+                                    <p class="font-small text-danger pb-1_2" id="optWkdContractorIdErr"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <select id="optWkdWorkorderSiteType" class="mdb-select md-form colorful-select dropdown-info mb-0">
+                                        <option value="" selected>Choose Site Type *</option>
+                                        <option value="Utilities">Utilities</option>
+                                        <option value="Public Facilities">Public Facilities</option>
+                                    </select>
+                                    <label for="optWkdWorkorderSiteType" id="lblWkdWorkorderSiteType"></label>
+                                    <p class="font-small text-danger pb-1_2" id="optWkdWorkorderSiteTypeErr"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <textarea id="txaWkdWorkorderDesc" class="md-textarea form-control" style="height: 104px"></textarea>
+                                    <label for="txaWkdWorkorderDesc" id="lblWkdWorkorderDesc" class="active">Problem Description</label>
+                                    <p class="font-small text-danger" id="txaWkdWorkorderDescErr"></p>
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoWT2" class="form-control mb-0" value="Civil">
-                                    <label for="txtTkdWkoWT2" id="lblTkdWkoWT2" class="active">Work Type</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoWT2Err"></p>
+                                    <input type="text" id="txaWkdWorkorderStatusDesc" class="form-control">
+                                    <label for="txaWkdWorkorderStatusDesc" id="lblWkdWorkorderStatusDesc" class="active">Work Status</label>
+                                    <p class="font-small text-danger pb-1_3" id="txaWkdWorkorderStatusDescErr"></p>
                                 </div>
                                 <div class="md-form mb-0">
-                                    <input type="text" id="txtTkdWkoWT3" class="form-control mb-0" value="Civil">
-                                    <label for="txtTkdWkoWT3" id="lblTkdWkoWT3" class="active">Work Category</label>
-                                    <p class="font-small text-danger mb-0" id="txtTkdWkoWT3Err"></p>
+                                    <input type="text" id="txaWkdWorkorderDateComplaint" class="form-control">
+                                    <label for="txaWkdWorkorderDateComplaint" id="lblWkdWorkorderDateComplaint" class="active">Date</label>
+                                    <p class="font-small text-danger pb-1_3" id="txaWkdWorkorderDateComplaintErr"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txaWkdWorkorderTimeComplaint" class="form-control">
+                                    <label for="txaWkdWorkorderTimeComplaint" id="lblWkdWorkorderTimeComplaint" class="active">Received Time</label>
+                                    <p class="font-small text-danger pb-1_3" id="txaWkdWorkorderTimeComplaintErr"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <select id="optWkdWorktypeId" class="mdb-select md-form colorful-select dropdown-info mb-0">
+                                        <option value="" selected>Choose Work Type *</option>
+                                    </select>
+                                    <label for="optWkdWorktypeId" id="lblWkdWorktypeId"></label>
+                                    <p class="font-small text-danger pb-1_2" id="optWkdWorktypeIdErr"></p>
+                                </div>
+                                <div class="md-form mb-0">
+                                    <select id="optWkdWorkcategoryId" class="mdb-select md-form colorful-select dropdown-info mb-0">
+                                        <option value="" selected>Choose Work Category *</option>
+                                    </select>
+                                    <label for="optWkdWorkcategoryId" id="lblWkdWorkcategoryId"></label>
+                                    <p class="font-small text-danger" id="optWkdWorkcategoryIdErr"></p>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="md-form mb-0">
-                                            <input type="text" id="txtTkdWkozone2" class="form-control mb-0" value="2">
-                                            <label for="txtTkdWkozone2" id="lblTkdWkozone2" class="active">Block</label>
-                                            <p class="font-small text-danger mb-0" id="txtTkdWkozone2Err"></p>
+                                            <input type="text" id="txaWkdWorkorderBlock" class="form-control">
+                                            <label for="txaWkdWorkorderBlock" id="lblWkdWorkorderBlock" class="active">Block</label>
+                                            <p class="font-small text-danger" id="txaWkdWorkorderBlockErr"></p>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="md-form mb-0">
-                                            <input type="text" id="txtTkdWkozone3" class="form-control mb-0" value="2">
-                                            <label for="txtTkdWkozone3" id="lblTkdWkozone3" class="active">Level</label>
-                                            <p class="font-small text-danger mb-0" id="txtTkdWkozone3Err"></p>
+                                            <input type="text" id="txaWkdWorkorderLevel" class="form-control">
+                                            <label for="txaWkdWorkorderLevel" id="lblWkdWorkorderLevel" class="active">Level</label>
+                                            <p class="font-small text-danger" id="txaWkdWorkorderLevelErr"></p>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="md-form mb-0">
-                                            <input type="text" id="txtTkdWkozone4" class="form-control mb-0" value="2">
-                                            <label for="txtTkdWkozone4" id="lblTkdWkozone4" class="active">Unit</label>
-                                            <p class="font-small text-danger mb-0" id="txtTkdWkozone4Err"></p>
+                                            <input type="text" id="txaWkdWorkorderUnit" class="form-control">
+                                            <label for="txaWkdWorkorderUnit" id="lblWkdWorkorderUnit" class="active">Unit</label>
+                                            <p class="font-small text-danger" id="txaWkdWorkorderUnitErr"></p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="md-form mb-0">
-                                    <textarea id="txaMcpAddress2" class="md-textarea form-control mb-0"
-                                              rows="1"></textarea>
-                                    <label for="txaMcpAddress2" id="lblMcpAddress2" class="active">Other Location
-                                        Description</label>
-                                    <p class="font-small text-danger mb-0" id="txaMcpAddress2Err"></p>
+                                    <textarea id="txaWkdWorkorderLocationDesc" class="md-textarea form-control" rows="1"></textarea>
+                                    <label for="txaWkdWorkorderLocationDesc" id="lblWkdWorkorderLocationDesc" class="active">Other Location Description</label>
+                                    <p class="font-small text-danger" id="txaWkdWorkorderLocationDescErr"></p>
                                 </div>
                             </div>
                         </div>
-                        <div class="row pt-3">
+                        <div class="row pt-3 divWkdPartDetails">
                             <div class="col-md-12">
                                 <label class="pt-2 font-weight-bold">Part Details :</label>
                                 <button type="button" id="butTkdCreateWorkOrder3"
@@ -168,7 +155,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row divWkdPartDetails">
                             <div class="col-md-12">
                                 <div class="px-3">
                                     <div class="table-responsive">
@@ -215,8 +202,8 @@
                                 </div>
                             </div>
                         </div>
-                        <hr>
-                        <div class="row">
+                        <hr class="divWkdPartDetails">
+                        <div class="row pt-3 divWkdLabourDetails">
                             <div class="col-md-12">
                                 <label class="pt-2 font-weight-bold">Labour Details :</label>
                                 <button type="button" id="butTkdCreateWorkOrder4"
@@ -225,7 +212,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row divWkdLabourDetails">
                             <div class="col-md-12">
                                 <div class="px-3">
                                     <div class="table-responsive">
@@ -275,13 +262,13 @@
                                 </div>
                             </div>
                         </div>
-                        <hr>
-                        <div class="row">
+                        <hr class="divWkdLabourDetails">
+                        <div class="row pt-3 divWkdPictures">
                             <div class="col-md-12">
                                 <label class="pt-2 font-weight-bold">Pictures :</label>
                             </div>
                         </div>
-                        <div class="row px-3">
+                        <div class="row px-3 divWkdPictures">
                             <div class="col-md-4 text-center">
                                 <!--Carousel Wrapper-->
                                 <div id="carousel-with-lb3" class="carousel slide carousel-multi-item"
@@ -427,8 +414,8 @@
                                 <label class="font-small text-muted">After Progress</label>
                             </div>
                         </div>
-                        <hr class="mb-1">
-                        <div class="row">
+                        <hr class="divWkdPictures">
+                        <div class="row divWkdAction">
                             <div class="col-md-12">
                                 <button type="button" id="butTkdCreateWorkOrder2"
                                         class="btn btn-outline-success btn-rounded waves-effect btn-sm float-right"><i

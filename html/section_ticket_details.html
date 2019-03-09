@@ -1,4 +1,4 @@
-<section class="section sectionTkdDetails">
+<section class="section mb-5 sectionTkdDetails">
     <div class="row mb-0 pb-0">
         <div class="col-md-12">
             <button type="button" class="btn peach-gradient btn-rounded float-right" id="btnTcdBack"><i
@@ -73,15 +73,19 @@
                             <h6 class="mt-1 mb-1">
                                 <small class="text-muted">Complaint</small>
                             </h6>
-                            <label id="txaTkdDetTicketComplaint"></label>
-                            <hr class="hr-bold mt-0 mb-1">
+                            <label id="txaTkdDetTicketComplaint" style="min-height: 198px;"></label>
+                            <hr class="hr-bold mt-0">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <button type="button" id="butTkdCreateWorkOrder"
-                                    class="btn btn-outline-red btn-rounded waves-effect btn-sm float-right"><i
+                                    class="btn btn-outline-dark-green btn-rounded waves-effect btn-sm float-right"><i
                                     class="fas fa-file-invoice mr-1"></i> Create Work Order
+                            </button>
+                            <button type="button" id="butTkdPrint"
+                                    class="btn btn-outline-red btn-rounded waves-effect btn-sm float-right"><i
+                                    class="fas fa-file-pdf mr-1"></i> Download Work Order
                             </button>
                         </div>
                     </div>
@@ -103,18 +107,30 @@
                         <div class="controls-top">
                             <a class="btn-floating btn-secondary btn-sm" href="#carousel-with-lb" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
                             <a class="btn-floating btn-secondary btn-sm" href="#carousel-with-lb" data-slide="next"><i class="fas fa-chevron-right"></i></a>
-                        </div>-->
+                        </div>
                         <ol class="carousel-indicators">
                             <li data-target="#carousel-with-lb" data-slide-to="0" class="active"></li>
                             <li data-target="#carousel-with-lb" data-slide-to="1"></li>
                         </ol>
-                        <!--/.Controls-->
+                        /.Controls-->
                         <!--Slides and lightbox-->
                         <div class="carousel-inner mdb-lightbox" role="listbox">
                             <div class="mdb-lightbox-ui"></div>
                             <div id="divTkdTicketImages"></div>
                         </div>
                         <!--/.Slides-->
+                        <!--Controls-->
+                        <a class="carousel-control-prev" href="#carousel-with-lb" role="button"
+                           data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carousel-with-lb" role="button"
+                           data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                        <!--/.Controls-->
                     </div>
                     <!--/.Carousel Wrapper-->
                 </div>

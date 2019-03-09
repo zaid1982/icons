@@ -2,6 +2,12 @@ function SectionTicketDetails() {
 
     let tkdCallFrom = '';
     let tkdTicketId = '';
+    let tkdWorkorderId = '';
+    let tkdRefStatus;
+    let tkdRefProblemtype;
+    let tkdRefWorktype;
+    let tkdRefWorkcategory;
+    let tkdWorkOrderClass;
     let mapOptions = {
         center: new google.maps.LatLng(2.904485,101.681497),
         zoom: 13,
@@ -24,13 +30,23 @@ function SectionTicketDetails() {
 
     this.init = function () {
         $('.sectionTkdDetails').hide();
+        tkdWorkOrderClass = new SectionWorkOrderDetails();
+        versionLocal = mzGetDataVersion();
+        tkdRefStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
+        tkdRefProblemtype = mzGetLocalArray('icon_problemtype', versionLocal, 'problemtypeId');
+        tkdRefWorktype = mzGetLocalArray('icon_worktype', versionLocal, 'worktypeId');
+        tkdRefWorkcategory = mzGetLocalArray('icon_workcategory', versionLocal, 'workcategoryId');
 
         $('#btnTcdBack').on('click', function () {
-            $('.sectionTkdDetails').hide();
+            $('.sectionTkdDetails, .sectionWorkOrderDetails').hide();
             if (tkdCallFrom === 'tck') {
                 $('.sectionTckMain').show();
             }
             $(window).scrollTop(0);
+        });
+
+        $('#butTkdCreateWorkOrder').on('click', function () {
+            tkdWorkOrderClass.load('tkd', tkdWorkorderId, tkdTicketId);
         });
     };
 
@@ -49,14 +65,16 @@ function SectionTicketDetails() {
         ShowLoader();
         setTimeout(function () {
             try {
+                tkdWorkOrderClass.hide();
                 const dataTkdDetTicket = mzAjaxRequest('ticket.php?ticketId='+tkdTicketId, 'GET');
                 mzSetFieldValue('TkdDetTicketNo', dataTkdDetTicket['ticketNo'], 'text');
-                mzSetFieldValue('TkdDetProblemType', refProblemtype[dataTkdDetTicket['problemtypeId']]['problemtypeDesc'], 'text');
-                mzSetFieldValue('TkdDetWorkType', refWorktype[refWorkcategory[dataTkdDetTicket['workcategoryId']]['worktypeId']]['worktypeDesc'], 'text');
-                mzSetFieldValue('TkdDetWorkCategory', refWorkcategory[dataTkdDetTicket['workcategoryId']]['workcategoryDesc'], 'text');
+                mzSetFieldValue('TkdDetProblemType', tkdRefProblemtype[dataTkdDetTicket['problemtypeId']]['problemtypeDesc'], 'text');
+                mzSetFieldValue('TkdDetWorkType', tkdRefWorktype[tkdRefWorkcategory[dataTkdDetTicket['workcategoryId']]['worktypeId']]['worktypeDesc'], 'text');
+                mzSetFieldValue('TkdDetWorkCategory', tkdRefWorkcategory[dataTkdDetTicket['workcategoryId']]['workcategoryDesc'], 'text');
                 mzSetFieldValue('TkdDetCreatedBy', dataTkdDetTicket['createdBy'], 'text');
                 mzSetFieldValue('TkdDetTicketDate', mzConvertDateDisplay(dataTkdDetTicket['ticketTimeSubmit']), 'text');
-                mzSetFieldValue('TkdDetTicketStatus', refStatus[dataTkdDetTicket['ticketStatus']]['statusDesc'], 'text');
+                mzSetFieldValue('TkdDetTicketStatus', tkdRefStatus[dataTkdDetTicket['ticketStatus']]['statusDesc'], 'text');
+                tkdWorkorderId = dataTkdDetTicket['workorderId'];
                 $('#txaTkdDetTicketComplaint').html(dataTkdDetTicket['ticketComplaint']);
 
                 const ticketImages = dataTkdDetTicket['ticketImages'];
@@ -65,7 +83,7 @@ function SectionTicketDetails() {
                     html += '<div class=" carousel-item '+(n==0?'active':'')+' text-center">' +
                             '<figure class="col-md-12 d-md-inline-block">' +
                                 '<a href="'+u['documentSrc']+'" data-size="1600x1067">' +
-                                '<img src="'+u['documentSrc']+'" class="img-fluid">' +
+                                '<img src="'+u['documentSrc']+'" class="img-fluid" style="min-height: 340px; object-fit: contain">' +
                                 '</a> ' +
                             '</figure>' +
                         '</div>';
@@ -78,8 +96,16 @@ function SectionTicketDetails() {
                 map.setCenter(mapLocation);
                 mapMarker.setPosition(mapLocation);
 
+                $('#butTkdCreateWorkOrder').hide();
                 if (tkdCallFrom === 'tck') {
                     $('.sectionTckMain').hide();
+                    if (tkdWorkorderId === '' && (mzIsRoleExist('1') || mzIsRoleExist('2') || mzIsRoleExist('4'))) {
+                        $('#butTkdCreateWorkOrder').show();
+                    } else if (tkdWorkorderId !== '') {
+                        tkdWorkOrderClass.load('tkd', tkdWorkorderId);
+                    }
+                } else if (tkdWorkorderId !== '') {
+                    tkdWorkOrderClass.load('tkd', tkdWorkorderId);
                 }
                 $('.sectionTkdDetails').show();
 
