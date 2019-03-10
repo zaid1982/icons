@@ -555,6 +555,22 @@ function mzConvertDateDisplay(dateInput) {
     return fullDateStr;
 }
 
+function mzConvertTimeDisplay(timeInput) {
+    if (typeof timeInput === 'undefined' || (timeInput.length !== 8)) {
+        return '';
+    }
+    const timeSplit = timeInput.split(':');
+    if (timeSplit.length !== 3) {
+        return '';
+    }
+    const secs = timeSplit[2];
+    const minutes = timeSplit[1];
+    const hours = parseInt(timeSplit[0]);
+    const ampm = hours < 12 ? 'am' : 'pm';
+    const newHour = hours < 12 ? hours : hours-12;
+    return newHour.toString() + ':' + minutes + ':' + secs + ampm;
+}
+
 function mzConvertMonth(monthInput) {
     switch (monthInput) {
         case 'January':
@@ -901,16 +917,22 @@ function mzSetFieldValue(name, value, type, label) {
     if (value !== '') {
         if (type === 'text') {
             $('#txt'+name).val(value);
-            $('#lbl'+name).addClass('active');
+            if (value !== '') {
+                $('#lbl'+name).addClass('active');
+            }
         }
         else if (type === 'select') {
             $('#opt' + name).val(value);
             //$('#opt' + name).prevAll('.select-dropdown').children('li:contains('+value+')').trigger('click');
-            $('#lbl'+name).html(label).addClass('active');
+            if (value !== '') {
+                $('#lbl'+name).html(label).addClass('active');
+            }
         }
         else if (type === 'textarea') {
             $('#txa' + name).val(value);
-            $('#lbl'+name).html(label).addClass('active');
+            if (value !== '') {
+                $('#lbl'+name).html(label).addClass('active');
+            }
         }
         else if (type === 'checkSingle') {
             $('#chk' + name).prop('checked', value === label);

@@ -72,7 +72,9 @@ function SectionTicketDetails() {
                 mzSetFieldValue('TkdDetWorkType', tkdRefWorktype[tkdRefWorkcategory[dataTkdDetTicket['workcategoryId']]['worktypeId']]['worktypeDesc'], 'text');
                 mzSetFieldValue('TkdDetWorkCategory', tkdRefWorkcategory[dataTkdDetTicket['workcategoryId']]['workcategoryDesc'], 'text');
                 mzSetFieldValue('TkdDetCreatedBy', dataTkdDetTicket['createdBy'], 'text');
-                mzSetFieldValue('TkdDetTicketDate', mzConvertDateDisplay(dataTkdDetTicket['ticketTimeSubmit']), 'text');
+                const dateDisplay = mzConvertDateDisplay(dataTkdDetTicket['ticketTimeSubmit'].substr(0,10));
+                const timeDisplay = mzConvertTimeDisplay(dataTkdDetTicket['ticketTimeSubmit'].substr(11));
+                mzSetFieldValue('TkdDetTicketDate', timeDisplay + ', ' + dateDisplay, 'text');
                 mzSetFieldValue('TkdDetTicketStatus', tkdRefStatus[dataTkdDetTicket['ticketStatus']]['statusDesc'], 'text');
                 tkdWorkorderId = dataTkdDetTicket['workorderId'];
                 $('#txaTkdDetTicketComplaint').html(dataTkdDetTicket['ticketComplaint']);
