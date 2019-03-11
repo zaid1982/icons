@@ -855,8 +855,19 @@ function mzOption(name, data, defaultText, keyIndex, valIndex, filters, type) {
                 for (let i=0; i<keysFilter.length; i++) {
                     const filterKey = keysFilter[i];
                     const filterVal = dataFilterArr[filterKey];
-                    if (typeof u[filterKey] !== 'undefined' && u[filterKey] === filterVal) {
-                        filterCnt++;
+                    if (typeof u[filterKey] !== 'undefined') {
+                        const dataValue = u[filterKey];
+                        if (dataValue === filterVal) {
+                            filterCnt++;
+                        } else if (filterVal.substr(0,1) === '#') {
+                            const filterSplit = dataValue.split(',');
+                            for (let j=0; j<filterSplit.length; j++) {
+                                if (filterSplit[j] === filterVal.substr(1)) {
+                                    filterCnt++;
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
                 if (filterCnt === keysFilter.length) {

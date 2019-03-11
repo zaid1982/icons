@@ -22,7 +22,7 @@
                             <div class="col-md-6">
                                 <div class="md-form mb-0">
                                     <select id="optWkdSiteId" class="mdb-select md-form colorful-select dropdown-info mb-0" searchable="Search">
-                                        <option value="" selected>Choose Site *</option>
+                                        <option value="" selected>Site *</option>
                                     </select>
                                     <label for="optWkdSiteId" id="lblWkdSiteId"></label>
                                     <p class="font-small text-danger" id="optWkdSiteIdErr"></p>
@@ -31,7 +31,7 @@
                             <div class="col-md-3">
                                 <div class="md-form mb-0">
                                     <select id="optWkdAreaId" class="mdb-select md-form colorful-select dropdown-info mb-0" searchable="Search">
-                                        <option value="" selected>Choose Area *</option>
+                                        <option value="" selected>Area *</option>
                                     </select>
                                     <label for="optWkdAreaId" id="lblWkdAreaId"></label>
                                     <p class="font-small text-danger" id="optWkdAreaIdErr"></p>
@@ -40,7 +40,7 @@
                             <div class="col-md-3">
                                 <div class="md-form mb-0">
                                     <select id="optWkdCityId" class="mdb-select md-form colorful-select dropdown-info mb-0" searchable="Search">
-                                        <option value="" selected>Choose City *</option>
+                                        <option value="" selected>City *</option>
                                     </select>
                                     <label for="optWkdCityId" id="lblWkdCityId"></label>
                                     <p class="font-small text-danger" id="optWkdCityIdErr"></p>
@@ -66,14 +66,14 @@
                                 </div>
                                 <div class="md-form mb-0">
                                     <select id="optWkdContractorId" class="mdb-select md-form colorful-select dropdown-info mb-0">
-                                        <option value="" selected>Choose Contractor *</option>
+                                        <option value="" selected>Contractor *</option>
                                     </select>
                                     <label for="optWkdContractorId" id="lblWkdContractorId"></label>
                                     <p class="font-small text-danger pb-1_2" id="optWkdContractorIdErr"></p>
                                 </div>
                                 <div class="md-form mb-0">
                                     <select id="optWkdWorkorderSiteType" class="mdb-select md-form colorful-select dropdown-info mb-0">
-                                        <option value="" selected>Choose Site Type *</option>
+                                        <option value="" selected>Site Type *</option>
                                         <option value="Utilities">Utilities</option>
                                         <option value="Public Facilities">Public Facilities</option>
                                     </select>
@@ -104,14 +104,14 @@
                                 </div>
                                 <div class="md-form mb-0">
                                     <select id="optWkdWorktypeId" class="mdb-select md-form colorful-select dropdown-info mb-0">
-                                        <option value="" selected>Choose Work Type *</option>
+                                        <option value="" selected>Work Type *</option>
                                     </select>
                                     <label for="optWkdWorktypeId" id="lblWkdWorktypeId"></label>
                                     <p class="font-small text-danger pb-1_2" id="optWkdWorktypeIdErr"></p>
                                 </div>
                                 <div class="md-form mb-0">
                                     <select id="optWkdWorkcategoryId" class="mdb-select md-form colorful-select dropdown-info mb-0">
-                                        <option value="" selected>Choose Work Category *</option>
+                                        <option value="" selected>Work Category *</option>
                                     </select>
                                     <label for="optWkdWorkcategoryId" id="lblWkdWorkcategoryId"></label>
                                     <p class="font-small text-danger" id="optWkdWorkcategoryIdErr"></p>
@@ -417,9 +417,11 @@
                         <hr class="divWkdPictures">
                         <div class="row divWkdAction">
                             <div class="col-md-12">
-                                <button type="button" id="butTkdCreateWorkOrder2"
-                                        class="btn btn-outline-success btn-rounded waves-effect btn-sm float-right"><i
-                                        class="fas fa-paper-plane mr-1"></i> Submit
+                                <button type="button" id="butWkdSubmit" class="btn btn-outline-success btn-rounded waves-effect btn-sm float-right">
+                                    <i class="fas fa-paper-plane mr-1"></i> Submit
+                                </button>
+                                <button type="button" id="butWkdSave" class="btn btn-outline-deep-orange btn-rounded waves-effect btn-sm float-right">
+                                    <i class="fas fa-save mr-1"></i> Save
                                 </button>
                             </div>
                         </div>

@@ -8,23 +8,33 @@ function SectionWorkOrderDetails() {
     let wkdRefSite;
     let wkdRefArea;
     let wkdRefCity;
+    let wkdRefContractor;
 
     this.init = function () {
         $('.sectionWorkOrderDetails').hide();
 
         $('#optWkdSiteId').on('change', function () {
             $('#lblWkdSiteId').html('Site *').addClass('active');
+            $('#optWkdContractorId').html('').removeClass('active');
+            mzOption('optWkdContractorId', wkdRefContractor, 'Contractor *', 'contractorId', 'contractorName', {sites: ('#'+$(this).val()), contractorStatus: '1'}, 'required');
         });
 
         $('#optWkdAreaId').on('change', function () {
             $('#lblWkdAreaId').html('Area *').addClass('active');
-            mzOption('optWkdSiteId', wkdRefSite, 'Choose Site *', 'siteId', 'siteDesc', {areaId: $(this).val(), siteStatus: '1'}, 'required');
+            $('#optWkdSiteId').html('').removeClass('active');
+            $('#optWkdContractorId').html('').removeClass('active');
+            mzOption('optWkdSiteId', wkdRefSite, 'Site *', 'siteId', 'siteDesc', {areaId: $(this).val(), siteStatus: '1'}, 'required');
+            mzOption('optWkdContractorId', wkdRefContractor, 'Contractor (Select Site 1st) *', 'contractorId', 'contractorName', {siteId: '', contractorStatus: '1'}, 'required');
         });
 
         $('#optWkdCityId').on('change', function () {
             $('#lblWkdCityId').html('City *').addClass('active');
-            mzOption('optWkdAreaId', wkdRefArea, 'Choose Area *', 'areaId', 'areaDesc', {cityId: $(this).val(), areaStatus: '1'}, 'required');
-            mzOption('optWkdSiteId', wkdRefSite, 'Choose Site *', 'siteId', 'siteDesc', {areaId: '', siteStatus: '1'}, 'required');
+            $('#optWkdAreaId').html('').removeClass('active');
+            $('#optWkdSiteId').html('').removeClass('active');
+            $('#optWkdContractorId').html('').removeClass('active');
+            mzOption('optWkdAreaId', wkdRefArea, 'Area *', 'areaId', 'areaDesc', {cityId: $(this).val(), areaStatus: '1'}, 'required');
+            mzOption('optWkdSiteId', wkdRefSite, 'Site (Select Area 1st) *', 'siteId', 'siteDesc', {areaId: '', siteStatus: '1'}, 'required');
+            mzOption('optWkdContractorId', wkdRefContractor, 'Contractor (Select Site 1st) *', 'contractorId', 'contractorName', {siteId: '', contractorStatus: '1'}, 'required');
         });
 
         $('#optWkdContractorId').on('change', function () {
@@ -37,7 +47,8 @@ function SectionWorkOrderDetails() {
 
         $('#optWkdWorktypeId').on('change', function () {
             $('#lblWkdWorktypeId').html('Work Type *').addClass('active');
-            mzOption('optWkdWorkcategoryId', wkdRefWorkcategory, 'Choose Work Category *', 'workcategoryId', 'workcategoryDesc', {worktypeId: $(this).val(), workcategoryStatus: '1'}, 'required');
+            $('#lblWkdWorkcategoryId').html('').removeClass('active');
+            mzOption('optWkdWorkcategoryId', wkdRefWorkcategory, 'Work Category *', 'workcategoryId', 'workcategoryDesc', {worktypeId: $(this).val(), workcategoryStatus: '1'}, 'required');
         });
 
         $('#optWkdWorkcategoryId').on('change', function () {
@@ -51,6 +62,162 @@ function SectionWorkOrderDetails() {
         wkdRefSite = mzGetLocalArray('icon_site', versionLocal, 'siteId');
         wkdRefArea = mzGetLocalArray('icon_area', versionLocal, 'areaId');
         wkdRefCity = mzGetLocalArray('icon_city', versionLocal, 'cityId');
+        wkdRefContractor = mzGetLocalArray('icon_contractor', versionLocal, 'contractorId');
+
+        const vDataWkd = [
+            {
+                field_id: 'optWkdSiteId',
+                type: 'select',
+                name: 'Site',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'optWkdAreaId',
+                type: 'select',
+                name: 'Area',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'optWkdCityId',
+                type: 'select',
+                name: 'City',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'txtWkdWorkorderNo',
+                type: 'text',
+                name: 'Work Order No.',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'txtWkdWorkorderStatusDesc',
+                type: 'text',
+                name: 'Work Status',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'txtWkdRequesterName',
+                type: 'text',
+                name: 'Requester',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'txtWkdWorkorderDateComplaint',
+                type: 'text',
+                name: 'Date',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'txtWkdRequesterPhone',
+                type: 'text',
+                name: 'Phone Number',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'txtWkdWorkorderTimeComplaint',
+                type: 'text',
+                name: 'Received Time',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'optWkdContractorId',
+                type: 'select',
+                name: 'Contractor',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'optWkdWorkorderSiteType',
+                type: 'select',
+                name: 'Site Type',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'optWkdWorktypeId',
+                type: 'select',
+                name: 'Work Type',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'optWkdWorkcategoryId',
+                type: 'select',
+                name: 'Work Category',
+                validator: {
+                    notEmpty: true
+                }
+            },
+            {
+                field_id: 'txtWkdWorkorderBlock',
+                type: 'text',
+                name: 'Block',
+                validator: {
+                    maxLength: 20
+                }
+            },
+            {
+                field_id: 'txtWkdWorkorderLevel',
+                type: 'text',
+                name: 'Level',
+                validator: {
+                    maxLength: 10
+                }
+            },
+            {
+                field_id: 'txtWkdWorkorderUnit',
+                type: 'text',
+                name: 'Unit',
+                validator: {
+                    maxLength: 10
+                }
+            },
+            {
+                field_id: 'txaWkdWorkorderDesc',
+                type: 'text',
+                name: 'Problem Description',
+                validator: {
+                    notEmpty: true,
+                    maxLength: 1000
+                }
+            },
+            {
+                field_id: 'txaWkdWorkorderLocationDesc',
+                type: 'text',
+                name: 'Other Location Description',
+                validator: {
+                    maxLength: 500
+                }
+            }
+        ];
+
+        let formWkdWorkorder = new MzValidate('formWkd');
+        formWkdWorkorder.registerFields(vDataWkd);
+
+        $('#formWkd').on('keyup change', function () {
+            $('#butWkdSubmit').attr('disabled', !formWkdWorkorder.validateForm());
+        });
     };
 
     this.load = function (callFrom, workorderId, ticketId) {
@@ -94,29 +261,27 @@ function SectionWorkOrderDetails() {
     this.extractDetails = function () {
         const dataWkdWorkorder = mzAjaxRequest('workorder.php?workorderId='+wkdWorkorderId, 'GET');
 
-        let worktypeId = '';
-        if (dataWkdWorkorder['workcategoryId'] !== '') {
-            worktypeId = wkdRefWorkcategory[dataWkdWorkorder['workcategoryId']]['worktypeId'];
-        }
         if (dataWkdWorkorder['workorderStatus'] === '5') {
-            mzOption('optWkdWorktypeId', wkdRefWorktype, 'Choose Work Type *', 'worktypeId', 'worktypeDesc', {worktypeStatus: '1'}, 'required');
-            mzOption('optWkdWorkcategoryId', wkdRefWorkcategory, 'Choose Work Category *', 'workcategoryId', 'workcategoryDesc', {worktypeId: worktypeId, workcategoryStatus: '1'}, 'required');
-            mzOption('optWkdCityId', wkdRefCity, 'Choose City *', 'cityId', 'cityDesc', {cityStatus: '1'}, 'required');
-            mzOption('optWkdAreaId', wkdRefArea, 'Choose Area *', 'areaId', 'areaDesc', {cityId: dataWkdWorkorder['cityId'], areaStatus: '1'}, 'required');
-            mzOption('optWkdSiteId', wkdRefSite, 'Choose Site *', 'siteId', 'siteDesc', {areaId: dataWkdWorkorder['areaId'], siteStatus: '1'}, 'required');
+            mzOption('optWkdWorktypeId', wkdRefWorktype, 'Work Type *', 'worktypeId', 'worktypeDesc', {worktypeStatus: '1'}, 'required');
+            mzOption('optWkdWorkcategoryId', wkdRefWorkcategory, 'Work Category '+(dataWkdWorkorder['worktypeId']===''?'(Select Work Type 1st) *':'*'), 'workcategoryId', 'workcategoryDesc', {worktypeId: dataWkdWorkorder['worktypeId'], workcategoryStatus: '1'}, 'required');
+            mzOption('optWkdCityId', wkdRefCity, 'City *', 'cityId', 'cityDesc', {cityStatus: '1'}, 'required');
+            mzOption('optWkdAreaId', wkdRefArea, 'Area '+(dataWkdWorkorder['cityId']===''?'(Select Work Type 1st) *':'*'), 'areaId', 'areaDesc', {cityId: dataWkdWorkorder['cityId'], areaStatus: '1'}, 'required');
+            mzOption('optWkdSiteId', wkdRefSite, 'Site '+(dataWkdWorkorder['areaId']===''?'(Select Work Type 1st) *':'*'), 'siteId', 'siteDesc', {areaId: dataWkdWorkorder['areaId'], siteStatus: '1'}, 'required');
+            mzOption('optWkdContractorId', wkdRefContractor, 'Contractor '+(dataWkdWorkorder['siteId']===''?'(Select Site 1st) *':'*'), 'contractorId', 'contractorName', {sites: '#'+dataWkdWorkorder['siteId'], contractorStatus: '1'}, 'required');
         } else {
-            mzOption('optWkdWorktypeId', wkdRefWorktype, 'Choose Work Type *', 'worktypeId', 'worktypeDesc');
-            mzOption('optWkdWorkcategoryId', wkdRefWorkcategory, 'Choose Work Category *', 'workcategoryId', 'workcategoryDesc');
-            mzOption('optWkdCityId', wkdRefCity, 'Choose City *', 'cityId', 'cityDesc');
-            mzOption('optWkdAreaId', wkdRefArea, 'Choose Area *', 'areaId', 'areaDesc');
-            mzOption('optWkdSiteId', wkdRefSite, 'Choose Site *', 'siteId', 'siteDesc');
+            mzOption('optWkdWorktypeId', wkdRefWorktype, 'Work Type *', 'worktypeId', 'worktypeDesc');
+            mzOption('optWkdWorkcategoryId', wkdRefWorkcategory, 'Work Category *', 'workcategoryId', 'workcategoryDesc');
+            mzOption('optWkdCityId', wkdRefCity, 'City *', 'cityId', 'cityDesc');
+            mzOption('optWkdAreaId', wkdRefArea, 'Area *', 'areaId', 'areaDesc');
+            mzOption('optWkdSiteId', wkdRefSite, 'Site *', 'siteId', 'siteDesc');
+            mzOption('optWkdContractorId', wkdRefContractor, 'Contractor *', 'contractorId', 'contractorName');
         }
 
         mzSetFieldValue('WkdWorkorderNo', dataWkdWorkorder['workorderNo'], 'text', 'Work Order No.');
         mzSetFieldValue('WkdSiteId', dataWkdWorkorder['siteId'], 'select', 'Site *');
         mzSetFieldValue('WkdAreaId', dataWkdWorkorder['areaId'], 'select', 'Area *');
         mzSetFieldValue('WkdCityId', dataWkdWorkorder['cityId'], 'select', 'City *');
-        mzSetFieldValue('WkdWorktypeId', worktypeId, 'select', 'Work Type *');
+        mzSetFieldValue('WkdWorktypeId', dataWkdWorkorder['worktypeId'], 'select', 'Work Type *');
         mzSetFieldValue('WkdWorkcategoryId', dataWkdWorkorder['workcategoryId'], 'select', 'Work Category *');
         mzSetFieldValue('WkdContractorId', dataWkdWorkorder['contractorId'], 'select', 'Contractor *');
         mzSetFieldValue('WkdWorkorderSiteType', dataWkdWorkorder['workorderSiteType'], 'select', 'Site Type *');
@@ -142,6 +307,7 @@ function SectionWorkOrderDetails() {
             mzDisableSelect('optWkdWorkorderSiteType', false);
             mzDisableSelect('optWkdWorktypeId', false);
             mzDisableSelect('optWkdWorkcategoryId', false);
+            $('#butWkdSubmit').attr('disabled', true);
 
             $('.divWkdAction').show();
         }
