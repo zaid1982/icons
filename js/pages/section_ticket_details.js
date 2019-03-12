@@ -46,7 +46,7 @@ function SectionTicketDetails() {
         });
 
         $('#butTkdCreateWorkOrder').on('click', function () {
-            tkdWorkOrderClass.load('tkd', tkdWorkorderId, tkdTicketId);
+            tkdWorkOrderClass.load('tck', tkdWorkorderId, tkdTicketId);
         });
     };
 
@@ -104,10 +104,10 @@ function SectionTicketDetails() {
                     if (tkdWorkorderId === '' && (mzIsRoleExist('1') || mzIsRoleExist('2') || mzIsRoleExist('4'))) {
                         $('#butTkdCreateWorkOrder').show();
                     } else if (tkdWorkorderId !== '') {
-                        tkdWorkOrderClass.load('tkd', tkdWorkorderId);
+                        tkdWorkOrderClass.load('tck', tkdWorkorderId);
                     }
                 } else if (tkdWorkorderId !== '') {
-                    tkdWorkOrderClass.load('tkd', tkdWorkorderId);
+                    tkdWorkOrderClass.load('tck', tkdWorkorderId);
                 }
                 $('.sectionTkdDetails').show();
 

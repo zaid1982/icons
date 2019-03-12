@@ -9,6 +9,7 @@ function SectionWorkOrderDetails() {
     let wkdRefArea;
     let wkdRefCity;
     let wkdRefContractor;
+    let formWkdWorkorder;
 
     this.init = function () {
         $('.sectionWorkOrderDetails').hide();
@@ -212,11 +213,47 @@ function SectionWorkOrderDetails() {
             }
         ];
 
-        let formWkdWorkorder = new MzValidate('formWkd');
+        formWkdWorkorder = new MzValidate('formWkd');
         formWkdWorkorder.registerFields(vDataWkd);
 
         $('#formWkd').on('keyup change', function () {
             $('#butWkdSubmit').attr('disabled', !formWkdWorkorder.validateForm());
+        });
+
+        $('#butWkdSave').on('click', function () {
+            ShowLoader();
+            setTimeout(function () {
+                try {
+                    if (!formWkdWorkorder.validateForm()) {
+                        throw new Error(_ALERT_MSG_VALIDATION);
+                    }
+
+
+                } catch (e) {
+                    toastr['error'](e.message, _ALERT_TITLE_ERROR);
+                }
+                HideLoader();
+            }, 300);
+        });
+
+        $('#butWkdSubmit').on('click', function () {
+            ShowLoader();
+            setTimeout(function () {
+                try {
+                    if (!formWkdWorkorder.validateForm()) {
+                        throw new Error(_ALERT_MSG_VALIDATION);
+                    }
+
+                    $('.sectionTkdDetails, .sectionWorkOrderDetails').hide();
+                    if (wkdCallFrom === 'tck') {
+                        $('.sectionTckMain').show();
+                    }
+                    $(window).scrollTop(0);
+                } catch (e) {
+                    toastr['error'](e.message, _ALERT_TITLE_ERROR);
+                }
+                HideLoader();
+            }, 300);
         });
     };
 
@@ -232,7 +269,9 @@ function SectionWorkOrderDetails() {
         wkdCallFrom = callFrom;
         wkdWorkorderId = workorderId;
 
+        formWkdWorkorder.clearValidation();
         $('.divWkdPartDetails, .divWkdLabourDetails, .divWkdPictures, .divWkdAction').hide();
+
         if (wkdWorkorderId === '') {
             if (typeof ticketId === 'undefined' || ticketId === '') {
                 toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
