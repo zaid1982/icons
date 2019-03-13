@@ -196,7 +196,7 @@ function SectionWorkOrderDetails() {
             },
             {
                 field_id: 'txaWkdWorkorderDesc',
-                type: 'text',
+                type: 'textarea',
                 name: 'Problem Description',
                 validator: {
                     notEmpty: true,
@@ -205,7 +205,7 @@ function SectionWorkOrderDetails() {
             },
             {
                 field_id: 'txaWkdWorkorderLocationDesc',
-                type: 'text',
+                type: 'textarea',
                 name: 'Other Location Description',
                 validator: {
                     maxLength: 500

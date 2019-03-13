@@ -230,7 +230,7 @@ function MzValidate(name) {
             const fieldSelector = $('#' + fieldId);
             const fieldErrSelector = $('#' + fieldId + 'Err');
             const fieldLblSelector = $('#lbl' + fieldId.substring(3));
-            if (u.type === 'text') {
+            if (u.type === 'text' || u.type === 'textarea') {
                 fieldSelector.val('');
                 fieldLblSelector.removeClass('active');
             } else if (u.type === 'select') {
@@ -301,7 +301,7 @@ function mzAjaxRequest(url, type, data, functionStr) {
 
     let errMsg = '';
     $.ajax({
-        url: 'http://localhost/icon/'+url,
+        url: 'http://localhost:8081/icon/'+url,
         type: type,
         //contentType: 'application/json',
         headers: header,
@@ -942,7 +942,7 @@ function mzSetFieldValue(name, value, type, label) {
         else if (type === 'textarea') {
             $('#txa' + name).val(value);
             if (value !== '') {
-                $('#lbl'+name).html(label).addClass('active');
+                $('#lbl'+name).addClass('active');
             }
         }
         else if (type === 'checkSingle') {
