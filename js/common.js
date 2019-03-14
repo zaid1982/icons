@@ -375,16 +375,6 @@ function initiatePages() {
         minScrollbarLength: 20
     });
 
-    // Data Picker Initialization
-    $('.datepicker').pickadate({
-        monthsFull: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-            'November', 'December'],
-        weekdaysShort: ['Ahd', 'Isn', 'Sel', 'Rab', 'Kha', 'Jum', 'Sab'],
-        today: 'Hari ini',
-        clear: 'Padam',
-        close: 'Batal'
-    });
-
     // Material Select Initialization
     $(document).ready(function () {
         $('.mdb-select').material_select();
@@ -536,7 +526,7 @@ function mzConvertDateDisplay(dateInput) {
     let timeNew = '';
     const monthsFull = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
             'November', 'December'];
-        
+
     const datePart = dateInput.substr(0, 10);
     const dateSplit = datePart.split("/");
     if (dateSplit.length !== 3) {

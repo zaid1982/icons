@@ -138,6 +138,7 @@
         <div class="includeHtml" id="h-section_work_order_details"></div>
     </div>
     <div class="includeHtml" id="h-modal_change_password"></div>
+    <div class="includeHtml" id="h-modal_confirm_submit"></div>
 
 </main>
 
@@ -190,7 +191,9 @@
     let refWorktype;
     let refWorkcategory;
     let changePasswordClass;
+    let confirmSubmitClass;
     let ticketDetailsClass;
+    let workOrderClass;
 
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -200,6 +203,8 @@
                 initiatePages();
                 changePasswordClass = new ModalChangePassword();
                 ticketDetailsClass = new SectionTicketDetails();
+                workOrderClass = new SectionWorkOrderDetails();
+                confirmSubmitClass = new ModalConfirmSubmit();
 
                 versionLocal = mzGetDataVersion();
                 refStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
@@ -421,6 +426,7 @@
     }
 
     document.write('<scr' + 'ipt src="js/pages/modal_change_password.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt src="js/pages/modal_confirm_submit.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/section_ticket_details.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/section_work_order_details.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 

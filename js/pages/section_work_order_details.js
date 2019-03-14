@@ -224,11 +224,22 @@ function SectionWorkOrderDetails() {
             ShowLoader();
             setTimeout(function () {
                 try {
-                    if (!formWkdWorkorder.validateForm()) {
-                        throw new Error(_ALERT_MSG_VALIDATION);
-                    }
-
-
+                    const data = {
+                        action: 'save_workorder',
+                        siteId: $('#optWkdSiteId').val(),
+                        areaId: $('#optWkdAreaId').val(),
+                        cityId: $('#optWkdCityId').val(),
+                        contractorId: $('#optWkdContractorId').val(),
+                        worktypeId: $('#optWkdWorktypeId').val(),
+                        workorderSiteType: $('#optWkdWorkorderSiteType').val(),
+                        workcategoryId: $('#optWkdWorkcategoryId').val(),
+                        workorderDesc: $('#txaWkdWorkorderDesc').val(),
+                        workorderBlock: $('#txtWkdWorkorderBlock').val(),
+                        workorderLevel: $('#txtWkdWorkorderLevel').val(),
+                        workorderUnit: $('#txtWkdWorkorderUnit').val(),
+                        workorderLocationDesc: $('#txaWkdWorkorderLocationDesc').val()
+                    };
+                    mzAjaxRequest('workorder.php?workorderId='+wkdWorkorderId, 'PUT', data);
                 } catch (e) {
                     toastr['error'](e.message, _ALERT_TITLE_ERROR);
                 }
@@ -244,11 +255,26 @@ function SectionWorkOrderDetails() {
                         throw new Error(_ALERT_MSG_VALIDATION);
                     }
 
-                    $('.sectionTkdDetails, .sectionWorkOrderDetails').hide();
+                    const data = {
+                        action: 'save_workorder2',
+                        siteId: $('#optWkdSiteId').val(),
+                        areaId: $('#optWkdAreaId').val(),
+                        cityId: $('#optWkdCityId').val(),
+                        contractorId: $('#optWkdContractorId').val(),
+                        worktypeId: $('#optWkdWorktypeId').val(),
+                        workorderSiteType: $('#optWkdWorkorderSiteType').val(),
+                        workcategoryId: $('#optWkdWorkcategoryId').val(),
+                        workorderDesc: $('#txaWkdWorkorderDesc').val(),
+                        workorderBlock: $('#txtWkdWorkorderBlock').val(),
+                        workorderLevel: $('#txtWkdWorkorderLevel').val(),
+                        workorderUnit: $('#txtWkdWorkorderUnit').val(),
+                        workorderLocationDesc: $('#txaWkdWorkorderLocationDesc').val()
+                    };
+                    mzAjaxRequest('workorder.php?workorderId='+wkdWorkorderId, 'PUT', data);
+
                     if (wkdCallFrom === 'tck') {
-                        $('.sectionTckMain').show();
+                        confirmSubmitClass.submit('tck', 'submit_workorder');
                     }
-                    $(window).scrollTop(0);
                 } catch (e) {
                     toastr['error'](e.message, _ALERT_TITLE_ERROR);
                 }
@@ -297,6 +323,24 @@ function SectionWorkOrderDetails() {
         $('.sectionWorkOrderDetails').show();
     };
 
+    this.submitWorkorder = function () {
+        ShowLoader();
+        setTimeout(function () {
+            try {
+                if (wkdCallFrom === 'tck') {
+                    mzAjaxRequest('ticket.php', 'GET', {Reportid: '1', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
+                    genTableTck();
+                    $('.sectionTkdDetails, .sectionWorkOrderDetails').hide();
+                    $('.sectionTckMain').show();
+                    $(window).scrollTop(0);
+                }
+            } catch (e) {
+                toastr['error'](e.message, _ALERT_TITLE_ERROR);
+            }
+            HideLoader();
+        }, 300);
+    };
+
     this.extractDetails = function () {
         const dataWkdWorkorder = mzAjaxRequest('workorder.php?workorderId='+wkdWorkorderId, 'GET');
 
@@ -315,7 +359,6 @@ function SectionWorkOrderDetails() {
             mzOption('optWkdSiteId', wkdRefSite, 'Site *', 'siteId', 'siteDesc');
             mzOption('optWkdContractorId', wkdRefContractor, 'Contractor *', 'contractorId', 'contractorName');
         }
-
         mzSetFieldValue('WkdWorkorderNo', dataWkdWorkorder['workorderNo'], 'text', 'Work Order No.');
         mzSetFieldValue('WkdSiteId', dataWkdWorkorder['siteId'], 'select', 'Site *');
         mzSetFieldValue('WkdAreaId', dataWkdWorkorder['areaId'], 'select', 'Area *');

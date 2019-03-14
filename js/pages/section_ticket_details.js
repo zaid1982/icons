@@ -7,7 +7,6 @@ function SectionTicketDetails() {
     let tkdRefProblemtype;
     let tkdRefWorktype;
     let tkdRefWorkcategory;
-    let tkdWorkOrderClass;
     let mapOptions = {
         center: new google.maps.LatLng(2.904485,101.681497),
         zoom: 13,
@@ -30,7 +29,6 @@ function SectionTicketDetails() {
 
     this.init = function () {
         $('.sectionTkdDetails').hide();
-        tkdWorkOrderClass = new SectionWorkOrderDetails();
         versionLocal = mzGetDataVersion();
         tkdRefStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
         tkdRefProblemtype = mzGetLocalArray('icon_problemtype', versionLocal, 'problemtypeId');
@@ -46,7 +44,7 @@ function SectionTicketDetails() {
         });
 
         $('#butTkdCreateWorkOrder').on('click', function () {
-            tkdWorkOrderClass.load('tck', tkdWorkorderId, tkdTicketId);
+            workOrderClass.load('tck', tkdWorkorderId, tkdTicketId);
         });
     };
 
@@ -65,7 +63,7 @@ function SectionTicketDetails() {
         ShowLoader();
         setTimeout(function () {
             try {
-                tkdWorkOrderClass.hide();
+                workOrderClass.hide();
                 const dataTkdDetTicket = mzAjaxRequest('ticket.php?ticketId='+tkdTicketId, 'GET');
                 mzSetFieldValue('TkdDetTicketNo', dataTkdDetTicket['ticketNo'], 'text');
                 mzSetFieldValue('TkdDetProblemType', tkdRefProblemtype[dataTkdDetTicket['problemtypeId']]['problemtypeDesc'], 'text');
@@ -104,10 +102,10 @@ function SectionTicketDetails() {
                     if (tkdWorkorderId === '' && (mzIsRoleExist('1') || mzIsRoleExist('2') || mzIsRoleExist('4'))) {
                         $('#butTkdCreateWorkOrder').show();
                     } else if (tkdWorkorderId !== '') {
-                        tkdWorkOrderClass.load('tck', tkdWorkorderId);
+                        workOrderClass.load('tck', tkdWorkorderId);
                     }
                 } else if (tkdWorkorderId !== '') {
-                    tkdWorkOrderClass.load('tck', tkdWorkorderId);
+                    workOrderClass.load('tck', tkdWorkorderId);
                 }
                 $('.sectionTkdDetails').show();
 
