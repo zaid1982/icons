@@ -327,6 +327,7 @@ function SectionWorkOrderDetails() {
         ShowLoader();
         setTimeout(function () {
             try {
+                mzAjaxRequest('workorder.php?workorderId='+wkdWorkorderId, 'PUT', {action: 'submit_workorder'});
                 if (wkdCallFrom === 'tck') {
                     mzAjaxRequest('ticket.php', 'GET', {Reportid: '1', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
                     genTableTck();
