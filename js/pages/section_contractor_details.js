@@ -138,6 +138,31 @@ function SectionContractorDetails() {
         $('#formCtd').on('keyup change', function () {
             $('#butCtdSubmitNew').attr('disabled', !formCtdContractor.validateForm());
         });
+
+        $('#btnCtdSave, #btnCtdUpdate').on('click', function () {
+            ShowLoader();
+            setTimeout(function () {
+                try {
+                    const data = {
+                        action: 'save_contractor',
+                        contractorName: $('#txtCtdContractorName').val(),
+                        contractorRegNo: $('#txtCtdContractorRegNo').val(),
+                        addressDesc: $('#txtCtdAddressDesc').val(),
+                        addressPostcode: $('#txtCtdAddressPostcode').val(),
+                        addressCity: $('#txtCtdAddressCity').val(),
+                        stateId: $('#optCtdStateId').val(),
+                        contractorContactNo: $('#txtCtdContractorContactNo').val(),
+                        contractorFaxNo: $('#txtCtdContractorFaxNo').val(),
+                        contractorEmail: $('#txtCtdContractorEmail').val()
+                    };
+                    mzAjaxRequest('contractor.php?contractorId='+ctdContractorId, 'PUT', data);
+                    genTableCtr(1);
+                } catch (e) {
+                    toastr['error'](e.message, _ALERT_TITLE_ERROR);
+                }
+                HideLoader();
+            }, 300);
+        });
     };
 
     this.load = function (callFrom, contractorId, rowRefresh) {
