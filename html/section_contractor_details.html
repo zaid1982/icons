@@ -1,0 +1,217 @@
+<section class="section mb-5 sectionCtdDetails">
+    <div class="row mb-0 pb-0">
+        <div class="col-md-12">
+            <button type="button" class="btn peach-gradient btn-rounded float-right" id="btnCtdBack"><i
+                    class="fas fa-arrow-left"></i> Back to Main Page
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-cascade cascading-admin-card user-card mt-4">
+                <div class="admin-up d-flex justify-content-start">
+                    <i class="fa fas fa-headset info-color py-4"></i>
+                    <div class="data">
+                        <h3 class="font-weight-bold dark-grey-text">Contractor Details</h3>
+                    </div>
+                </div>
+                <div class="card-body card-body-cascade">
+                    <form id="formCtd">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtCtdContractorName" class="form-control">
+                                    <label for="txtCtdContractorName" id="lblCtdContractorName">Contractor Name *</label>
+                                    <p class="font-small text-danger" id="txtCtdContractorNameErr"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtCtdContractorRegNo" class="form-control">
+                                    <label for="txtCtdContractorRegNo" id="lblCtdContractorRegNo">Registration No *</label>
+                                    <p class="font-small text-danger" id="txtCtdContractorRegNoErr"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtCtdAddressDesc" class="form-control">
+                                    <label for="txtCtdAddressDesc" id="lblCtdAddressDesc">Address *</label>
+                                    <p class="font-small text-danger" id="txtCtdAddressDescErr"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtCtdAddressPostcode" class="form-control">
+                                    <label for="txtCtdAddressPostcode" id="lblCtdAddressPostcode">Postcode *</label>
+                                    <p class="font-small text-danger" id="txtCtdAddressPostcodeErr"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtCtdAddressCity" class="form-control">
+                                    <label for="txtCtdAddressCity" id="lblCtdAddressCity">City *</label>
+                                    <p class="font-small text-danger" id="txtCtdAddressCityErr"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="md-form mb-0">
+                                    <select id="optCtdStateId" class="mdb-select md-form colorful-select dropdown-info mb-0" searchable="Search">
+                                        <option value="" selected>State *</option>
+                                    </select>
+                                    <label for="optCtdStateId" id="lblCtdStateId"></label>
+                                    <p class="font-small text-danger" id="optCtdStateIdErr"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtCtdContractorContactNo" class="form-control">
+                                    <label for="txtCtdContractorContactNo" id="lblCtdContractorContactNo">Contact No *</label>
+                                    <p class="font-small text-danger" id="txtCtdContractorContactNoErr"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtCtdContractorFaxNo" class="form-control">
+                                    <label for="txtCtdContractorFaxNo" id="lblCtdContractorFaxNo">Fax No</label>
+                                    <p class="font-small text-danger" id="txtCtdContractorFaxNoErr"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtCtdContractorEmail" class="form-control">
+                                    <label for="txtCtdContractorEmail" id="lblCtdContractorEmail">Email *</label>
+                                    <p class="font-small text-danger" id="txtCtdContractorEmailErr"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtCtdContractorCreatedBy" class="form-control">
+                                    <label for="txtCtdContractorCreatedBy" id="lblCtdContractorCreatedBy">Created By</label>
+                                    <p class="font-small text-danger" id="txtCtdContractorCreatedByErr"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtCtdContractorTimeCreated" class="form-control">
+                                    <label for="txtCtdContractorTimeCreated" id="lblCtdContractorTimeCreated">Time Created</label>
+                                    <p class="font-small text-danger" id="txtCtdContractorTimeCreatedErr"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="txtCtdContractorStatus" class="form-control">
+                                    <label for="txtCtdContractorStatus" id="lblCtdContractorStatus">Status</label>
+                                    <p class="font-small text-danger" id="txtCtdContractorStatusErr"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" id="btnCtdSubmitNew" class="btn btn-outline-dark-green btn-rounded waves-effect btn-sm float-right">
+                                    <i class="fas fa-paper-plane mr-1"></i> Submit New Contractor
+                                </button>
+                                <button type="button" id="btnCtdSave" class="btn btn-outline-info btn-rounded waves-effect btn-sm float-right">
+                                    <i class="fas fa-save mr-1"></i> Save Draft
+                                </button>
+                                <button type="button" id="btnCtdUpdate" class="btn btn-outline-info btn-rounded waves-effect btn-sm float-right">
+                                    <i class="fas fa-save mr-1"></i> Update Details
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card card-cascade narrower">
+                <div class="view view-cascade gradient-card-header aqua-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <button type="button" id="btnCtdSiteAdd" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" data-toggle="tooltip" data-placement="top" title="Add Site"><i class="fas fa-plus mt-0"></i></button>
+                        <a tabindex="0" role="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="popover" data-trigger="focus" title="Work Category List"
+                           data-content="This list contains of all sites that should be under maintenance scope."><i class="fas fa-info mt-0 mx-1"></i></a>
+                        <button type="button" id="btnDtCtdSiteRefresh" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0"></i></button>
+                    </div>
+                    <a href="javascript:void(0);" class="white-text mx-3">Site List</a>
+                    <div>
+                        <div id="btnDtCtdSiteExport"></div>
+                    </div>
+                </div>
+                <div class="px-4 pb-4">
+                    <form class="form-inline md-form form-sm mt-0 mb-0 pb-0 float-right">
+                        <div class="">
+                            <i class="fas fa-search mt-2" aria-hidden="true"></i>
+                            <input id="txtCtdSiteSearch" class="form-control form-control-sm" style="width: 250px; max-width:250px" type="text" aria-label="Search">
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table id="dtCtdSite" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
+                            <thead>
+                            <tr class="th-strong">
+                                <th width="6%">No</th>
+                                <th>Site Name</th>
+                                <th width="20%">Area</th>
+                                <th width="15%">City</th>
+                                <th width="80px"></th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card card-cascade narrower">
+                <div class="view view-cascade gradient-card-header aqua-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <button type="button" id="btnCtdEmployeeAdd" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" data-toggle="tooltip" data-placement="top" title="Add Site"><i class="fas fa-plus mt-0"></i></button>
+                        <a tabindex="0" role="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="popover" data-trigger="focus" title="Work Category List"
+                           data-content="This list contains of all sites that should be under maintenance scope."><i class="fas fa-info mt-0 mx-1"></i></a>
+                        <button type="button" id="btnDtCtdEmployeeRefresh" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0"></i></button>
+                    </div>
+                    <a href="javascript:void(0);" class="white-text mx-3">Employee List</a>
+                    <div>
+                        <div id="btnDtCtdEmployeeExport"></div>
+                    </div>
+                </div>
+                <div class="px-4 pb-4">
+                    <form class="form-inline md-form form-sm mt-0 mb-0 pb-0 float-right">
+                        <div class="">
+                            <i class="fas fa-search mt-2" aria-hidden="true"></i>
+                            <input id="txtCtdEmployeeSearch" class="form-control form-control-sm" style="width: 250px; max-width:250px" type="text" aria-label="Search">
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table id="dtCtdEmployee" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
+                            <thead>
+                            <tr class="th-strong">
+                                <th width="5%">No</th>
+                                <th>Employee Name</th>
+                                <th width="15%">Contact No</th>
+                                <th width="20%">Email</th>
+                                <th width="15%">Role</th>
+                                <th width="80px"></th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

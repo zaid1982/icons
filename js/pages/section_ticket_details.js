@@ -107,8 +107,8 @@ function SectionTicketDetails() {
                 } else if (tkdWorkorderId !== '') {
                     workOrderClass.load('tck', tkdWorkorderId);
                 }
-                $('.sectionTkdDetails').show();
 
+                $('.sectionTkdDetails').show();
                 $(window).scrollTop(0);
             } catch (e) {
                 toastr['error'](e.message, _ALERT_TITLE_ERROR);

@@ -978,16 +978,31 @@ function mzSetObjectToArray(objects, id) {
     return returnVal;
 }
 
-function mzIsRoleExist(roleId) {
+function mzIsRoleExist(roleIds) {
+    if (typeof roleIds === 'undefined' || roleIds === '') {
+        throw new Error(_ALERT_MSG_ERROR_DEFAULT);
+    }
+    const roleSplit = roleIds.split(',');
+    if (roleSplit.length === 0) {
+        throw new Error(_ALERT_MSG_ERROR_DEFAULT);
+    }
+
+    let result = false;
     let userInfo = sessionStorage.getItem('userInfo');
     userInfo = JSON.parse(userInfo);
     const roles = userInfo['roles'];
     for (let i=0; i<roles.length; i++) {
-        if (roles[i]['roleId'] === roleId) {
-            return true;
+        for (let j=0; j<roleSplit.length; j++) {
+            if (roles[i]['roleId'] === roleSplit[j]) {
+                result = true;
+                break;
+            }
+        }
+        if (result) {
+            break;
         }
     }
-    return false;
+    return result;
 }
 
 function mzDisableSelect(fieldId, disable) {

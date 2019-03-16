@@ -42,7 +42,7 @@
                         <button type="button" id="btnCtrContractorAdd" class="btn btn-outline-white btn-rounded btn-sm px-2 material-tooltip-main" data-toggle="tooltip" data-placement="top" title="Add Site"><i class="fas fa-plus mt-0"></i></button>
                         <a tabindex="0" role="button" class="btn btn-outline-white btn-rounded btn-sm px-2"
                            data-toggle="popover" data-trigger="focus" title="Contractor List"
-                           data-content="This list contains of all sites that should be under maintenance scope."><i class="fas fa-info mt-0 mx-1"></i></a>
+                           data-content="This list contains of all registered contractors which will be assigned for the work orders."><i class="fas fa-info mt-0 mx-1"></i></a>
                         <button type="button" id="btnDtCtrContractorRefresh" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0"></i></button>
                     </div>
                     <a href="javascript:void(0);" class="white-text mx-3">Contractor</a>
@@ -51,10 +51,12 @@
                     </div>
                 </div>
                 <div class="px-4 pb-4">
-                    <div class="md-form mb-0 float-right pr-3" style="width: 300px">
-                        <input type="text" id="txtCtrContractorSearch" class="form-control">
-                        <label for="txtCtrContractorSearch">Keyword Search</label>
-                    </div>
+                    <form class="form-inline md-form form-sm mt-0 mb-0 pb-0 float-right">
+                        <div class="">
+                            <i class="fas fa-search mt-2" aria-hidden="true"></i>
+                            <input id="txtCtrContractorSearch" class="form-control form-control-sm" style="width: 250px; max-width:250px" type="text" aria-label="Search">
+                        </div>
+                    </form>
                     <div class="table-responsive">
                         <table id="dtCtrContractor" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
                             <thead>
@@ -74,13 +76,11 @@
                 </div>
             </div>
         </section>
+        <div class="includeHtml" id="h-section_contractor_details"></div>
     </div>
 
     <div class="includeHtml" id="h-modal_change_password"></div>
     <div class="includeHtml" id="h-modal_confirm_delete"></div>
-    <div class="includeHtml" id="h-modal_site"></div>
-    <div class="includeHtml" id="h-modal_area"></div>
-    <div class="includeHtml" id="h-modal_city"></div>
 
 </main>
 
@@ -115,29 +115,39 @@
     let oTableCtrContractor;
     let versionLocal;
     let refStatus;
+    let refSite;
     let refArea;
     let refCity;
 
     let changePasswordClass;
     let confirmDeleteClass;
-    let siteClass;
-    let areaClass;
-    let cityClass;
+    let contractorDetailsClass;
 
     document.addEventListener('DOMContentLoaded', function () {
         ShowLoader();
         setTimeout(function () {
             try {
                 initiatePages();
+                changePasswordClass = new ModalChangePassword();
+                confirmDeleteClass = new ModalConfirmDelete('contractor');
+                contractorDetailsClass = new SectionContractorDetails();
 
                 versionLocal = mzGetDataVersion();
                 refStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
+                refSite = mzGetLocalArray('icon_site', versionLocal, 'siteId');
+                refArea = mzGetLocalArray('icon_area', versionLocal, 'areaId');
+                refCity = mzGetLocalArray('icon_city', versionLocal, 'cityId');
 
-                // table Conractor List
+                contractorDetailsClass.setRefStatus(refStatus);
+                contractorDetailsClass.setRefSite(refSite);
+                contractorDetailsClass.setRefArea(refArea);
+                contractorDetailsClass.setRefCity(refCity);
+
+                // table Contractor List
                 oTableCtrContractor =  $('#dtCtrContractor').DataTable({
                     bLengthChange: false,
                     bFilter: true,
-                    "aaSorting": [[3, 'asc'],[2, 'asc'],[1, 'asc']],
+                    "aaSorting": [[1, 'asc']],
                     fnRowCallback : function(nRow, aData, iDisplayIndex){
                         const info = oTableCtrContractor.page.info();
                         $('td', nRow).eq(0).html(info.page * info.length + (iDisplayIndex + 1));
@@ -154,7 +164,18 @@
                             {mData: 'contractorContactNo'},
                             {mData: 'sites',
                                 mRender: function (data, type, row) {
-                                    return '<ul style="padding-left: 0px"><li>Kuarters Kerajaan Pangsapuri 17RK2, Presint 17, WP Putrajaya</li><li>Pasar Borong Dengkil, Dengkil Selatan, Dengkil</li></ul>';
+                                    let label = '';
+                                    if (data != '') {
+                                        label = '<ul style="padding-left: 0px">';
+                                        const dataSplit = data.split(',');
+                                        for (let j=0; j<dataSplit.length; j++) {
+                                            const areaId = refSite[dataSplit[j]]['areaId'];
+                                            const cityId = refArea[areaId]['cityId'];
+                                            label += '<li>' + refSite[dataSplit[j]]['siteDesc'] + ', ' + refArea[areaId]['areaDesc'] + ', ' + refCity[cityId]['cityDesc'] + '</li>';
+                                        }
+                                        label += '</ul>';
+                                    }
+                                    return label;
                                 }
                             },
                             {mData: null,
@@ -164,13 +185,13 @@
                             },
                             {mData: null, bSortable: false, sClass: 'text-center',
                                 mRender: function (data, type, row, meta) {
-                                    let label = '<a><i class="fas fa-edit" onclick="siteClass.edit(\'ctr\', ' + row['siteId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>&nbsp;&nbsp;';
-                                    if (row['siteStatus'] === '1') {
-                                        label += '<a><i class="fas fa-toggle-off" onclick="siteClass.deactivate(\'ctr\', ' + row['siteId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Deactivate"></i></a>&nbsp;&nbsp;';
+                                    let label = '<a><i class="fas fa-edit" onclick="contractorDetailsClass.load(\'ctr\', ' + row['contractorId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>&nbsp;&nbsp;';
+                                    if (row['contractorStatus'] === '1') {
+                                        label += '<a><i class="fas fa-toggle-off" onclick="contractorDetailsClass.deactivate(\'ctr\', ' + row['contractorId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Deactivate"></i></a>&nbsp;&nbsp;';
                                     } else {
-                                        label += '<a><i class="fas fa-toggle-on" onclick="siteClass.activate(\'ctr\', ' + row['siteId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Activate"></i></a>&nbsp;&nbsp;';
+                                        label += '<a><i class="fas fa-toggle-on" onclick="contractorDetailsClass.activate(\'ctr\', ' + row['contractorId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Activate"></i></a>&nbsp;&nbsp;';
                                     }
-                                    label += '<a><i class="fas fa-trash-alt" onclick="confirmDeleteClass.delete(\'ctr\', '+row['siteId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
+                                    label += '<a><i class="fas fa-trash-alt" onclick="confirmDeleteClass.delete(\'ctr\', '+row['contractorId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
                                     return label;
                                 }
                             },
@@ -231,6 +252,22 @@
 
                 genTableCtr(0);
 
+                $('#btnDtCtrContractorRefresh').on('click', function () {
+                    ShowLoader();
+                    setTimeout(function () {
+                        try {
+                            genTableCtr(1);
+                        } catch (e) {
+                            toastr['error'](e.message, _ALERT_TITLE_ERROR);
+                        }
+                        HideLoader();
+                    }, 300);
+                });
+
+                $('#btnCtrContractorAdd').on('click', function () {
+                    contractorDetailsClass.load('ctr');
+                });
+
             } catch (e) {
                 toastr['error'](e.message, _ALERT_TITLE_ERROR);
             }
@@ -249,5 +286,6 @@
 
     document.write('<scr' + 'ipt src="js/pages/modal_change_password.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/modal_confirm_delete.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt src="js/pages/section_contractor_details.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
 </script>

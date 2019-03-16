@@ -1,5 +1,6 @@
 function SectionWorkOrderDetails() {
 
+    let self = this;
     let wkdCallFrom = '';
     let wkdWorkorderId = '';
     let wkdRefStatus;
@@ -311,14 +312,14 @@ function SectionWorkOrderDetails() {
                         ticketId: ticketId
                     };
                     wkdWorkorderId = mzAjaxRequest('workorder.php', 'POST', data);
-                    this.extractDetails();
+                    self.extractDetails();
                 } catch (e) {
                     toastr['error'](e.message, _ALERT_TITLE_ERROR);
                 }
                 HideLoader();
             }, 300);
         } else {
-            this.extractDetails();
+            self.extractDetails();
         }
         $('.sectionWorkOrderDetails').show();
     };
