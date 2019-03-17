@@ -82,6 +82,7 @@
     <div class="includeHtml" id="h-modal_change_password"></div>
     <div class="includeHtml" id="h-modal_confirm_delete"></div>
     <div class="includeHtml" id="h-modal_site_add"></div>
+    <div class="includeHtml" id="h-modal_employee"></div>
 
 </main>
 
@@ -164,7 +165,7 @@
                             {mData: 'contractorRegNo'},
                             {mData: 'contractorContactNo'},
                             {mData: 'sites',
-                                mRender: function (data, type, row) {
+                                mRender: function (data) {
                                     let label = '';
                                     if (data != '') {
                                         label = '<ul style="padding-left: 0px">';
@@ -289,5 +290,6 @@
     document.write('<scr' + 'ipt src="js/pages/modal_confirm_delete.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/section_contractor_details.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/modal_site_add.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt src="js/pages/modal_employee.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
 </script>

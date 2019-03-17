@@ -1,0 +1,49 @@
+<div class="modal fade" id="modal_employee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal mt-5 pt-5 mb-5" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header info-color white-text">
+                <h4 class="mb-0" id="lblMpyTitle">Employee</h4>
+                <button type="button" class="close waves-effect waves-light mr-0" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-3">
+                <form id="formMpy">
+                    <a href="javascript:void(0);" id="lnkMstAddCity"><i class="fas fa-search fa-lg float-right pt-2 grey-ic"></i></a>
+                    <div class="md-form" style="width: 90%">
+                        <input type="text" id="txtMstDesc" class="form-control">
+                        <label for="txtMstDesc" id="lblMstDesc">Enter MyKad No. / Passport No. *</label>
+                        <p class="font-small text-danger" id="txtMstDescErr"></p>
+                    </div>
+                    <h6 class="font-weight-bold">New Employee Registration</h6>
+                    <div class="md-form">
+                        <input type="text" id="txtMstsDesc" class="form-control">
+                        <label for="txtMstsDesc" id="lblMstsDesc">Enter MyKad No. / Passport No. *</label>
+                        <p class="font-small text-danger" id="txtMstsDescErr"></p>
+                    </div>
+                    <div class="md-form">
+                        <select id="optMpyAreaId" class="mdb-select md-form colorful-select dropdown-info">
+                            <option value="" selected>Area (Select City 1st) *</option>
+                        </select>
+                        <label for="optMpyAreaId" id="lblMpyAreaId"></label>
+                        <p class="font-small text-danger" id="optMpyAreaIdErr"></p>
+                    </div>
+                    <div class="md-form">
+                        <select id="optMpySiteId" class="mdb-select md-form colorful-select dropdown-info">
+                            <option value="" selected>Site (Select Area 1st) *</option>
+                        </select>
+                        <label for="optMpySiteId" id="lblMpySiteId"></label>
+                        <p class="font-small text-danger" id="optMpySiteIdErr"></p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer flex-center">
+                <button class="btn btn-outline-info waves-effect" data-dismiss="modal"><i class="fas fa-undo-alt ml-1"></i> Close</button>
+                <button id="btnMpySubmit" class="btn btn-info waves-effect"><i class="fas fa-highlighter"></i> Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

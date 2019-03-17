@@ -8,19 +8,26 @@ function SectionContractorDetails() {
     let ctdRefArea;
     let ctdRefCity;
     let ctdRefState;
+    let ctdRefRole;
     let ctdRoleEdit;
     let ctdRowRefresh;
     let formCtdContractor;
     let oTableCtdSite;
+    let oTableCtdEmployee;
     let ctdSiteAddClass;
+    let ctdEmployeeClass;
     let ctdConfirmDeleteSiteClass;
 
     this.init = function () {
         $('.sectionCtdDetails').hide();
-        ctdRefState = mzGetLocalArray('icon_state', mzGetDataVersion(), 'stateId');
-        ctdRoleEdit = mzIsRoleExist('1,2,4,5');
-        ctdConfirmDeleteSiteClass = new ModalConfirmDelete('contractor_site');
         ctdSiteAddClass = new ModalSiteAdd();
+        ctdEmployeeClass = new ModalEmployee();
+        ctdConfirmDeleteSiteClass = new ModalConfirmDelete('contractor_site');
+
+        let ctdVersionLocal = mzGetDataVersion();
+        ctdRefState = mzGetLocalArray('icon_state', ctdVersionLocal, 'stateId');
+        ctdRefRole = mzGetLocalArray('icon_role', ctdVersionLocal, 'roleId');
+        ctdRoleEdit = mzIsRoleExist('1,2,4,5');
         ctdSiteAddClass.setClassFrom(self);
 
         $('#btnCtdBack').on('click', function () {
@@ -33,6 +40,10 @@ function SectionContractorDetails() {
 
         $('#btnCtdSiteAdd').on('click', function () {
             ctdSiteAddClass.add('ctr');
+        });
+
+        $('#btnCtdEmployeeAdd').on('click', function () {
+            ctdEmployeeClass.add('ctd');
         });
 
         $('#btnDtCtdSiteRefresh').on('click', function () {
@@ -270,6 +281,98 @@ function SectionContractorDetails() {
                 })
             ]
         }).container().appendTo($('#btnDtCtdSiteExport'));
+
+        oTableCtdEmployee = $('#dtCtdEmployee').DataTable({
+            bLengthChange: false,
+            bFilter: true,
+            "aaSorting": [[1, 'asc']],
+            fnRowCallback : function(nRow, aData, iDisplayIndex){
+                const info = oTableCtdEmployee.page.info();
+                $('td', nRow).eq(0).html(info.page * info.length + (iDisplayIndex + 1));
+            },
+            drawCallback: function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            },
+            language: _DATATABLE_LANGUAGE,
+            autoWidth: false,
+            aoColumns:
+                [
+                    {mData: null, bSortable: false},
+                    {mData: 'userFullname'},
+                    {mData: 'userContactNo'},
+                    {mData: 'userEmail'},
+                    {mData: 'roles',
+                        mRender: function (data) {
+                            let label = '';
+                            if (data != '') {
+                                const dataSplit = data.split(',');
+                                if (dataSplit.length > 0) {
+                                    for (let j=0; j<dataSplit.length; j++) {
+                                        label += ', ' + ctdRefRole[dataSplit[j]]['roleDesc'];
+                                    }
+                                    label = label.substr(2);
+                                }
+                            }
+                            return label;
+                        }
+                    },
+                    {mData: null,
+                        mRender: function (data, type, row) {
+                            return '<h6><span class="badge badge-pill '+ctdRefStatus[row['userStatus']]['statusColor']+' z-depth-2">'+ctdRefStatus[row['userStatus']]['statusDesc']+'</span></h6>';
+                        }
+                    },
+                    {mData: null, bSortable: false, sClass: 'text-center',
+                        mRender: function (data, type, row, meta) {
+                            return '<a><i class="fas fa-trash-alt" onclick="contractorDetailsClass.deleteFromLink('+row['userGroupId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
+                        }
+                    }
+                ]
+        });
+        $("#dtCtdEmployee_filter").hide();
+        $('#txtCtdEmployeeSearch').on('keyup change', function () {
+            oTableCtdEmployee.search($(this).val()).draw();
+        });
+
+        let cntCtdEmployee;
+        let btnCtdEmployeeOpt = {
+            exportOptions: {
+                columns: [ 0, 1, 2, 3],
+                format: {
+                    body: function ( data, row, column ) {
+                        if (row === 0 && column === 0) {
+                            cntCtdEmployee = 1;
+                        }
+                        return column === 0 ? cntCtdEmployee++ : data;
+                    }
+                }
+            }
+        };
+
+        new $.fn.dataTable.Buttons(oTableCtdEmployee, {
+            buttons: [
+                $.extend( true, {}, btnCtdEmployeeOpt, {
+                    extend:    'print',
+                    text:      '<i class="fas fa-print"></i>',
+                    title:     'ICONS System - Contractor Employee',
+                    titleAttr: 'Print',
+                    className: 'btn btn-outline-white btn-rounded btn-sm px-2'
+                }),
+                $.extend( true, {}, btnCtdEmployeeOpt, {
+                    extend:    'excelHtml5',
+                    text:      '<i class="fas fa-file-excel"></i>',
+                    title:     'ICONS System - Contractor Employee',
+                    titleAttr: 'Excel',
+                    className: 'btn btn-outline-white btn-rounded btn-sm px-2'
+                }),
+                $.extend( true, {}, btnCtdEmployeeOpt, {
+                    extend:    'pdfHtml5',
+                    text:      '<i class="fas fa-file-pdf"></i>',
+                    title:     'ICONS System - Contractor Employee',
+                    titleAttr: 'Pdf',
+                    className: 'btn btn-outline-white btn-rounded btn-sm px-2'
+                })
+            ]
+        }).container().appendTo($('#btnDtCtdEmployeeExport'));
     };
 
     this.deleteFromLink = function (contractorSiteId, rowRefresh) {
@@ -327,7 +430,9 @@ function SectionContractorDetails() {
         mzSetFieldValue('CtdContractorCreatedBy', dataCtdContractor['contractorCreatedBy'], 'text', 'Created By');
         mzSetFieldValue('CtdContractorTimeCreated', mzConvertDateDisplay(dataCtdContractor['contractorTimeCreated']), 'text', 'Time Created');
         mzSetFieldValue('CtdContractorStatus', ctdRefStatus[dataCtdContractor['contractorStatus']]['statusDesc'], 'text', 'Status');
+
         oTableCtdSite.clear().rows.add(dataCtdContractor['sites']).draw();
+        oTableCtdEmployee.clear().rows.add(dataCtdContractor['employees']).draw();
 
         $('#formCtd').find('input, textarea, select').attr('disabled', true);
         $('#btnCtdSave, #btnCtdUpdate, #btnCtdSubmitNew').hide();
