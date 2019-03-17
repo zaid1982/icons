@@ -1,0 +1,44 @@
+<div class="modal fade" id="modal_site_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal mt-5 pt-5 mb-5" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header info-color white-text">
+                <h4 class="mb-0" id="lblMsxTitle">Site</h4>
+                <button type="button" class="close waves-effect waves-light mr-0" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-3">
+                <form id="formMsx">
+                    <div class="md-form">
+                        <select id="optMsxCityId" class="mdb-select md-form colorful-select dropdown-info">
+                            <option value="" selected>City *</option>
+                        </select>
+                        <label for="optMsxCityId" id="lblMsxCityId"></label>
+                        <p class="font-small text-danger" id="optMsxCityIdErr"></p>
+                    </div>
+                    <div class="md-form">
+                        <select id="optMsxAreaId" class="mdb-select md-form colorful-select dropdown-info">
+                            <option value="" selected>Area (Select City 1st) *</option>
+                        </select>
+                        <label for="optMsxAreaId" id="lblMsxAreaId"></label>
+                        <p class="font-small text-danger" id="optMsxAreaIdErr"></p>
+                    </div>
+                    <div class="md-form">
+                        <select id="optMsxSiteId" class="mdb-select md-form colorful-select dropdown-info">
+                            <option value="" selected>Site (Select Area 1st) *</option>
+                        </select>
+                        <label for="optMsxSiteId" id="lblMsxSiteId"></label>
+                        <p class="font-small text-danger" id="optMsxSiteIdErr"></p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer flex-center">
+                <button class="btn btn-outline-info waves-effect" data-dismiss="modal"><i class="fas fa-undo-alt ml-1"></i> Close</button>
+                <button id="btnMsxSubmit" class="btn btn-info waves-effect"><i class="fas fa-highlighter"></i> Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

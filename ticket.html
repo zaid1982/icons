@@ -292,7 +292,7 @@
                         columns: [ 0, 1, 2, 3, 4, 5, 6 ],
                         format: {
                             body: function ( data, row, column ) {
-                                if (row === 0) {
+                                if (row === 0 && column === 0) {
                                     cntTckTicket = 1;
                                 }
                                 if (column === 5) {

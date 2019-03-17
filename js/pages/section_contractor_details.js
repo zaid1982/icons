@@ -11,9 +11,17 @@ function SectionContractorDetails() {
     let ctdRoleEdit;
     let ctdRowRefresh;
     let formCtdContractor;
+    let oTableCtdSite;
+    let ctdSiteAddClass;
+    let ctdConfirmDeleteSiteClass;
 
     this.init = function () {
         $('.sectionCtdDetails').hide();
+        ctdRefState = mzGetLocalArray('icon_state', mzGetDataVersion(), 'stateId');
+        ctdRoleEdit = mzIsRoleExist('1,2,4,5');
+        ctdConfirmDeleteSiteClass = new ModalConfirmDelete('contractor_site');
+        ctdSiteAddClass = new ModalSiteAdd();
+        ctdSiteAddClass.setClassFrom(self);
 
         $('#btnCtdBack').on('click', function () {
             $('.sectionCtdDetails').hide();
@@ -23,8 +31,21 @@ function SectionContractorDetails() {
             $(window).scrollTop(0);
         });
 
-        ctdRefState = mzGetLocalArray('icon_state', mzGetDataVersion(), 'stateId');
-        ctdRoleEdit = mzIsRoleExist('1,2,4,5');
+        $('#btnCtdSiteAdd').on('click', function () {
+            ctdSiteAddClass.add('ctr');
+        });
+
+        $('#btnDtCtdSiteRefresh').on('click', function () {
+            ShowLoader();
+            setTimeout(function () {
+                try {
+                    self.extractDetails();
+                } catch (e) {
+                    toastr['error'](e.message, _ALERT_TITLE_ERROR);
+                }
+                HideLoader();
+            }, 300);
+        });
 
         const vDataCtdContractor = [
             {
@@ -163,6 +184,96 @@ function SectionContractorDetails() {
                 HideLoader();
             }, 300);
         });
+
+        oTableCtdSite = $('#dtCtdSite').DataTable({
+            bLengthChange: false,
+            bFilter: true,
+            "aaSorting": [[1, 'asc']],
+            fnRowCallback : function(nRow, aData, iDisplayIndex){
+                const info = oTableCtdSite.page.info();
+                $('td', nRow).eq(0).html(info.page * info.length + (iDisplayIndex + 1));
+            },
+            drawCallback: function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            },
+            language: _DATATABLE_LANGUAGE,
+            aoColumns:
+                [
+                    {mData: null, bSortable: false},
+                    {mData: null,
+                        mRender: function (data, type, row) {
+                            return ctdRefSite[row['siteId']]['siteDesc'];
+                        }
+                    },
+                    {mData: null,
+                        mRender: function (data, type, row) {
+                            const areaId = ctdRefSite[row['siteId']]['areaId'];
+                            return ctdRefArea[areaId]['areaDesc'];
+                        }
+                    },
+                    {mData: null,
+                        mRender: function (data, type, row) {
+                            const areaId = ctdRefSite[row['siteId']]['areaId'];
+                            const cityId = ctdRefArea[areaId]['cityId'];
+                            return refCity[cityId]['cityDesc'];
+                        }
+                    },
+                    {mData: null, bSortable: false, sClass: 'text-center',
+                        mRender: function (data, type, row, meta) {
+                            return '<a><i class="fas fa-trash-alt" onclick="contractorDetailsClass.deleteFromLink('+row['contractorSiteId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
+                        }
+                    }
+                ]
+        });
+        $("#dtCtdSite_filter").hide();
+        $('#txtCtdSiteSearch').on('keyup change', function () {
+            oTableCtdSite.search($(this).val()).draw();
+        });
+
+        let cntCtdSite;
+        let btnCtdSiteOpt = {
+            exportOptions: {
+                columns: [ 0, 1, 2, 3],
+                format: {
+                    body: function ( data, row, column ) {
+                        if (row === 0 && column === 0) {
+                            cntCtdSite = 1;
+                        }
+                        return column === 0 ? cntCtdSite++ : data;
+                    }
+                }
+            }
+        };
+
+        new $.fn.dataTable.Buttons(oTableCtdSite, {
+            buttons: [
+                $.extend( true, {}, btnCtdSiteOpt, {
+                    extend:    'print',
+                    text:      '<i class="fas fa-print"></i>',
+                    title:     'ICONS System - Contractor Sites',
+                    titleAttr: 'Print',
+                    className: 'btn btn-outline-white btn-rounded btn-sm px-2'
+                }),
+                $.extend( true, {}, btnCtdSiteOpt, {
+                    extend:    'excelHtml5',
+                    text:      '<i class="fas fa-file-excel"></i>',
+                    title:     'ICONS System - Contractor Sites',
+                    titleAttr: 'Excel',
+                    className: 'btn btn-outline-white btn-rounded btn-sm px-2'
+                }),
+                $.extend( true, {}, btnCtdSiteOpt, {
+                    extend:    'pdfHtml5',
+                    text:      '<i class="fas fa-file-pdf"></i>',
+                    title:     'ICONS System - Contractor Sites',
+                    titleAttr: 'Pdf',
+                    className: 'btn btn-outline-white btn-rounded btn-sm px-2'
+                })
+            ]
+        }).container().appendTo($('#btnDtCtdSiteExport'));
+    };
+
+    this.deleteFromLink = function (contractorSiteId, rowRefresh) {
+        ctdConfirmDeleteSiteClass.delete('ctd', contractorSiteId, rowRefresh, ctdSiteAddClass);
     };
 
     this.load = function (callFrom, contractorId, rowRefresh) {
@@ -202,22 +313,6 @@ function SectionContractorDetails() {
         }, 300);
     };
 
-    this.setRefSite = function (refSiteSet) {
-        ctdRefSite = refSiteSet;
-    };
-
-    this.setRefArea = function (refAreaSet) {
-        ctdRefArea = refAreaSet;
-    };
-
-    this.setRefCity = function (refCitySet) {
-        ctdRefCity = refCitySet;
-    };
-
-    this.setRefStatus = function (refStatusSet) {
-        ctdRefStatus = refStatusSet;
-    };
-
     this.extractDetails = function () {
         const dataCtdContractor = mzAjaxRequest('contractor.php?contractorId='+ctdContractorId, 'GET');
         mzSetFieldValue('CtdContractorName', dataCtdContractor['contractorName'], 'text', 'Contractor Name *');
@@ -232,6 +327,7 @@ function SectionContractorDetails() {
         mzSetFieldValue('CtdContractorCreatedBy', dataCtdContractor['contractorCreatedBy'], 'text', 'Created By');
         mzSetFieldValue('CtdContractorTimeCreated', mzConvertDateDisplay(dataCtdContractor['contractorTimeCreated']), 'text', 'Time Created');
         mzSetFieldValue('CtdContractorStatus', ctdRefStatus[dataCtdContractor['contractorStatus']]['statusDesc'], 'text', 'Status');
+        oTableCtdSite.clear().rows.add(dataCtdContractor['sites']).draw();
 
         $('#formCtd').find('input, textarea, select').attr('disabled', true);
         $('#btnCtdSave, #btnCtdUpdate, #btnCtdSubmitNew').hide();
@@ -245,6 +341,42 @@ function SectionContractorDetails() {
                 $('#btnCtdUpdate').show();
             }
         }
+    };
+
+    this.addDataTableSite = function (contractorSiteId, contractorId, siteId) {
+        const addRow = {
+            contractorSiteId: contractorSiteId,
+            contractorId: contractorId,
+            siteId: siteId
+        };
+        oTableCtdSite.row.add(addRow).draw();
+    };
+
+    this.deleteDataTableSite = function (rowDelete) {
+        oTableCtdSite.row(rowDelete).remove().draw();
+    };
+
+    this.setRefSite = function (refSiteSet) {
+        ctdRefSite = refSiteSet;
+        ctdSiteAddClass.setRefSite(ctdRefSite);
+    };
+
+    this.setRefArea = function (refAreaSet) {
+        ctdRefArea = refAreaSet;
+        ctdSiteAddClass.setRefArea(ctdRefArea);
+    };
+
+    this.setRefCity = function (refCitySet) {
+        ctdRefCity = refCitySet;
+        ctdSiteAddClass.setRefCity(ctdRefCity);
+    };
+
+    this.setRefStatus = function (refStatusSet) {
+        ctdRefStatus = refStatusSet;
+    };
+
+    this.getCtdContractorId = function () {
+        return ctdContractorId;
     };
 
     this.init();

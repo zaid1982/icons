@@ -9,6 +9,7 @@ function ModalConfirmDelete(type) {
     let mcdCallFrom;
     let mcdId;
     let mcdRowRefresh;
+    let mcdReturnClass;
 
     this.init = function () {
         $('#btnMcdSubmit').on('click', function () {
@@ -25,14 +26,17 @@ function ModalConfirmDelete(type) {
                 case 'site':
                     siteClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
                     break;
-                default:
-                    toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+                case 'contractor_site':
+                    mcdReturnClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
+                    break;
+                //default:
+                    //toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
             }
             $('#modal_confirm_delete').modal('hide');
         });
     };
 
-    this.delete = function (callFrom, id, rowRefresh) {
+    this.delete = function (callFrom, id, rowRefresh, returnClass) {
         if (typeof callFrom === 'undefined' || callFrom === '') {
             toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
             return false;
@@ -48,6 +52,7 @@ function ModalConfirmDelete(type) {
         mcdCallFrom = callFrom;
         mcdId = id;
         mcdRowRefresh = rowRefresh;
+        mcdReturnClass = typeof returnClass !== 'undefined' ? returnClass : '';
         $('#modal_confirm_delete').modal({backdrop: 'static', keyboard: false});
     };
 

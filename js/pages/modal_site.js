@@ -26,6 +26,14 @@ function ModalSite(_areaClass, _cityClass) {
             $('#lblMstAreaId').html('Area *').addClass('active');
         });
 
+        $('#lnkMstAddCity').on('click', function () {
+            mstCityClass.add('Mst');
+        });
+
+        $('#lnkMstAddArea').on('click', function () {
+            mstAreaClass.add('Mst', $('#optMstCityId').val());
+        });
+
         const vDataMst = [
             {
                 field_id: 'txtMstDesc',
@@ -66,14 +74,6 @@ function ModalSite(_areaClass, _cityClass) {
 
         $('#formMst').on('keyup change', function () {
             $('#btnMstSubmit').attr('disabled', !formMstValidate.validateForm());
-        });
-
-        $('#lnkMstAddCity').on('click', function () {
-            mstCityClass.add('Mst');
-        });
-
-        $('#lnkMstAddArea').on('click', function () {
-            mstAreaClass.add('Mst', $('#optMstCityId').val());
         });
 
         $('#modal_site').on('hidden.bs.modal', function(){

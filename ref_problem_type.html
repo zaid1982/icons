@@ -179,7 +179,7 @@
                         columns: [ 0, 1, 2],
                         format: {
                             body: function ( data, row, column ) {
-                                if (row === 0) {
+                                if (row === 0 && column === 0) {
                                     cntPbtProblemType = 1;
                                 }
                                 if (column === 2) {
