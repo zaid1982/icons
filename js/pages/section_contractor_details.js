@@ -3,6 +3,7 @@ function SectionContractorDetails() {
     let self = this;
     let ctdCallFrom = '';
     let ctdContractorId = '';
+    let ctdGroupId;
     let ctdRefStatus;
     let ctdRefSite;
     let ctdRefArea;
@@ -43,7 +44,7 @@ function SectionContractorDetails() {
         });
 
         $('#btnCtdEmployeeAdd').on('click', function () {
-            ctdEmployeeClass.add('ctd');
+            ctdEmployeeClass.add('ctd', ctdGroupId);
         });
 
         $('#btnDtCtdSiteRefresh').on('click', function () {
@@ -430,6 +431,7 @@ function SectionContractorDetails() {
         mzSetFieldValue('CtdContractorCreatedBy', dataCtdContractor['contractorCreatedBy'], 'text', 'Created By');
         mzSetFieldValue('CtdContractorTimeCreated', mzConvertDateDisplay(dataCtdContractor['contractorTimeCreated']), 'text', 'Time Created');
         mzSetFieldValue('CtdContractorStatus', ctdRefStatus[dataCtdContractor['contractorStatus']]['statusDesc'], 'text', 'Status');
+        ctdGroupId = dataCtdContractor['groupId'];
 
         oTableCtdSite.clear().rows.add(dataCtdContractor['sites']).draw();
         oTableCtdEmployee.clear().rows.add(dataCtdContractor['employees']).draw();

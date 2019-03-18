@@ -59,8 +59,8 @@ function MzValidate(name) {
     obj.fields = [];
 
     const checkField = function (field_id, type, val) {
-        const fieldSelector = $('#' + field_id);
-        const fieldVal = fieldSelector.val();
+        const fieldSelector = type === 'notEmptyCheck' ? $("[name='"+field_id+"']:checked") : $('#' + field_id);
+        const fieldVal = type !== 'notEmptyCheck' ? fieldSelector.val() : '';
         switch (type) {
             case 'notEmpty':
                 if (val === true && (fieldVal === '' || fieldVal === null))
@@ -110,14 +110,19 @@ function MzValidate(name) {
                 if (val === true && fieldSelector.prop('files').length === 0)
                     return false;
                 break;
+            case 'notEmptyCheck':
+                console.log(fieldSelector.length);
+                if (val === true && fieldSelector.length === 0)
+                    return false;
+                break;
         }
         return true;
     };
 
-    const validateFields = function (field_id, validator, name) {
+    const validateFields = function (field_id, validator, name, type) {
         let msg = '';
-        const fieldSelector = $('#' + field_id);
-        const fieldErrSelector = $('#' + field_id + 'Err');
+        const fieldSelector = type === 'check' ? $("input[name='"+field_id+"']:checkbox") : $('#' + field_id);
+        const fieldErrSelector = type === 'check' ? $('#' + field_id.substr(0, field_id.length-2) + 'Err') : $('#' +field_id + 'Err');
         fieldSelector.removeClass('invalid');
         fieldErrSelector.html('');
 
@@ -166,6 +171,9 @@ function MzValidate(name) {
                     case 'notEmptyFile':
                         msg += '<br>Please choose ' + name + ' file';
                         return false;
+                    case 'notEmptyCheck':
+                        msg += '<br>Please choose at least 1 ' + name;
+                        return false;
                 }
             }
         });
@@ -191,12 +199,12 @@ function MzValidate(name) {
     this.registerFields = function (data) {
         let arrFields = [];
         $.each(data, function (n, u) {
-            const fieldSelector = $('#' + u.field_id);
-            const fieldErrSelector = $('#' + u.field_id + 'Err');
+            const fieldSelector = u.type === 'check' ? $("input[name='"+u.field_id+"']:checkbox") : $('#' + u.field_id);
+            const fieldErrSelector = u.type === 'check' ? $('#' + (u.field_id).substr(0, (u.field_id).length-2) + 'Err') : $('#' + u.field_id + 'Err');
             fieldSelector.removeClass('invalid');
             fieldErrSelector.html('');
             fieldSelector.on('keyup change', function () {
-                validateFields(u.field_id, u.validator, u.name);
+                validateFields(u.field_id, u.validator, u.name, u.type);
             });
             u.enabled = true;
             arrFields.push(u);
@@ -217,7 +225,7 @@ function MzValidate(name) {
     this.validateNow = function () {
         let result = true;
         $.each(this.fields, function (n, u) {
-            if (u.enabled && !validateFields(u.field_id, u.validator, u.name)) {
+            if (u.enabled && !validateFields(u.field_id, u.validator, u.name, u.type)) {
                 result = false;
             }                
         });
@@ -227,9 +235,11 @@ function MzValidate(name) {
     this.clearValidation = function () {
         $.each(this.fields, function (n, u) {
             const fieldId = u.field_id;
-            const fieldSelector = $('#' + fieldId);
-            const fieldErrSelector = $('#' + fieldId + 'Err');
-            const fieldLblSelector = $('#lbl' + fieldId.substring(3));
+            const fieldSelector = u.type === 'check' ? $("input[name='"+fieldId+"']:checkbox") : $('#' + fieldId);
+            const fieldErrSelector = u.type === 'check' ? $('#' + fieldId.substr(0, fieldId.length-2) + 'Err') : $('#' +fieldId + 'Err');
+            //const fieldSelector = $('#' + fieldId);
+            //const fieldErrSelector = $('#' + fieldId + 'Err');
+            const fieldLblSelector = u.type !== 'check' ? $('#lbl' + fieldId.substring(3)) : '';
             if (u.type === 'text' || u.type === 'textarea') {
                 fieldSelector.val('');
                 fieldLblSelector.removeClass('active');
@@ -246,9 +256,11 @@ function MzValidate(name) {
                 fieldLblSelector.html('').removeClass('active');
             } else if (u.type === 'checkSingle') {
                 fieldSelector.prop('checked', false);
+            } else if (u.type === 'check') {
+                fieldSelector.prop('checked',false);
+                fieldLblSelector.html('').removeClass('active');
             } else if (u.type === 'file') {
                 fieldSelector.val('');
-                fieldLblSelector.val('');
                 fieldLblSelector.html('').removeClass('active');
             }
             fieldSelector.removeClass('invalid');
