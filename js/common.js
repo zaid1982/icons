@@ -111,7 +111,6 @@ function MzValidate(name) {
                     return false;
                 break;
             case 'notEmptyCheck':
-                console.log(fieldSelector.length);
                 if (val === true && fieldSelector.length === 0)
                     return false;
                 break;
@@ -237,8 +236,6 @@ function MzValidate(name) {
             const fieldId = u.field_id;
             const fieldSelector = u.type === 'check' ? $("input[name='"+fieldId+"']:checkbox") : $('#' + fieldId);
             const fieldErrSelector = u.type === 'check' ? $('#' + fieldId.substr(0, fieldId.length-2) + 'Err') : $('#' +fieldId + 'Err');
-            //const fieldSelector = $('#' + fieldId);
-            //const fieldErrSelector = $('#' + fieldId + 'Err');
             const fieldLblSelector = u.type !== 'check' ? $('#lbl' + fieldId.substring(3)) : '';
             if (u.type === 'text' || u.type === 'textarea') {
                 fieldSelector.val('');
@@ -258,7 +255,6 @@ function MzValidate(name) {
                 fieldSelector.prop('checked', false);
             } else if (u.type === 'check') {
                 fieldSelector.prop('checked',false);
-                fieldLblSelector.html('').removeClass('active');
             } else if (u.type === 'file') {
                 fieldSelector.val('');
                 fieldLblSelector.html('').removeClass('active');
@@ -289,6 +285,29 @@ function MzValidate(name) {
         });
         this.fields = arrFields;
     };
+
+    this.validateForm = function () {
+        let result = true;
+        $.each(this.fields, function (n, u) {
+            if (u.enabled && !validateFieldsNoError(u.field_id, u.validator)) {
+                result = false;
+            }
+        });
+        return result;
+    };
+
+    this.validateField = function (fieldId) {
+        let result = true;
+        let arrFields = this.fields;
+        $.each(arrFields, function (n, u) {
+            if (u.field_id === fieldId) {
+                if (u.enabled && !validateFieldsNoError(u.field_id, u.validator)) {
+                    result = false;
+                }
+            }
+        });
+        return result;
+    }
 }
 
 function mzAjaxRequest(url, type, data, functionStr) {
@@ -622,7 +641,6 @@ function mzEmailShort(emailInput, shortLength) {
     if (emailInput.length > shortLength) {
         for (let u = shortLength; u < emailInput.length; u++) {
             if (emailInput.substr(u, 1) === '@' || emailInput.substr(u, 1) === '.') {
-                console.log(emailInput);
                 emailNew = emailInput.substr(0, u) + '<br>' + emailInput.substr(u);
                 break;
             }
@@ -927,7 +945,7 @@ function mzChartOption() {
 }
 
 function mzSetFieldValue(name, value, type, label) {
-    if (value !== '') {
+    if (value !== '' && value.length !== 0) {
         if (type === 'text') {
             $('#txt'+name).val(value);
             if (value !== '') {
@@ -949,6 +967,11 @@ function mzSetFieldValue(name, value, type, label) {
         }
         else if (type === 'checkSingle') {
             $('#chk' + name).prop('checked', value === label);
+        }
+        else if (type === 'check') {
+            for (let i=0; i<value.length; i++) {
+                $('#chk' + name + value[i]).prop('checked', true);
+            }
         }
     }
 }

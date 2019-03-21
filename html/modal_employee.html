@@ -11,20 +11,27 @@
             </div>
             <!--Body-->
             <div class="modal-body mb-2">
-                <form id="formMye">
-                    <a href="javascript:void(0);" id="lnkMstAddCity"><i class="fas fa-search fa-lg float-right pt-2 grey-ic"></i></a>
+                <form id="formMyeSelect">
+                    <a href="javascript:void(0);" id="lnkMyeCheckIc"><i class="fas fa-search fa-lg float-right pt-2 grey-ic" data-toggle="tooltip" data-placement="top" title="Check MyKad No. / Password No."></i></a>
                     <div class="md-form" style="width: 90%">
-                        <input type="text" id="txtMyeUserMykadNo" class="form-control">
-                        <label for="txtMyeUserMykadNo" id="lblMyeUserMykadNo">Enter MyKad No. / Passport No. *</label>
+                        <input type="text" id="txtMyeSelectMykad" class="form-control">
+                        <label for="txtMyeSelectMykad" id="lblMyeSelectMykad">Enter MyKad No. / Passport No. *</label>
+                        <p class="font-small text-danger" id="txtMyeSelectMykadErr"></p>
+                    </div>
+                </form>
+                <form id="formMye">
+                    <h6 class="font-weight-bold pb-2" id="lblFormMyeTitle"></h6>
+                    <div class="md-form">
+                        <input type="text" id="txtMyeUserMykadNo" class="form-control" disabled="">
+                        <label for="txtMyeUserMykadNo" id="lblMyeUserMykadNo">MyKad No. / Passport No. *</label>
                         <p class="font-small text-danger" id="txtMyeUserMykadNoErr"></p>
                     </div>
-                    <h6 class="font-weight-bold">New Employee Registration</h6>
                     <div class="md-form">
                         <input type="text" id="txtMyeUserName" class="form-control" autocomplete="new-id">
                         <label for="txtMyeUserName" id="lblMyeUserName">User ID *</label>
                         <p class="font-small text-danger" id="txtMyeUserNameErr"></p>
                     </div>
-                    <div class="md-form">
+                    <div class="md-form" id="divMyeUserPassword">
                         <input type="password" id="txtMyeUserPassword" class="form-control" autocomplete="new-password">
                         <label for="txtMyeUserPassword" id="lblMyeUserPassword">Password *</label>
                         <p class="font-small text-danger" id="txtMyeUserPasswordErr"></p>
@@ -51,12 +58,12 @@
                     </div>
                     <div class="md-form">
                         <div class="form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" name="chkMyeRole[]" id="chkMyeRole1">
-                            <label class="form-check-label" for="chkMyeRole1">Contractor Supervisor</label>
+                            <input type="checkbox" class="form-check-input" name="chkMyeRole[]" id="chkMyeRole5">
+                            <label class="form-check-label" for="chkMyeRole5">Contractor Supervisor</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" name="chkMyeRole[]" id="chkMyeRole2">
-                            <label class="form-check-label" for="chkMyeRole2">Contractor Employee</label>
+                            <input type="checkbox" class="form-check-input" name="chkMyeRole[]" id="chkMyeRole6">
+                            <label class="form-check-label" for="chkMyeRole6">Contractor Employee</label>
                         </div>
                         <p class="font-small text-danger mt-3" id="chkMyeRoleErr"></p>
                     </div>

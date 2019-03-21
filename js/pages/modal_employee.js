@@ -6,15 +6,28 @@ function ModalEmployee() {
     let myeGroupId = '';
 
     this.init = function () {
-        const vDataMye = [
+        const vDataMyeSelect = [
             {
-                field_id: 'txtMyeUserMykadNo',
+                field_id: 'txtMyeSelectMykad',
                 type: 'text',
                 name: 'MyKad No. / Passport No.',
                 validator: {
                     notEmpty: true,
                     maxLength: 20,
                     minLength: 8
+                }
+            }
+        ];
+
+        let formMyeSelectValidate = new MzValidate('formMyeSelect');
+        formMyeSelectValidate.registerFields(vDataMyeSelect);
+
+        const vDataMye = [
+            {
+                field_id: 'txtMyeUserMykadNo',
+                type: 'text',
+                name: 'MyKad No. / Passport No.',
+                validator: {
                 }
             },
             {
@@ -94,11 +107,69 @@ function ModalEmployee() {
         });
 
         $('#modal_employee').on('hidden.bs.modal', function(){
+            formMyeSelectValidate.clearValidation();
             formMyeValidate.clearValidation();
         });
 
         $('#modal_employee').on('shown.bs.modal', function(){
             $('#btnMyeSubmit').attr('disabled', true);
+        });
+
+        $('#lnkMyeCheckIc').on('click', function () {
+            ShowLoader();
+            setTimeout(function () {
+                try {
+                    if (!formMyeSelectValidate.validateForm()) {
+                        throw new Error('Please enter the valid MyKad No. / Passport No.');
+                    }
+                    const myKad = $('#txtMyeSelectMykad').val();
+                    formMyeValidate.clearValidation();
+
+                    const data = {
+                        action: 'get_by_mykad',
+                        groupId: myeGroupId,
+                        userMykadNo: myKad
+                    };
+                    const dataMyeEmployee = mzAjaxRequest('employee.php', 'POST', data);
+                    if (dataMyeEmployee.length !== 0) {
+                        $('#divMyeUserPassword').hide();
+                        formMyeValidate.disableField('txtMyeUserName');
+                        formMyeValidate.disableField('txtMyeUserPassword');
+                        formMyeValidate.disableField('txtMyeUserFirstName');
+                        formMyeValidate.disableField('txtMyeUserLastName');
+                        formMyeValidate.disableField('txtMyeUserContactNo');
+                        formMyeValidate.disableField('txtMyeUserEmail');
+                        mzSetFieldValue('MyeUserMykadNo', dataMyeEmployee['userMykadNo'], 'text', 'MyKad No. / Passport No. *');
+                        mzSetFieldValue('MyeUserName', dataMyeEmployee['userName'], 'text', 'User ID *');
+                        mzSetFieldValue('MyeUserFirstName', dataMyeEmployee['userFirstName'], 'text', 'First Name *');
+                        mzSetFieldValue('MyeUserLastName', dataMyeEmployee['userLastName'], 'text', 'Last Name *');
+                        mzSetFieldValue('MyeUserContactNo', dataMyeEmployee['userContactNo'], 'text', 'Contact No. *');
+                        mzSetFieldValue('MyeUserEmail', dataMyeEmployee['userEmail'], 'text', 'Email *');
+                        mzSetFieldValue('MyeRole', dataMyeEmployee['roles'], 'check');
+
+                        $('#lblFormMyeTitle').html('New Employee Registration');
+                        $('#txtMyeUserName, #txtMyeUserFirstName, #txtMyeUserLastName, #txtMyeUserContactNo, #txtMyeUserEmail').prop('disabled', true);
+                        $('#btnMyeSubmit').attr('disabled', !formMyeValidate.validateForm());
+                    } else {
+                        $('#divMyeUserPassword').show();
+                        formMyeValidate.enableField('txtMyeUserName');
+                        formMyeValidate.enableField('txtMyeUserPassword');
+                        formMyeValidate.enableField('txtMyeUserFirstName');
+                        formMyeValidate.enableField('txtMyeUserLastName');
+                        formMyeValidate.enableField('txtMyeUserContactNo');
+                        formMyeValidate.enableField('txtMyeUserEmail');
+                        mzSetFieldValue('MyeUserMykadNo', myKad, 'text', 'MyKad No. / Passport No. *');
+
+                        $('#lblFormMyeTitle').html('Existing System User');
+                        $('#txtMyeUserName, #txtMyeUserFirstName, #txtMyeUserLastName, #txtMyeUserContactNo, #txtMyeUserEmail').prop('disabled', false);
+                        $('#btnMyeSubmit').attr('disabled', true);
+                    }
+                    $('#formMye').show();
+                } catch (e) {
+                    toastr['error'](e.message, _ALERT_TITLE_ERROR);
+                }
+                HideLoader();
+            }, 300);
         });
     };
 
@@ -116,9 +187,9 @@ function ModalEmployee() {
         myeUserGroupId = '';
         myeRowRefresh = '';
 
+        $('#formMye').hide();
         $('#lblMyeTitle').html('<i class="fas fa-user-plus"></i> Add Contractor Employee');
         $('#btnMyeSubmit').html('<i class="far fa-paper-plane ml-1"></i> Submit');
-        $('#btnMyeSubmit').attr('disabled', true);
         $('#modal_employee').modal({backdrop: 'static', keyboard: false});
     };
 
