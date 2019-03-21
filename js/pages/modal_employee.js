@@ -4,6 +4,7 @@ function ModalEmployee() {
     let myeRowRefresh = '';
     let myeUserGroupId = '';
     let myeGroupId = '';
+    let formMyeValidate;
 
     this.init = function () {
         const vDataMyeSelect = [
@@ -99,7 +100,7 @@ function ModalEmployee() {
             }
         ];
 
-        let formMyeValidate = new MzValidate('formMye');
+        formMyeValidate = new MzValidate('formMye');
         formMyeValidate.registerFields(vDataMye);
 
         $('#formMye').on('keyup change', function () {
@@ -147,7 +148,8 @@ function ModalEmployee() {
                         mzSetFieldValue('MyeUserEmail', dataMyeEmployee['userEmail'], 'text', 'Email *');
                         mzSetFieldValue('MyeRole', dataMyeEmployee['roles'], 'check');
 
-                        $('#lblFormMyeTitle').html('New Employee Registration');
+                        $('#lblFormMyeTitle').html('New Employee Registration').show();
+                        $('#txtMyeUserMykadNo').prop('disabled', true);
                         $('#txtMyeUserName, #txtMyeUserFirstName, #txtMyeUserLastName, #txtMyeUserContactNo, #txtMyeUserEmail').prop('disabled', true);
                         $('#btnMyeSubmit').attr('disabled', !formMyeValidate.validateForm());
                     } else {
@@ -160,7 +162,8 @@ function ModalEmployee() {
                         formMyeValidate.enableField('txtMyeUserEmail');
                         mzSetFieldValue('MyeUserMykadNo', myKad, 'text', 'MyKad No. / Passport No. *');
 
-                        $('#lblFormMyeTitle').html('Existing System User');
+                        $('#lblFormMyeTitle').html('Existing System User').show();
+                        $('#txtMyeUserMykadNo').prop('disabled', true);
                         $('#txtMyeUserName, #txtMyeUserFirstName, #txtMyeUserLastName, #txtMyeUserContactNo, #txtMyeUserEmail').prop('disabled', false);
                         $('#btnMyeSubmit').attr('disabled', true);
                     }
@@ -184,12 +187,41 @@ function ModalEmployee() {
         }
         myeCallFrom = callFrom;
         myeGroupId = groupId;
-        myeUserGroupId = '';
+        myeUserGroupId  = '';
         myeRowRefresh = '';
 
+        $('#formMyeSelect').show();
         $('#formMye').hide();
         $('#lblMyeTitle').html('<i class="fas fa-user-plus"></i> Add Contractor Employee');
         $('#btnMyeSubmit').html('<i class="far fa-paper-plane ml-1"></i> Submit');
+        $('#modal_employee').modal({backdrop: 'static', keyboard: false});
+    };
+
+    this.edit = function (callFrom, userGroupId, rowRefresh) {
+        if (typeof callFrom === 'undefined' || callFrom === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof userGroupId === 'undefined' || userGroupId === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof rowRefresh === 'undefined' || rowRefresh === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        myeCallFrom = callFrom;
+        myeGroupId = '';
+        myeUserGroupId  = userGroupId;
+        myeRowRefresh = rowRefresh;
+
+        $('#txtMyeUserMykadNo, #txtMyeUserName, #txtMyeUserFirstName, #txtMyeUserLastName, #txtMyeUserContactNo, #txtMyeUserEmail').prop('disabled', false);
+        $('#btnMyeSubmit').attr('disabled', !formMyeValidate.validateForm());
+        $('#formMyeSelect').hide();
+        $('#formMye').show();
+        $('#lblFormMyeTitle').html('').hide();
+        $('#lblMyeTitle').html('<i class="fas fa-user-plus"></i> Edit Contractor Employee');
+        $('#btnMyeSubmit').html('<i class="fas fa-save ml-1"></i> Update');
         $('#modal_employee').modal({backdrop: 'static', keyboard: false});
     };
 

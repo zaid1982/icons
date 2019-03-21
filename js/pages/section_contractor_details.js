@@ -232,7 +232,7 @@ function SectionContractorDetails() {
                     },
                     {mData: null, bSortable: false, sClass: 'text-center',
                         mRender: function (data, type, row, meta) {
-                            return '<a><i class="fas fa-trash-alt" onclick="contractorDetailsClass.deleteFromLink('+row['contractorSiteId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
+                            return '<a><i class="fas fa-trash-alt" onclick="contractorDetailsClass.deleteSite('+row['contractorSiteId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
                         }
                     }
                 ]
@@ -324,7 +324,9 @@ function SectionContractorDetails() {
                     },
                     {mData: null, bSortable: false, sClass: 'text-center',
                         mRender: function (data, type, row, meta) {
-                            return '<a><i class="fas fa-trash-alt" onclick="contractorDetailsClass.deleteFromLink('+row['userGroupId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
+                            let label = '<a><i class="fas fa-edit" onclick="contractorDetailsClass.editEmployee(' + row['userGroupId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>&nbsp;&nbsp;';
+                            label += '<a><i class="fas fa-trash-alt" onclick="contractorDetailsClass.deleteEmployee(' + row['userGroupId'] + ', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
+                            return label;
                         }
                     }
                 ]
@@ -337,11 +339,16 @@ function SectionContractorDetails() {
         let cntCtdEmployee;
         let btnCtdEmployeeOpt = {
             exportOptions: {
-                columns: [ 0, 1, 2, 3],
+                columns: [ 0, 1, 2, 3, 4, 5],
                 format: {
                     body: function ( data, row, column ) {
                         if (row === 0 && column === 0) {
                             cntCtdEmployee = 1;
+                        }
+                        if (column === 5) {
+                            const n = data.search('">');
+                            const k = data.substr(n+2);
+                            return k.replace('</span></h6>','');
                         }
                         return column === 0 ? cntCtdEmployee++ : data;
                     }
@@ -370,14 +377,23 @@ function SectionContractorDetails() {
                     text:      '<i class="fas fa-file-pdf"></i>',
                     title:     'ICONS System - Contractor Employee',
                     titleAttr: 'Pdf',
+                    orientation: 'landscape',
                     className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                 })
             ]
         }).container().appendTo($('#btnDtCtdEmployeeExport'));
     };
 
-    this.deleteFromLink = function (contractorSiteId, rowRefresh) {
+    this.deleteSite = function (contractorSiteId, rowRefresh) {
         ctdConfirmDeleteSiteClass.delete('ctd', contractorSiteId, rowRefresh, ctdSiteAddClass);
+    };
+
+    this.editEmployee = function (userGroupId, rowRefresh) {
+        ctdEmployeeClass.edit('ctd', userGroupId, rowRefresh);
+    };
+
+    this.deleteEmployee = function (userGroupId, rowRefresh) {
+        ctdEmployeeClass.edit('ctd', userGroupId, rowRefresh);
     };
 
     this.load = function (callFrom, contractorId, rowRefresh) {
