@@ -2,9 +2,11 @@ function ModalEmployee() {
 
     let myeCallFrom = '';
     let myeRowRefresh = '';
-    let myeUserGroupId = '';
     let myeGroupId = '';
+    let myeUserId = '';
+    let myeUserStatus = '';
     let formMyeValidate;
+    let myeClassFrom;
 
     this.init = function () {
         const vDataMyeSelect = [
@@ -147,10 +149,11 @@ function ModalEmployee() {
                         mzSetFieldValue('MyeUserContactNo', dataMyeEmployee['userContactNo'], 'text', 'Contact No. *');
                         mzSetFieldValue('MyeUserEmail', dataMyeEmployee['userEmail'], 'text', 'Email *');
                         mzSetFieldValue('MyeRole', dataMyeEmployee['roles'], 'check');
+                        myeUserId = dataMyeEmployee['userId'];
+                        myeUserStatus = dataMyeEmployee['userStatus'];
 
                         $('#lblFormMyeTitle').html('New Employee Registration').show();
-                        $('#txtMyeUserMykadNo').prop('disabled', true);
-                        $('#txtMyeUserName, #txtMyeUserFirstName, #txtMyeUserLastName, #txtMyeUserContactNo, #txtMyeUserEmail').prop('disabled', true);
+                        $('#txtMyeUserMykadNo, #txtMyeUserName, #txtMyeUserFirstName, #txtMyeUserLastName, #txtMyeUserContactNo, #txtMyeUserEmail').prop('disabled', true);
                         $('#btnMyeSubmit').attr('disabled', !formMyeValidate.validateForm());
                     } else {
                         $('#divMyeUserPassword').show();
@@ -161,6 +164,8 @@ function ModalEmployee() {
                         formMyeValidate.enableField('txtMyeUserContactNo');
                         formMyeValidate.enableField('txtMyeUserEmail');
                         mzSetFieldValue('MyeUserMykadNo', myKad, 'text', 'MyKad No. / Passport No. *');
+                        myeUserId = '';
+                        myeUserStatus = '1';
 
                         $('#lblFormMyeTitle').html('Existing System User').show();
                         $('#txtMyeUserMykadNo').prop('disabled', true);
@@ -174,6 +179,85 @@ function ModalEmployee() {
                 HideLoader();
             }, 300);
         });
+
+        $('#btnMyeSubmit').on('click', function () {
+            ShowLoader();
+            setTimeout(function () {
+                try {
+                    if (!formMyeValidate.validateForm()) {
+                        throw new Error(_ALERT_MSG_VALIDATION);
+                    }
+
+                    let tempRow = {};
+                    let rolesStr = '';
+                    $("input[name='chkMyeRole[]']:checked").map(function(){
+                        rolesStr += ','+$(this).val();
+                    });
+                    rolesStr = rolesStr.substr(1);
+
+                    if (myeUserGroupId === '' && myeGroupId !== '') {   // add employee
+                        if (myeUserId !== '') {     // existing user
+                            const dataAddExisting = {
+                                action: 'add_employee_existing',
+                                groupId: myeGroupId,
+                                userId: myeUserId,
+                                roles: rolesStr
+                            };
+                            //mzAjaxRequest('employee.php', 'POST', dataAddExisting);
+                            tempRow['userId'] = myeUserId;
+                        } else {    // new user
+                            const dataAddNew = {
+                                action: 'add_employee_new',
+                                userName: $('#txtMyeUserName').val(),
+                                userPassword: $('#txtMyeUserPassword').val(),
+                                userFirstName: $('#txtMyeUserFirstName').val(),
+                                userLastName: $('#txtMyeUserLastName').val(),
+                                userContactNo: $('#txtMyeUserContactNo').val(),
+                                userEmail: $('#txtMyeUserEmail').val(),
+                                groupId: myeGroupId,
+                                roles: rolesStr
+                            };
+                            tempRow['userId'] = mzAjaxRequest('employee.php', 'POST', dataAddNew);
+                        }
+
+                        if (myeCallFrom === 'ctd') {
+                            tempRow['userFullname'] = ($('#txtMyeUserFirstName').val() + ' ' + $('#txtMyeUserLastName').val());
+                            tempRow['userContactNo'] = $('#txtMyeUserContactNo').val();
+                            tempRow['userEmail'] = $('#txtMyeUserEmail').val();
+                            tempRow['roles'] = rolesStr;
+                            tempRow['userStatus'] = myeUserStatus;
+                            myeClassFrom.addDataTableEmployee(tempRow);
+                        }
+                    } else if (myeUserGroupId !== '' && myeGroupId === '') {    // update employee
+                        const dataEdit = {
+                            action: 'update',
+                            roles: rolesStr
+                        };
+                        mzAjaxRequest('employee.php?userId='+myeUserId, 'PUT', dataEdit);
+                        if (myeCallFrom === 'ctd') {
+                            tempRow['userId'] = myeUserId;
+                            tempRow['userFullname'] = ($('#txtMyeUserFirstName').val() + ' ' + $('#txtMyeUserLastName').val());
+                            tempRow['userContactNo'] = $('#txtMyeUserContactNo').val();
+                            tempRow['userEmail'] = $('#txtMyeUserEmail').val();
+                            tempRow['roles'] = rolesStr;
+                            tempRow['userStatus'] = myeUserStatus;
+                            myeClassFrom.editDataTableEmployee(tempRow, myeRowRefresh);
+                        }
+                    } else {
+                        throw new Error(_ALERT_MSG_ERROR_DEFAULT);
+                    }
+
+                    $('#modal_employee').modal('hide');
+                } catch (e) {
+                    toastr['error'](e.message, _ALERT_TITLE_ERROR);
+                }
+                HideLoader();
+            }, 300);
+        });
+    };
+
+    this.setClassFrom = function (classFrom) {
+        myeClassFrom = classFrom;
     };
 
     this.add = function (callFrom, groupId) {
@@ -187,7 +271,7 @@ function ModalEmployee() {
         }
         myeCallFrom = callFrom;
         myeGroupId = groupId;
-        myeUserGroupId  = '';
+        myeUserId  = '';
         myeRowRefresh = '';
 
         $('#formMyeSelect').show();
@@ -197,12 +281,12 @@ function ModalEmployee() {
         $('#modal_employee').modal({backdrop: 'static', keyboard: false});
     };
 
-    this.edit = function (callFrom, userGroupId, rowRefresh) {
+    this.edit = function (callFrom, userId, groupId, rowRefresh) {
         if (typeof callFrom === 'undefined' || callFrom === '') {
             toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
             return false;
         }
-        if (typeof userGroupId === 'undefined' || userGroupId === '') {
+        if (typeof userId === 'undefined' || userId === '') {
             toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
             return false;
         }
@@ -211,18 +295,44 @@ function ModalEmployee() {
             return false;
         }
         myeCallFrom = callFrom;
-        myeGroupId = '';
-        myeUserGroupId  = userGroupId;
+        myeGroupId = groupId;
+        myeUserId = userId;
         myeRowRefresh = rowRefresh;
 
-        $('#txtMyeUserMykadNo, #txtMyeUserName, #txtMyeUserFirstName, #txtMyeUserLastName, #txtMyeUserContactNo, #txtMyeUserEmail').prop('disabled', false);
-        $('#btnMyeSubmit').attr('disabled', !formMyeValidate.validateForm());
-        $('#formMyeSelect').hide();
-        $('#formMye').show();
-        $('#lblFormMyeTitle').html('').hide();
-        $('#lblMyeTitle').html('<i class="fas fa-user-plus"></i> Edit Contractor Employee');
-        $('#btnMyeSubmit').html('<i class="fas fa-save ml-1"></i> Update');
-        $('#modal_employee').modal({backdrop: 'static', keyboard: false});
+        ShowLoader();
+        setTimeout(function () {
+            try {
+                const dataMyeEmployee = mzAjaxRequest('employee.php?userId='+myeUserId+'&groupId='+myeGroupId, 'GET');
+                formMyeValidate.disableField('txtMyeUserName');
+                formMyeValidate.disableField('txtMyeUserPassword');
+                formMyeValidate.disableField('txtMyeUserFirstName');
+                formMyeValidate.disableField('txtMyeUserLastName');
+                formMyeValidate.disableField('txtMyeUserContactNo');
+                formMyeValidate.disableField('txtMyeUserEmail');
+                mzSetFieldValue('MyeUserMykadNo', dataMyeEmployee['userMykadNo'], 'text', 'MyKad No. / Passport No. *');
+                mzSetFieldValue('MyeUserName', dataMyeEmployee['userName'], 'text', 'User ID *');
+                mzSetFieldValue('MyeUserFirstName', dataMyeEmployee['userFirstName'], 'text', 'First Name *');
+                mzSetFieldValue('MyeUserLastName', dataMyeEmployee['userLastName'], 'text', 'Last Name *');
+                mzSetFieldValue('MyeUserContactNo', dataMyeEmployee['userContactNo'], 'text', 'Contact No. *');
+                mzSetFieldValue('MyeUserEmail', dataMyeEmployee['userEmail'], 'text', 'Email *');
+                mzSetFieldValue('MyeRole', dataMyeEmployee['roles'], 'check');
+                myeUserId = dataMyeEmployee['userId'];
+                myeUserStatus = dataMyeEmployee['userStatus'];
+
+                $('#divMyeUserPassword').hide();
+                $('#txtMyeUserMykadNo, #txtMyeUserName, #txtMyeUserFirstName, #txtMyeUserLastName, #txtMyeUserContactNo, #txtMyeUserEmail').prop('disabled', true);
+                $('#btnMyeSubmit').attr('disabled', true);
+                $('#formMyeSelect').hide();
+                $('#formMye').show();
+                $('#lblFormMyeTitle').html('').hide();
+                $('#lblMyeTitle').html('<i class="fas fa-user-plus"></i> Edit Contractor Employee');
+                $('#btnMyeSubmit').html('<i class="fas fa-save ml-1"></i> Update');
+                $('#modal_employee').modal({backdrop: 'static', keyboard: false});
+            } catch (e) {
+                toastr['error'](e.message, _ALERT_TITLE_ERROR);
+            }
+            HideLoader();
+        }, 300);
     };
 
     this.init();

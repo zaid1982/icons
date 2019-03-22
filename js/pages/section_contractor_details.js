@@ -30,6 +30,7 @@ function SectionContractorDetails() {
         ctdRefRole = mzGetLocalArray('icon_role', ctdVersionLocal, 'roleId');
         ctdRoleEdit = mzIsRoleExist('1,2,4,5');
         ctdSiteAddClass.setClassFrom(self);
+        ctdEmployeeClass.setClassFrom(self);
 
         $('#btnCtdBack').on('click', function () {
             $('.sectionCtdDetails').hide();
@@ -47,7 +48,7 @@ function SectionContractorDetails() {
             ctdEmployeeClass.add('ctd', ctdGroupId);
         });
 
-        $('#btnDtCtdSiteRefresh').on('click', function () {
+        $('#btnDtCtdSiteRefresh, #btnDtCtdEmployeeRefresh').on('click', function () {
             ShowLoader();
             setTimeout(function () {
                 try {
@@ -324,8 +325,8 @@ function SectionContractorDetails() {
                     },
                     {mData: null, bSortable: false, sClass: 'text-center',
                         mRender: function (data, type, row, meta) {
-                            let label = '<a><i class="fas fa-edit" onclick="contractorDetailsClass.editEmployee(' + row['userGroupId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>&nbsp;&nbsp;';
-                            label += '<a><i class="fas fa-trash-alt" onclick="contractorDetailsClass.deleteEmployee(' + row['userGroupId'] + ', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
+                            let label = '<a><i class="fas fa-edit" onclick="contractorDetailsClass.editEmployee(' + row['userId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>&nbsp;&nbsp;';
+                            label += '<a><i class="fas fa-trash-alt" onclick="contractorDetailsClass.deleteEmployee(' + row['userId'] + ', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
                             return label;
                         }
                     }
@@ -388,12 +389,12 @@ function SectionContractorDetails() {
         ctdConfirmDeleteSiteClass.delete('ctd', contractorSiteId, rowRefresh, ctdSiteAddClass);
     };
 
-    this.editEmployee = function (userGroupId, rowRefresh) {
-        ctdEmployeeClass.edit('ctd', userGroupId, rowRefresh);
+    this.editEmployee = function (userId, rowRefresh) {
+        ctdEmployeeClass.edit('ctd', userId, ctdGroupId, rowRefresh);
     };
 
-    this.deleteEmployee = function (userGroupId, rowRefresh) {
-        ctdEmployeeClass.edit('ctd', userGroupId, rowRefresh);
+    this.deleteEmployee = function (userId, rowRefresh) {
+        ctdEmployeeClass.edit('ctd', userId, rowRefresh);
     };
 
     this.load = function (callFrom, contractorId, rowRefresh) {
@@ -466,17 +467,24 @@ function SectionContractorDetails() {
         }
     };
 
-    this.addDataTableSite = function (contractorSiteId, contractorId, siteId) {
-        const addRow = {
+    this.addDataTableSite = function (contractorSiteId, siteId) {
+        const rowAdd = {
             contractorSiteId: contractorSiteId,
-            contractorId: contractorId,
             siteId: siteId
         };
-        oTableCtdSite.row.add(addRow).draw();
+        oTableCtdSite.row.add(rowAdd).draw();
     };
 
     this.deleteDataTableSite = function (rowDelete) {
         oTableCtdSite.row(rowDelete).remove().draw();
+    };
+
+    this.addDataTableEmployee = function (rowAdd) {
+        oTableCtdEmployee.row.add(rowAdd).draw();
+    };
+
+    this.editDataTableEmployee = function (rowEdit, rowRefresh) {
+        oTableCtdEmployee.row(rowRefresh).data(rowEdit).draw();
     };
 
     this.setRefSite = function (refSiteSet) {

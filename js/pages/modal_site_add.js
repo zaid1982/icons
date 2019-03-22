@@ -88,7 +88,7 @@ function ModalSiteAdd() {
 
                     if (msxCallFrom === 'ctr') {
                         const contractorSiteId = mzAjaxRequest('contractor.php', 'POST', data);
-                        msxClassFrom.addDataTableSite(contractorSiteId, msxClassFrom.getCtdContractorId(), $('#optMsxSiteId').val());
+                        msxClassFrom.addDataTableSite(contractorSiteId, $('#optMsxSiteId').val());
                     }
                     $('#modal_site_add').modal('hide');
                 } catch (e) {
