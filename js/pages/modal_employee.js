@@ -7,6 +7,7 @@ function ModalEmployee() {
     let myeUserStatus = '';
     let formMyeValidate;
     let myeClassFrom;
+    let myeAction = '';
 
     this.init = function () {
         const vDataMyeSelect = [
@@ -195,7 +196,7 @@ function ModalEmployee() {
                     });
                     rolesStr = rolesStr.substr(1);
 
-                    if (myeUserGroupId === '' && myeGroupId !== '') {   // add employee
+                    if (myeAction === 'add') {
                         if (myeUserId !== '') {     // existing user
                             const dataAddExisting = {
                                 action: 'add_employee_existing',
@@ -203,7 +204,7 @@ function ModalEmployee() {
                                 userId: myeUserId,
                                 roles: rolesStr
                             };
-                            //mzAjaxRequest('employee.php', 'POST', dataAddExisting);
+                            mzAjaxRequest('employee.php', 'POST', dataAddExisting);
                             tempRow['userId'] = myeUserId;
                         } else {    // new user
                             const dataAddNew = {
@@ -228,7 +229,7 @@ function ModalEmployee() {
                             tempRow['userStatus'] = myeUserStatus;
                             myeClassFrom.addDataTableEmployee(tempRow);
                         }
-                    } else if (myeUserGroupId !== '' && myeGroupId === '') {    // update employee
+                    } else if (myeAction === 'edit') {
                         const dataEdit = {
                             action: 'update',
                             roles: rolesStr
@@ -273,6 +274,7 @@ function ModalEmployee() {
         myeGroupId = groupId;
         myeUserId  = '';
         myeRowRefresh = '';
+        myeAction = 'add';
 
         $('#formMyeSelect').show();
         $('#formMye').hide();
@@ -298,6 +300,7 @@ function ModalEmployee() {
         myeGroupId = groupId;
         myeUserId = userId;
         myeRowRefresh = rowRefresh;
+        myeAction = 'edit';
 
         ShowLoader();
         setTimeout(function () {
