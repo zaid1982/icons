@@ -210,6 +210,7 @@ function ModalEmployee() {
                             const dataAddNew = {
                                 action: 'add_employee_new',
                                 userName: $('#txtMyeUserName').val(),
+                                userMykadNo: $('#txtMyeUserMykadNo').val(),
                                 userPassword: $('#txtMyeUserPassword').val(),
                                 userFirstName: $('#txtMyeUserFirstName').val(),
                                 userLastName: $('#txtMyeUserLastName').val(),
