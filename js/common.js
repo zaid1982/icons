@@ -19,6 +19,9 @@ const _ALERT_MSG_SUCCESS_ACTIVATE = "Your account has successfully activated. Pl
 const _ALERT_MSG_SUCCESS_UPDATE_USER = "Your information successfully updated";
 const _ALERT_MSG_ERROR_SITE_NOCITY = "Please select city first";
 
+const _ALERT_MSG_ERROR_CONTRACTOR_NOSITE = "Please make sure at least 1 site selected";
+const _ALERT_MSG_ERROR_CONTRACTOR_NOEMPLOYEE = "Please register at least 1 employee";
+
 const _DATATABLE_LANGUAGE =  {
 };
 

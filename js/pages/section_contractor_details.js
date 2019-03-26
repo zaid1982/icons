@@ -172,7 +172,7 @@ function SectionContractorDetails() {
         formCtdContractor.registerFields(vDataCtdContractor);
 
         $('#formCtd').on('keyup change', function () {
-            $('#butCtdSubmitNew').attr('disabled', !formCtdContractor.validateForm());
+            $('#btnCtdSubmitNew').attr('disabled', !formCtdContractor.validateForm());
         });
 
         oTableCtdSite = $('#dtCtdSite').DataTable({
@@ -378,7 +378,9 @@ function SectionContractorDetails() {
                         contractorEmail: $('#txtCtdContractorEmail').val()
                     };
                     mzAjaxRequest('contractor.php?contractorId='+ctdContractorId, 'PUT', data);
-                    genTableCtr(1);
+                    if (ctdCallFrom === 'ctr') {
+                        genTableCtr(1);
+                    }
                 } catch (e) {
                     toastr['error'](e.message, _ALERT_TITLE_ERROR);
                 }
@@ -387,15 +389,40 @@ function SectionContractorDetails() {
         });
 
         $('#btnCtdSubmitNew').on('click', function () {
-            // check site and employee exist or not
             ShowLoader();
             setTimeout(function () {
                 try {
-                    const data = {
+                    const dataSave = {
+                        action: 'save_contractor2',
+                        contractorName: $('#txtCtdContractorName').val(),
+                        contractorRegNo: $('#txtCtdContractorRegNo').val(),
+                        addressDesc: $('#txtCtdAddressDesc').val(),
+                        addressPostcode: $('#txtCtdAddressPostcode').val(),
+                        addressCity: $('#txtCtdAddressCity').val(),
+                        stateId: $('#optCtdStateId').val(),
+                        contractorContactNo: $('#txtCtdContractorContactNo').val(),
+                        contractorFaxNo: $('#txtCtdContractorFaxNo').val(),
+                        contractorEmail: $('#txtCtdContractorEmail').val()
+                    };
+                    mzAjaxRequest('contractor.php?contractorId='+ctdContractorId, 'PUT', dataSave);
+
+                    if (oTableCtdSite.rows().count() === 0) {
+                        throw new Error(_ALERT_MSG_ERROR_CONTRACTOR_NOSITE);
+                    }
+                    if (oTableCtdEmployee.rows().count() === 0) {
+                        throw new Error(_ALERT_MSG_ERROR_CONTRACTOR_NOEMPLOYEE);
+                    }
+
+                    const dataSubmit = {
                         action: 'submit_contractor'
                     };
-                    mzAjaxRequest('contractor.php?contractorId='+ctdContractorId, 'PUT', data);
-                    genTableCtr(1);
+                    mzAjaxRequest('contractor.php?contractorId='+ctdContractorId, 'PUT', dataSubmit);
+                    $('.sectionCtdDetails').hide();
+                    if (ctdCallFrom === 'ctr') {
+                        genTableCtr(1);
+                        $('.sectionCtrMain').show();
+                    }
+                    $(window).scrollTop(0);
                 } catch (e) {
                     toastr['error'](e.message, _ALERT_TITLE_ERROR);
                 }
@@ -481,6 +508,7 @@ function SectionContractorDetails() {
             mzDisableSelect('optCtdStateId', false);
             if (dataCtdContractor['contractorStatus'] === '5') {
                 $('#btnCtdSave, #btnCtdSubmitNew').show();
+                $('#btnCtdSubmitNew').attr('disabled', !formCtdContractor.validateForm());
             } else {
                 $('#btnCtdUpdate').show();
             }
