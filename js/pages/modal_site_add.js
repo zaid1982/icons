@@ -1,5 +1,6 @@
 function ModalSiteAdd() {
 
+    const msxClassName = 'ModalSiteAdd';
     let msxCallFrom = '';
     let msxRowRefresh = '';
     let msxSiteId = '';
@@ -99,6 +100,10 @@ function ModalSiteAdd() {
         });
     };
 
+    this.getClassName = function () {
+        return msxClassName;
+    };
+
     this.setClassFrom = function (classFrom) {
         msxClassFrom = classFrom;
     };
@@ -144,6 +149,7 @@ function ModalSiteAdd() {
             toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
             return false;
         }
+
         ShowLoader();
         setTimeout(function () {
             try {

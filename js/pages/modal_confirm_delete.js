@@ -27,7 +27,14 @@ function ModalConfirmDelete(type) {
                     siteClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
                     break;
                 case 'contractor_site':
-                    mcdReturnClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
+                    if (typeof mcdReturnClass !== 'undefined' && mcdReturnClass.getClassName() === 'ModalSiteAdd') {
+                        mcdReturnClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
+                    }
+                    break;
+                case 'contractor_employee':
+                    if (typeof mcdReturnClass !== 'undefined' && mcdReturnClass.getClassName() === 'ModalEmployee') {
+                        mcdReturnClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
+                    }
                     break;
                 //default:
                     //toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);

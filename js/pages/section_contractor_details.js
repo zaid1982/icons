@@ -18,12 +18,14 @@ function SectionContractorDetails() {
     let ctdSiteAddClass;
     let ctdEmployeeClass;
     let ctdConfirmDeleteSiteClass;
+    let ctdConfirmDeleteEmployeeClass;
 
     this.init = function () {
         $('.sectionCtdDetails').hide();
         ctdSiteAddClass = new ModalSiteAdd();
         ctdEmployeeClass = new ModalEmployee();
         ctdConfirmDeleteSiteClass = new ModalConfirmDelete('contractor_site');
+        ctdConfirmDeleteEmployeeClass = new ModalConfirmDelete('contractor_employee');
 
         let ctdVersionLocal = mzGetDataVersion();
         ctdRefState = mzGetLocalArray('icon_state', ctdVersionLocal, 'stateId');
@@ -171,31 +173,6 @@ function SectionContractorDetails() {
 
         $('#formCtd').on('keyup change', function () {
             $('#butCtdSubmitNew').attr('disabled', !formCtdContractor.validateForm());
-        });
-
-        $('#btnCtdSave, #btnCtdUpdate').on('click', function () {
-            ShowLoader();
-            setTimeout(function () {
-                try {
-                    const data = {
-                        action: 'save_contractor',
-                        contractorName: $('#txtCtdContractorName').val(),
-                        contractorRegNo: $('#txtCtdContractorRegNo').val(),
-                        addressDesc: $('#txtCtdAddressDesc').val(),
-                        addressPostcode: $('#txtCtdAddressPostcode').val(),
-                        addressCity: $('#txtCtdAddressCity').val(),
-                        stateId: $('#optCtdStateId').val(),
-                        contractorContactNo: $('#txtCtdContractorContactNo').val(),
-                        contractorFaxNo: $('#txtCtdContractorFaxNo').val(),
-                        contractorEmail: $('#txtCtdContractorEmail').val()
-                    };
-                    mzAjaxRequest('contractor.php?contractorId='+ctdContractorId, 'PUT', data);
-                    genTableCtr(1);
-                } catch (e) {
-                    toastr['error'](e.message, _ALERT_TITLE_ERROR);
-                }
-                HideLoader();
-            }, 300);
         });
 
         oTableCtdSite = $('#dtCtdSite').DataTable({
@@ -383,6 +360,48 @@ function SectionContractorDetails() {
                 })
             ]
         }).container().appendTo($('#btnDtCtdEmployeeExport'));
+
+        $('#btnCtdSave, #btnCtdUpdate').on('click', function () {
+            ShowLoader();
+            setTimeout(function () {
+                try {
+                    const data = {
+                        action: 'save_contractor',
+                        contractorName: $('#txtCtdContractorName').val(),
+                        contractorRegNo: $('#txtCtdContractorRegNo').val(),
+                        addressDesc: $('#txtCtdAddressDesc').val(),
+                        addressPostcode: $('#txtCtdAddressPostcode').val(),
+                        addressCity: $('#txtCtdAddressCity').val(),
+                        stateId: $('#optCtdStateId').val(),
+                        contractorContactNo: $('#txtCtdContractorContactNo').val(),
+                        contractorFaxNo: $('#txtCtdContractorFaxNo').val(),
+                        contractorEmail: $('#txtCtdContractorEmail').val()
+                    };
+                    mzAjaxRequest('contractor.php?contractorId='+ctdContractorId, 'PUT', data);
+                    genTableCtr(1);
+                } catch (e) {
+                    toastr['error'](e.message, _ALERT_TITLE_ERROR);
+                }
+                HideLoader();
+            }, 300);
+        });
+
+        $('#btnCtdSubmitNew').on('click', function () {
+            // check site and employee exist or not
+            ShowLoader();
+            setTimeout(function () {
+                try {
+                    const data = {
+                        action: 'submit_contractor'
+                    };
+                    mzAjaxRequest('contractor.php?contractorId='+ctdContractorId, 'PUT', data);
+                    genTableCtr(1);
+                } catch (e) {
+                    toastr['error'](e.message, _ALERT_TITLE_ERROR);
+                }
+                HideLoader();
+            }, 300);
+        });
     };
 
     this.deleteSite = function (contractorSiteId, rowRefresh) {
@@ -394,7 +413,8 @@ function SectionContractorDetails() {
     };
 
     this.deleteEmployee = function (userId, rowRefresh) {
-        ctdEmployeeClass.edit('ctd', userId, rowRefresh);
+        ctdEmployeeClass.setMyeGroupId(ctdGroupId);
+        ctdConfirmDeleteEmployeeClass.delete('ctd', userId, rowRefresh, ctdEmployeeClass);
     };
 
     this.load = function (callFrom, contractorId, rowRefresh) {
@@ -485,6 +505,10 @@ function SectionContractorDetails() {
 
     this.editDataTableEmployee = function (rowEdit, rowRefresh) {
         oTableCtdEmployee.row(rowRefresh).data(rowEdit).draw();
+    };
+
+    this.deleteDataTableEmployee = function (rowDelete) {
+        oTableCtdEmployee.row(rowDelete).remove().draw();
     };
 
     this.setRefSite = function (refSiteSet) {

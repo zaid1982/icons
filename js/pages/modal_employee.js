@@ -1,5 +1,6 @@
 function ModalEmployee() {
 
+    const myeClassName = 'ModalEmployee';
     let myeCallFrom = '';
     let myeRowRefresh = '';
     let myeGroupId = '';
@@ -233,6 +234,7 @@ function ModalEmployee() {
                     } else if (myeAction === 'edit') {
                         const dataEdit = {
                             action: 'update',
+                            groupId: myeGroupId,
                             roles: rolesStr
                         };
                         mzAjaxRequest('employee.php?userId='+myeUserId, 'PUT', dataEdit);
@@ -258,8 +260,16 @@ function ModalEmployee() {
         });
     };
 
+    this.getClassName = function () {
+        return myeClassName;
+    };
+
     this.setClassFrom = function (classFrom) {
         myeClassFrom = classFrom;
+    };
+
+    this.setMyeGroupId = function (groupId) {
+        myeGroupId = groupId;
     };
 
     this.add = function (callFrom, groupId) {
@@ -290,6 +300,10 @@ function ModalEmployee() {
             return false;
         }
         if (typeof userId === 'undefined' || userId === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof groupId === 'undefined' || groupId === '') {
             toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
             return false;
         }
@@ -332,6 +346,38 @@ function ModalEmployee() {
                 $('#lblMyeTitle').html('<i class="fas fa-user-plus"></i> Edit Contractor Employee');
                 $('#btnMyeSubmit').html('<i class="fas fa-save ml-1"></i> Update');
                 $('#modal_employee').modal({backdrop: 'static', keyboard: false});
+            } catch (e) {
+                toastr['error'](e.message, _ALERT_TITLE_ERROR);
+            }
+            HideLoader();
+        }, 300);
+    };
+
+    this.delete = function (callFrom, userId, rowRefresh) {
+        if (typeof callFrom === 'undefined' || callFrom === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof userId === 'undefined' || userId === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof rowRefresh === 'undefined' || rowRefresh === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (myeGroupId === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+
+        ShowLoader();
+        setTimeout(function () {
+            try {
+                mzAjaxRequest('employee.php?userId='+userId+'&groupId='+myeGroupId, 'DELETE');
+                if (callFrom === 'ctd') {
+                    myeClassFrom.deleteDataTableEmployee(rowRefresh);
+                }
             } catch (e) {
                 toastr['error'](e.message, _ALERT_TITLE_ERROR);
             }
