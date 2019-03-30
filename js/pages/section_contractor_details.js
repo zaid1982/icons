@@ -1,5 +1,6 @@
 function SectionContractorDetails() {
 
+    const ctdClassName = 'SectionContractorDetails';
     let self = this;
     let ctdCallFrom = '';
     let ctdContractorId = '';
@@ -537,6 +538,95 @@ function SectionContractorDetails() {
 
     this.deleteDataTableEmployee = function (rowDelete) {
         oTableCtdEmployee.row(rowDelete).remove().draw();
+    };
+
+    this.deactivate = function (callFrom, contractorId, rowRefresh) {
+        if (typeof callFrom === 'undefined' || callFrom === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof contractorId === 'undefined' || contractorId === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof rowRefresh === 'undefined' || rowRefresh === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        ShowLoader();
+        setTimeout(function () {
+            try {
+                mzAjaxRequest('contractor.php?contractorId='+contractorId, 'PUT', {action: 'deactivate'});
+                const currentRow = oTableCtrContractor.row(rowRefresh).data();
+                currentRow['contractorStatus'] = '2';
+                if (callFrom === 'ctr') {
+                    oTableCtrContractor.row(rowRefresh).data(currentRow).draw();
+                }
+            } catch (e) {
+                toastr['error'](e.message, _ALERT_TITLE_ERROR);
+            }
+            HideLoader();
+        }, 300);
+    };
+
+    this.activate = function (callFrom, contractorId, rowRefresh) {
+        if (typeof callFrom === 'undefined' || callFrom === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof contractorId === 'undefined' || contractorId === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof rowRefresh === 'undefined' || rowRefresh === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        ShowLoader();
+        setTimeout(function () {
+            try {
+                mzAjaxRequest('contractor.php?contractorId='+contractorId, 'PUT', {action: 'activate'});
+                const currentRow = oTableCtrContractor.row(rowRefresh).data();
+                currentRow['contractorStatus'] = '1';
+                if (callFrom === 'ctr') {
+                    oTableCtrContractor.row(rowRefresh).data(currentRow).draw();
+                }
+            } catch (e) {
+                toastr['error'](e.message, _ALERT_TITLE_ERROR);
+            }
+            HideLoader();
+        }, 300);
+    };
+
+    this.delete = function (callFrom, contractorId, rowRefresh) {
+        if (typeof callFrom === 'undefined' || callFrom === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof contractorId === 'undefined' || contractorId === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        if (typeof rowRefresh === 'undefined' || rowRefresh === '') {
+            toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
+            return false;
+        }
+        ShowLoader();
+        setTimeout(function () {
+            try {
+                mzAjaxRequest('contractor.php?contractorId='+contractorId, 'DELETE');
+                if (callFrom === 'ctr') {
+                    oTableCtrContractor.row(rowRefresh).remove().draw();
+                }
+            } catch (e) {
+                toastr['error'](e.message, _ALERT_TITLE_ERROR);
+            }
+            HideLoader();
+        }, 300);
+    };
+
+    this.getClassName = function () {
+        return ctdClassName;
     };
 
     this.setRefSite = function (refSiteSet) {

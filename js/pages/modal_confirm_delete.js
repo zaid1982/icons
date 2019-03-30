@@ -36,6 +36,11 @@ function ModalConfirmDelete(type) {
                         mcdReturnClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
                     }
                     break;
+                case 'contractor':
+                    if (typeof mcdReturnClass !== 'undefined' && mcdReturnClass.getClassName() === 'SectionContractorDetails') {
+                        mcdReturnClass.delete(mcdCallFrom, mcdId, mcdRowRefresh);
+                    }
+                    break;
                 //default:
                     //toastr['error'](_ALERT_MSG_ERROR_DEFAULT, _ALERT_TITLE_ERROR);
             }

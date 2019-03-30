@@ -67,7 +67,7 @@
                                     <th width="12%">Contact No.</th>
                                     <th width="25%">Site</th>
                                     <th width="5%">Status</th>
-                                    <th width="80px"></th>
+                                    <th width="60px"></th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -189,11 +189,13 @@
                                 mRender: function (data, type, row, meta) {
                                     let label = '<a><i class="fas fa-edit" onclick="contractorDetailsClass.load(\'ctr\', ' + row['contractorId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>&nbsp;&nbsp;';
                                     if (row['contractorStatus'] === '1') {
-                                        label += '<a><i class="fas fa-toggle-off" onclick="contractorDetailsClass.deactivate(\'ctr\', ' + row['contractorId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Deactivate"></i></a>&nbsp;&nbsp;';
-                                    } else {
-                                        label += '<a><i class="fas fa-toggle-on" onclick="contractorDetailsClass.activate(\'ctr\', ' + row['contractorId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Activate"></i></a>&nbsp;&nbsp;';
+                                        label += '<a><i class="fas fa-toggle-off" onclick="contractorDetailsClass.deactivate(\'ctr\', ' + row['contractorId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Deactivate"></i></a>';
+                                    } else if (row['contractorStatus'] === '2') {
+                                        label += '<a><i class="fas fa-toggle-on" onclick="contractorDetailsClass.activate(\'ctr\', ' + row['contractorId'] + ', ' + meta.row + ')" data-toggle="tooltip" data-placement="top" title="Activate"></i></a>';
                                     }
-                                    label += '<a><i class="fas fa-trash-alt" onclick="confirmDeleteClass.delete(\'ctr\', '+row['contractorId']+', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
+                                    if (row['contractorStatus'] === '5') {
+                                        label += '<a><i class="fas fa-trash-alt" onclick="deleteContractorCtr(' + row['contractorId'] + ', ' + meta.row + ');" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>';
+                                    }
                                     return label;
                                 }
                             },
@@ -276,9 +278,14 @@
 
             HideLoader();
         }, 400);
+
     });
 
-    function genTableCtr(type) {
+    function deleteContractorCtr (contractorId, rowRefresh) {
+        confirmDeleteClass.delete('ctr', contractorId, rowRefresh, contractorDetailsClass);
+    }
+
+    function genTableCtr (type) {
         if (type === 1) {
             versionLocal = mzGetDataVersion();
         }
