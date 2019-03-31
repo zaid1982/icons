@@ -39,6 +39,8 @@ function SectionTicketDetails() {
             $('.sectionTkdDetails, .sectionWorkOrderDetails').hide();
             if (tkdCallFrom === 'tck') {
                 $('.sectionTckMain').show();
+            } else if (tkdCallFrom === 'wdr') {
+                $('.sectionWdrMain').show();
             }
             $(window).scrollTop(0);
         });
@@ -104,8 +106,11 @@ function SectionTicketDetails() {
                     } else if (tkdWorkorderId !== '') {
                         workOrderClass.load('tck', tkdWorkorderId);
                     }
-                } else if (tkdWorkorderId !== '') {
-                    workOrderClass.load('tck', tkdWorkorderId);
+                } else if (tkdCallFrom === 'wdr') {
+                    $('.sectionWdrMain').hide();
+                    if (tkdWorkorderId !== '') {
+                        workOrderClass.load('wdr', tkdWorkorderId);
+                    }
                 }
 
                 $('.sectionTkdDetails').show();

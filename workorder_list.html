@@ -35,7 +35,7 @@
 <main>
     <div class="container-fluid">
         <!--Section: Main panel-->
-        <section class="mb-5 mt-lg-5 sectionTckMain">
+        <section class="mb-5 mt-lg-5 sectionWdrMain">
             <div class="card card-cascade narrower">
                 <!--Section: Search Function & Chart-->
                 <section>
@@ -43,47 +43,48 @@
                         <!--Search Function-->
                         <div class="col-xl-5 col-lg-12 mr-0">
                             <div class="view view-cascade gradient-card-header light-blue lighten-1 z-depth-4">
-                                <h2 class="h2-responsive mb-0">Open Tickets</h2>
+                                <h2 class="h2-responsive mb-0">Work Order List</h2>
                             </div>
                             <div class="card-body card-body-cascade">
                                 <div class="card-body pt-3">
                                     <div class="mt-1 pb-2">
-                                        <small>Ticket Status:</small>
+                                        <small>Work Order Status:</small>
                                         <ul class="striped list-unstyled pl-2">
-                                            <li><a href="javascript:void(0);" id="linkTckNew"><span class="bullet red accent-2"></span> New Tickets <span class="badge red accent-2 float-right">0</span></a></li>
-                                            <li><a href="javascript:void(0);" id="linkTckProcessing"><span class="bullet blue-grey"></span> Processing <span class="badge blue-grey float-right">0</span></a></li>
-                                            <li><a href="javascript:void(0);" id="linkTckKiv"><span class="bullet amber"></span> KIV <span class="badge amber float-right">0</span></a></li>
+                                            <li><a href="javascript:void(0);" id="linkWdr12"><span class="bullet pink lighten-2 accent-2"></span> Assigned <span class="badge pink lighten-2 accent-2 float-right">0</span></a></li>
+                                            <li><a href="javascript:void(0);" id="linkWdr13"><span class="bullet purple accent-2"></span> Perform Work <span class="badge purple accent-2 float-right">0</span></a></li>
+                                            <li><a href="javascript:void(0);" id="linkWdr14"><span class="bullet light-green accent-2"></span> Verify Work <span class="badge light-green accent-2 float-right">0</span></a></li>
+                                            <li><a href="javascript:void(0);" id="linkWdr15"><span class="bullet green accent-2"></span> Complete <span class="badge green accent-2 float-right">0</span></a></li>
                                         </ul>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <select id="optTckProblemtypeId" class="mdb-select colorful-select dropdown-info md-form mb-0" searchable="Search"></select>
+                                            <select id="optWdrProblemtypeId" class="mdb-select colorful-select dropdown-info md-form mb-0" searchable="Search"></select>
                                             <label>Problem Type</label>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <select id="optTckWorktypeId" class="mdb-select colorful-select dropdown-info md-form mb-0" searchable="Search"></select>
+                                            <select id="optWdrWorktypeId" class="mdb-select colorful-select dropdown-info md-form mb-0" searchable="Search"></select>
                                             <label>Work Type</label>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mt-3 mb-0">
-                                                <input id="txtTckDateFrom" placeholder=" " type="text" class="form-control datepicker">
-                                                <label for="txtTckDateFrom">Date Created from</label>
+                                                <input id="txtWdrDateFrom" placeholder=" " type="text" class="form-control datepicker">
+                                                <label for="txtWdrDateFrom">Date Created from</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="md-form mt-3 mb-0">
-                                                <input id="txtTckDateTo" placeholder=" " type="text" class="form-control datepicker">
-                                                <label for="txtTckDateTo">Date Created to</label>
+                                                <input id="txtWdrDateTo" placeholder=" " type="text" class="form-control datepicker">
+                                                <label for="txtWdrDateTo">Date Created to</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="md-form mb-0">
-                                        <input type="text" id="txtTckTicketSearch" class="form-control" placeholder=" ">
-                                        <label for="txtTckTicketSearch" class="active">Keyword Search</label>
+                                        <input type="text" id="txtWdrWorkorderSearch" class="form-control" placeholder=" ">
+                                        <label for="txtWdrWorkorderSearch" class="active">Keyword Search</label>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +92,7 @@
                         <!--Chart-->
                         <div class="col-xl-7 col-lg-12 mb-4">
                             <div class="view view-cascade z-depth-4">
-                                <div id="chartTckOpenByStatus" style="height: 570px; margin: 0 "></div>
+                                <div id="chartWdrOpenByStatus" style="height: 610px; margin: 0 "></div>
                             </div>
                         </div>
                     </div>
@@ -101,29 +102,30 @@
                     <div class="card card-cascade narrower z-depth-0">
                         <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center z-depth-4">
                             <div>
-                                <a tabindex="0" role="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="popover" data-trigger="focus" title="Ticket List"
-                                   data-content="This list contains of all tickets received from complainer."><i class="fas fa-info mt-0 mx-1"></i></a>
-                                <button type="button" id="btnDtTckTicketRefresh" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0"></i></button>
+                                <a tabindex="0" role="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="popover" data-trigger="focus" title="Work Order List"
+                                   data-content="This list contains of all work orders created by clerk."><i class="fas fa-info mt-0 mx-1"></i></a>
+                                <button type="button" id="btnDtWdrWorkorderRefresh" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="tooltip" data-placement="top" title="Refresh data"><i class="fas fa-sync mt-0"></i></button>
                             </div>
-                            <a href="javascript:void(0);" class="white-text mx-3">New Tickets</a>
+                            <a href="javascript:void(0);" class="white-text mx-3">Work Order List</a>
                             <div>
-                                <div id="btnDtTckTicketExport"></div>
+                                <div id="btnDtWdrWorkorderExport"></div>
                             </div>
                         </div>
                         <div class="px-4 pb-4">
                             <div class="table-responsive">
-                                <table id="dtTckTicket" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
+                                <table id="dtWdrWorkorder" class="table table-hover mb-0 display responsive" cellspacing="0" width="100%">
                                     <thead>
-                                        <tr class="th-strong">
-                                            <th width="4%">No</th>
-                                            <th>Ticket No</th>
-                                            <th width="15%">Problem Type</th>
-                                            <th width="15%">Work Type</th>
-                                            <th width="24%">Work Category</th>
-                                            <th width="15%">Received Time</th>
-                                            <th width="8%">Status</th>
-                                            <th width="32px"></th>
-                                        </tr>
+                                    <tr class="th-strong">
+                                        <th width="4%">No</th>
+                                        <th width="12%">Work Order No</th>
+                                        <th>Contractor</th>
+                                        <th width="12%">Problem Type</th>
+                                        <th width="12%">Work Type</th>
+                                        <th width="15%">Work Category</th>
+                                        <th width="13%">Created Time</th>
+                                        <th width="8%">Status</th>
+                                        <th width="32px"></th>
+                                    </tr>
                                     </thead>
                                     <tbody></tbody>
                                 </table>
@@ -137,8 +139,6 @@
         <div class="includeHtml" id="h-section_work_order_details"></div>
     </div>
     <div class="includeHtml" id="h-modal_change_password"></div>
-    <div class="includeHtml" id="h-modal_confirm_submit"></div>
-
 </main>
 
 <!-- SCRIPTS -->
@@ -182,15 +182,15 @@
 <script type="text/javascript">
     document.write('<scr' + 'ipt src="js/common.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
-    let oTableTckTicket;
-    let dataTckTicket;
+    let oTableWdrWorkorder;
+    let dataWdrWorkorder;
     let versionLocal;
     let refStatus;
     let refProblemtype;
     let refWorktype;
     let refWorkcategory;
+    let refContractor;
     let changePasswordClass;
-    let confirmSubmitClass;
     let ticketDetailsClass;
     let workOrderClass;
     let oTableDateSearch = false;
@@ -204,25 +204,25 @@
                 changePasswordClass = new ModalChangePassword();
                 ticketDetailsClass = new SectionTicketDetails();
                 workOrderClass = new SectionWorkOrderDetails();
-                confirmSubmitClass = new ModalConfirmSubmit();
 
                 versionLocal = mzGetDataVersion();
                 refStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
                 refProblemtype = mzGetLocalArray('icon_problemtype', versionLocal, 'problemtypeId');
                 refWorktype = mzGetLocalArray('icon_worktype', versionLocal, 'worktypeId');
                 refWorkcategory = mzGetLocalArray('icon_workcategory', versionLocal, 'workcategoryId');
+                refContractor = mzGetLocalArray('icon_contractor', versionLocal, 'contractorId');
 
-                mzOption('optTckProblemtypeId', refProblemtype, 'All Problem Type', 'problemtypeId', 'problemtypeDesc');
-                mzOption('optTckWorktypeId', refWorktype, 'All Work Type', 'worktypeId', 'worktypeDesc');
-                mzDateFromTo('txtTckDateFrom', 'txtTckDateTo');
+                mzOption('optWdrProblemtypeId', refProblemtype, 'All Problem Type', 'problemtypeId', 'problemtypeDesc');
+                mzOption('optWdrWorktypeId', refWorktype, 'All Work Type', 'worktypeId', 'worktypeDesc');
+                mzDateFromTo('txtWdrDateFrom', 'txtWdrDateTo');
 
-                // table Ticket List
-                oTableTckTicket = $('#dtTckTicket').DataTable({
+                // table Work Order List
+                oTableWdrWorkorder = $('#dtWdrWorkorder').DataTable({
                     bLengthChange: false,
                     bFilter: true,
-                    "aaSorting": [5, 'desc'],
+                    "aaSorting": [6, 'desc'],
                     fnRowCallback : function(nRow, aData, iDisplayIndex){
-                        const info = oTableTckTicket.page.info();
+                        const info = oTableWdrWorkorder.page.info();
                         $('td', nRow).eq(0).html(info.page * info.length + (iDisplayIndex + 1));
                     },
                     drawCallback: function () {
@@ -232,7 +232,10 @@
                     aoColumns:
                         [
                             {mData: null, bSortable: false},
-                            {mData: 'ticketNo'},
+                            {mData: 'workorderNo'},
+                            {mData: 'contractorId', mRender: function (data, type, row){
+                                    return row['contractorId'] !== '' ? refContractor[row['contractorId']]['contractorName'] : '';
+                                }},
                             {mData: null, mRender: function (data, type, row){
                                     return row['problemtypeId'] !== '' ? refProblemtype[row['problemtypeId']]['problemtypeDesc'] : '';
                                 }},
@@ -242,65 +245,70 @@
                             {mData: null, mRender: function (data, type, row){
                                     return row['workcategoryId'] !== '' ? refWorkcategory[row['workcategoryId']]['workcategoryDesc'] : '';
                                 }},
-                            {mData: 'ticketTimeSubmit'},
+                            {mData: 'workorderTimeSubmit'},
                             {mData: null,
                                 mRender: function (data, type, row) {
-                                    return '<h6><span class="badge badge-pill '+refStatus[row['ticketStatus']]['statusColor']+' z-depth-2">'+refStatus[row['ticketStatus']]['statusDesc']+'</span></h6>';
+                                    return '<h6><span class="badge badge-pill '+refStatus[row['workorderStatus']]['statusColor']+' z-depth-2">'+refStatus[row['workorderStatus']]['statusDesc']+'</span></h6>';
                                 }
                             },
                             {mData: null, bSortable: false, sClass: 'text-center',
                                 mRender: function (data, type, row) {
-                                    return '<a><i class="fas fa-info-circle" onclick="ticketDetailsClass.load(\'tck\', '+row['ticketId']+')" data-toggle="tooltip" data-placement="top" title="Details"></i></a>';
+                                    return '<a><i class="fas fa-info-circle" onclick="ticketDetailsClass.load(\'wdr\', '+row['ticketId']+')" data-toggle="tooltip" data-placement="top" title="Details"></i></a>';
                                 }
                             },
-                            {mData: 'ticketId', visible: false},
+                            {mData: 'workorderId', visible: false},
                             {mData: 'problemtypeId', visible: false},
                             {mData: 'workcategoryId', visible: false},
                             {mData: 'worktypeId', visible: false, mRender: function (data, type, row){
                                     return row['workcategoryId'] !== '' ? refWorkcategory[row['workcategoryId']]['worktypeId'] : '';
                                 }},
-                            {mData: 'ticketStatus', visible: false}
+                            {mData: 'workorderStatus', visible: false}
                         ]
+
                 });
-                $("#dtTckTicket_filter").hide();
-                $('#txtTckTicketSearch').on('keyup change', function () {
+                $("#dtWdrWorkorder_filter").hide();
+                $('#txtWdrWorkorderSearch').on('keyup change', function () {
                     oTableDateSearch = true;
-                    oTableTckTicket.search($(this).val()).draw();
+                    oTableWdrWorkorder.search($(this).val()).draw();
                 });
-                $('#optTckProblemtypeId').on('change', function () {
+                $('#optWdrProblemtypeId').on('change', function () {
                     const problemtypeId = $(this).val();
                     oTableDateSearch = true;
-                    $(this).val() === '' ? oTableTckTicket.column(9).search(problemtypeId).draw() : oTableTckTicket.column(9).search('^'+problemtypeId+'$', true, false, true).draw();
+                    $(this).val() === '' ? oTableWdrWorkorder.column(10).search(problemtypeId).draw() : oTableWdrWorkorder.column(10).search('^'+problemtypeId+'$', true, false, true).draw();
                 });
-                $('#optTckWorktypeId').on('change', function () {
+                $('#optWdrWorktypeId').on('change', function () {
                     const worktypeId = $(this).val();
                     oTableDateSearch = true;
-                    $(this).val() === '' ? oTableTckTicket.column(11).search(worktypeId).draw() : oTableTckTicket.column(11).search('^'+worktypeId+'$', true, false, true).draw();
+                    $(this).val() === '' ? oTableWdrWorkorder.column(12).search(worktypeId).draw() : oTableWdrWorkorder.column(12).search('^'+worktypeId+'$', true, false, true).draw();
                 });
-                $('#linkTckNew').on('click', function () {
+                $('#linkWdr12').on('click', function () {
                     oTableDateSearch = true;
-                    oTableTckTicket.column(12).search('11', false, true, false).draw();
+                    oTableWdrWorkorder.column(13).search('12', false, true, false).draw();
                 });
-                $('#linkTckProcessing').on('click', function () {
+                $('#linkWdr13').on('click', function () {
                     oTableDateSearch = true;
-                    oTableTckTicket.column(12).search('^(12|13|14)$', true, true, false).draw();
+                    oTableWdrWorkorder.column(13).search('13', false, true, false).draw();
                 });
-                $('#linkTckKiv').on('click', function () {
+                $('#linkWdr14').on('click', function () {
                     oTableDateSearch = true;
-                    oTableTckTicket.column(12).search('10', false, true, false).draw();
+                    oTableWdrWorkorder.column(13).search('14', false, true, false).draw();
                 });
-                $('#txtTckDateFrom, #txtTckDateTo').on('change', function () {
+                $('#linkWdr15').on('click', function () {
                     oTableDateSearch = true;
-                    oTableTckTicket.draw();
+                    oTableWdrWorkorder.column(13).search('15', false, true, false).draw();
+                });
+                $('#txtWdrDateFrom, #txtWdrDateTo').on('change', function () {
+                    oTableDateSearch = true;
+                    oTableWdrWorkorder.draw();
                 });
 
                 $.fn.dataTable.ext.search.push(function (settings, data) {
                     if (!oTableDateSearch) {
                         return true;
                     }
-                    const DataTableDate = data[5].trim();
-                    const dateFrom = mzConvertDate($('#txtTckDateFrom').val());
-                    const dateTo = mzConvertDate($('#txtTckDateTo').val());
+                    const DataTableDate = data[6].trim();
+                    const dateFrom = mzConvertDate($('#txtWdrDateFrom').val());
+                    const dateTo = mzConvertDate($('#txtWdrDateTo').val());
                     oTableDateSearch = false;
                     if (dateFrom === '' && dateTo === '') {
                         return true;
@@ -314,58 +322,58 @@
                     return false;
                 });
 
-                let cntTckTicket;
-                let btnTckTicketOpt = {
+                let cntWdrWorkorder;
+                let btnWdrWorkorderOpt = {
                     exportOptions: {
-                        columns: [ 0, 1, 2, 3, 4, 5, 6 ],
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7],
                         format: {
                             body: function ( data, row, column ) {
                                 if (row === 0 && column === 0) {
-                                    cntTckTicket = 1;
+                                    cntWdrWorkorder = 1;
                                 }
-                                if (column === 6) {
+                                if (column === 7) {
                                     const n = data.search('">');
                                     const k = data.substr(n+2);
                                     return k.replace('</span></h6>','');
                                 }
-                                return column === 0 ? cntTckTicket++ : data;
+                                return column === 0 ? cntWdrWorkorder++ : data;
                             }
                         }
                     }
                 };
 
-                new $.fn.dataTable.Buttons(oTableTckTicket, {
+                new $.fn.dataTable.Buttons(oTableWdrWorkorder, {
                     buttons: [
-                        $.extend( true, {}, btnTckTicketOpt, {
+                        $.extend( true, {}, btnWdrWorkorderOpt, {
                             extend:    'print',
                             text:      '<i class="fas fa-print"></i>',
-                            title:     'ICONS System - Ticket',
+                            title:     'ICONS System - Work Order',
                             titleAttr: 'Print',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         }),
-                        $.extend( true, {}, btnTckTicketOpt, {
+                        $.extend( true, {}, btnWdrWorkorderOpt, {
                             extend:    'excelHtml5',
                             text:      '<i class="fas fa-file-excel"></i>',
-                            title:     'ICONS System - Ticket',
+                            title:     'ICONS System - Work Order',
                             titleAttr: 'Excel',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         }),
-                        $.extend( true, {}, btnTckTicketOpt, {
+                        $.extend( true, {}, btnWdrWorkorderOpt, {
                             extend:    'pdfHtml5',
                             text:      '<i class="fas fa-file-pdf"></i>',
-                            title:     'ICONS System - Ticket',
+                            title:     'ICONS System - Work Order',
                             titleAttr: 'Pdf',
                             orientation: 'landscape',
                             className: 'btn btn-outline-white btn-rounded btn-sm px-2'
                         })
                     ]
-                }).container().appendTo($('#btnDtTckTicketExport'));
+                }).container().appendTo($('#btnDtWdrWorkorderExport'));
 
-                $('#btnDtTckTicketRefresh').on('click', function () {
+                $('#btnDtWdrWorkorderRefresh').on('click', function () {
                     ShowLoader();
                     setTimeout(function () {
                         try {
-                            genTableTck();
+                            getTableWdr();
                         } catch (e) {
                             toastr['error'](e.message, _ALERT_TITLE_ERROR);
                         }
@@ -373,9 +381,8 @@
                     }, 300);
                 });
 
-                mzAjaxRequest('ticket.php', 'GET', {Reportid: '1', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
-                genTableTck();
-                oTableTckTicket.column(12).search('11', false, true, false).draw();
+                mzAjaxRequest('workorder.php', 'GET', {Reportid: '1', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
+                getTableWdr();
 
             } catch (e) {
                 toastr['error'](e.message, _ALERT_TITLE_ERROR);
@@ -385,39 +392,29 @@
 
     });
 
-    function genTableTck () {
-        dataTckTicket = mzAjaxRequest('ticket.php', 'GET', {'Cache-Control': 'no-cache, no-transform'});
-        oTableTckTicket.clear().rows.add(dataTckTicket).draw();
+    function getTableWdr () {
+        dataWdrWorkorder = mzAjaxRequest('workorder.php', 'GET', {'Cache-Control': 'no-cache, no-transform'});
+        oTableWdrWorkorder.clear().rows.add(dataWdrWorkorder).draw();
     }
 
     function displayChart (result) {
+        let chartData = [];
         result = JSON.parse(result);
 
-        let chartData = [];
-        let totalNew = 0;
-        let totalProcessing = 0;
-        let totalKiv = 0;
-
         $.each(result, function (n, u) {
-            chartData.push({name:refStatus[u['ticketStatus']]['statusDesc'], y:parseInt(u.total), color:refStatus[u['ticketStatus']]['statusColorCode']});
-            if (u['ticketStatus'] === '11') {
-                totalNew = parseInt(u.total);
-            } else if (u['ticketStatus'] === '10') {
-                totalKiv = parseInt(u.total);
-            } else {
-                totalProcessing += parseInt(u.total);
+            const status = u['workorderStatus'];
+            if (status !== '5') {
+                chartData.push({name:refStatus[status]['statusDesc'], y:parseInt(u.total), color:refStatus[status]['statusColorCode']});
+                $('#linkWdr'+status).html('<span class="bullet '+refStatus[status]['statusColor']+'"></span> '+refStatus[status]['statusDesc']+' <span class="badge '+refStatus[status]['statusColor']+' float-right">'+u['total']+'</span>');
             }
         });
-        $('#linkTckNew').html('<span class="bullet '+refStatus[11]['statusColor']+'"></span> New Tickets <span class="badge '+refStatus[11]['statusColor']+' float-right">'+totalNew+'</span>');
-        $('#linkTckProcessing').html('<span class="bullet blue-grey"></span> Processing <span class="badge blue-grey float-right">'+totalProcessing+'</span>');
-        $('#linkTckKiv').html('<span class="bullet '+refStatus[10]['statusColor']+'"></span> KIV <span class="badge '+refStatus[10]['statusColor']+' float-right">'+totalKiv+'</span>');
 
-        Highcharts.chart('chartTckOpenByStatus', {
+        Highcharts.chart('chartWdrOpenByStatus', {
             chart: {
                 type: 'pie'
             },
             title: {
-                text: 'Total Open Ticket by Status'
+                text: 'Total Work Order by Status'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y} ({point.percentage:.1f}%)</b>'
@@ -444,12 +441,9 @@
     }
 
     document.write('<scr' + 'ipt src="js/pages/modal_change_password.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
-    document.write('<scr' + 'ipt src="js/pages/modal_confirm_submit.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/section_ticket_details.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
     document.write('<scr' + 'ipt src="js/pages/section_work_order_details.js?' + new Date().valueOf() + '" type="text/javascript"></scr' + 'ipt>');
 
 </script>
-
 </body>
-
 </html>
