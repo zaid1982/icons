@@ -112,8 +112,8 @@
                                         <th width="15%">Problem Type</th>
                                         <th width="16%">Work Type</th>
                                         <th>Work Category</th>
-                                        <th width="15%">Received Time</th>
-                                        <th width="8%">Status</th>
+                                        <th width="10%">Received Time</th>
+                                        <th width="10%">Task Type</th>
                                         <th width="32px"></th>
                                     </tr>
                                     </thead>
@@ -231,11 +231,7 @@
                                     return row['workcategoryId'] !== '' ? refWorkcategory[row['workcategoryId']]['workcategoryDesc'] : '';
                                 }},
                             {mData: 'workorderTimeSubmit'},
-                            {mData: null,
-                                mRender: function (data, type, row) {
-                                    return '<h6><span class="badge badge-pill '+refStatus[row['workorderStatus']]['statusColor']+' z-depth-2">'+refStatus[row['workorderStatus']]['statusDesc']+'</span></h6>';
-                                }
-                            },
+                            {mData: 'checkpointDesc'},
                             {mData: null, bSortable: false, sClass: 'text-center',
                                 mRender: function (data, type, row) {
                                     return '<a><i class="fas fa-info-circle" onclick="ticketDetailsClass.load(\'wdp\', '+row['ticketId']+')" data-toggle="tooltip" data-placement="top" title="Details"></i></a>';
@@ -259,12 +255,12 @@
                 $('#optWdpProblemtypeId').on('change', function () {
                     const problemtypeId = $(this).val();
                     oTableDateSearch = true;
-                    $(this).val() === '' ? oTableWdpWorkorder.column(10).search(problemtypeId).draw() : oTableWdpWorkorder.column(10).search('^'+problemtypeId+'$', true, false, true).draw();
+                    $(this).val() === '' ? oTableWdpWorkorder.column(9).search(problemtypeId).draw() : oTableWdpWorkorder.column(9).search('^'+problemtypeId+'$', true, false, true).draw();
                 });
                 $('#optWdpWorktypeId').on('change', function () {
                     const worktypeId = $(this).val();
                     oTableDateSearch = true;
-                    $(this).val() === '' ? oTableWdpWorkorder.column(12).search(worktypeId).draw() : oTableWdpWorkorder.column(12).search('^'+worktypeId+'$', true, false, true).draw();
+                    $(this).val() === '' ? oTableWdpWorkorder.column(11).search(worktypeId).draw() : oTableWdpWorkorder.column(11).search('^'+worktypeId+'$', true, false, true).draw();
                 });
                 $('#linkWdp12').on('click', function () {
                     oTableDateSearch = true;
@@ -291,7 +287,7 @@
                     if (!oTableDateSearch) {
                         return true;
                     }
-                    const DataTableDate = data[6].trim();
+                    const DataTableDate = data[5].trim();
                     const dateFrom = mzConvertDate($('#txtWdpDateFrom').val());
                     const dateTo = mzConvertDate($('#txtWdpDateTo').val());
                     oTableDateSearch = false;
@@ -315,11 +311,6 @@
                             body: function ( data, row, column ) {
                                 if (row === 0 && column === 0) {
                                     cntWdpWorkorder = 1;
-                                }
-                                if (column === 6) {
-                                    const n = data.search('">');
-                                    const k = data.substr(n+2);
-                                    return k.replace('</span></h6>','');
                                 }
                                 return column === 0 ? cntWdpWorkorder++ : data;
                             }
@@ -366,7 +357,7 @@
                     }, 300);
                 });
 
-                mzAjaxRequest('workorder.php', 'GET', {Reportid: '1', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
+                mzAjaxRequest('workorder.php', 'GET', {Reportid: '2', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
                 getTableWdp();
 
             } catch (e) {
@@ -378,7 +369,7 @@
     });
 
     function getTableWdp () {
-        dataWdpWorkorder = mzAjaxRequest('workorder.php', 'GET', {'Cache-Control': 'no-cache, no-transform'});
+        dataWdpWorkorder = mzAjaxRequest('workorder.php', 'GET', {Reportid: 'get_pending_tasks', 'Cache-Control': 'no-cache, no-transform'});
         oTableWdpWorkorder.clear().rows.add(dataWdpWorkorder).draw();
     }
 
@@ -387,10 +378,8 @@
         result = JSON.parse(result);
 
         $.each(result, function (n, u) {
-            const status = u['workorderStatus'];
-            if (status !== '5') {
-                chartData.push({name:refStatus[status]['statusDesc'], y:parseInt(u.total), color:refStatus[status]['statusColorCode']});
-            }
+            const worktypeId = u['worktypeId'];
+            chartData.push({name:refWorktype[worktypeId]['worktypeDesc'], y:parseInt(u.total)});
         });
 
         Highcharts.chart('chartWdpOpenByStatus', {
