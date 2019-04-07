@@ -976,6 +976,16 @@ function mzSetFieldValue(name, value, type, label) {
                 $('#chk' + name + value[i]).prop('checked', true);
             }
         }
+        else if (type === 'date') {
+            const dateSplit = value.split("/");
+            if (dateSplit.length !== 3) {
+                return '';
+            }
+            const day = parseInt(dateSplit[2]);
+            const month = parseInt(dateSplit[1])-1;
+            const year = parseInt(dateSplit[0]);
+            $('#txt'+name).pickadate('set').set('select', new Date(year, month, day));
+        }
     }
 }
 
