@@ -882,7 +882,7 @@ function mzOption(name, data, defaultText, keyIndex, valIndex, filters, type) {
                         const dataValue = u[filterKey];
                         if (dataValue === filterVal) {
                             filterCnt++;
-                        } else if (filterVal.substr(0,1) === '#') {
+                        } else if (filterVal !== null && filterVal.substr(0,1) === '#') {
                             const filterSplit = dataValue.split(',');
                             for (let j=0; j<filterSplit.length; j++) {
                                 if (filterSplit[j] === filterVal.substr(1)) {
@@ -985,6 +985,15 @@ function mzSetFieldValue(name, value, type, label) {
             const month = parseInt(dateSplit[1])-1;
             const year = parseInt(dateSplit[0]);
             $('#txt'+name).pickadate('set').set('select', new Date(year, month, day));
+        }
+    } else {
+        if (type === 'text') {
+            $('#txt'+name).val('');
+            $('#lbl'+name).removeClass('active');
+        }
+        else if (type === 'textarea') {
+            $('#txa' + name).val('');
+            $('#lbl'+name).removeClass('active');
         }
     }
 }
