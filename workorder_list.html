@@ -381,7 +381,6 @@
                     }, 300);
                 });
 
-                mzAjaxRequest('workorder.php', 'GET', {Reportid: '1', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
                 getTableWdr();
 
             } catch (e) {
@@ -393,6 +392,7 @@
     });
 
     function getTableWdr () {
+        mzAjaxRequest('workorder.php', 'GET', {Reportid: '1', 'Cache-Control': 'no-cache, no-transform'}, 'displayChart()');
         dataWdrWorkorder = mzAjaxRequest('workorder.php', 'GET', {'Cache-Control': 'no-cache, no-transform'});
         oTableWdrWorkorder.clear().rows.add(dataWdrWorkorder).draw();
     }
