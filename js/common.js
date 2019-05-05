@@ -403,11 +403,11 @@ function initiatePages() {
     $(".button-collapse").sideNav();
 
     let container = document.querySelector('.custom-scrollbar');
-    Ps.initialize(container, {
+    /*Ps.initialize(container, {
         wheelSpeed: 2,
         wheelPropagation: true,
         minScrollbarLength: 20
-    });
+    });*/
 
     // Material Select Initialization
     $(document).ready(function () {
