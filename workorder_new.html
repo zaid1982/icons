@@ -178,6 +178,7 @@
     let ticketDetailsClass;
     let workOrderClass;
 
+
     document.addEventListener('DOMContentLoaded', function () {
 
         ShowLoader();
@@ -185,13 +186,21 @@
             try {
                 initiatePages();
                 versionLocal = mzGetDataVersion();
-                changePasswordClass = new ModalChangePassword();
-                workorderNewClass = new MainWorkorderNew();
-                workorderNewClass.setVersionLocal(versionLocal);
-                workorderNewClass.load();
+                const refProblemtype = mzGetLocalArray('icon_problemtype', versionLocal, 'problemtypeId');
+                const refWorktype = mzGetLocalArray('icon_worktype', versionLocal, 'worktypeId');
+                const refWorkcategory = mzGetLocalArray('icon_workcategory', versionLocal, 'workcategoryId');
 
+                changePasswordClass = new ModalChangePassword();
                 ticketDetailsClass = new SectionTicketDetails();
                 workOrderClass = new SectionWorkOrderDetails();
+
+                workorderNewClass = new MainWorkorderNew();
+                workorderNewClass.setWdpRefProblemtype(refProblemtype);
+                workorderNewClass.setWdpRefWorktype(refWorktype);
+                workorderNewClass.setWdpRefWorkcategory(refWorkcategory);
+                workorderNewClass.setTicketDetailsClass(ticketDetailsClass);
+                workorderNewClass.load();
+
             } catch (e) {
                 toastr['error'](e.message, _ALERT_TITLE_ERROR);
             }

@@ -5,17 +5,14 @@ function MainWorkorderNew() {
     let wdpVersionLocal;
     let oTableWdpWorkorder;
     let oTableDateSearch = false;
-    let refProblemtype;
-    let refWorktype;
-    let refWorkcategory;
+    let wdpRefProblemtype;
+    let wdpRefWorktype;
+    let wdpRefWorkcategory;
+    let wdpTicketDetailsClass;
 
     this.load = function () {
-        refProblemtype = mzGetLocalArray('icon_problemtype', wdpVersionLocal, 'problemtypeId');
-        refWorktype = mzGetLocalArray('icon_worktype', wdpVersionLocal, 'worktypeId');
-        refWorkcategory = mzGetLocalArray('icon_workcategory', wdpVersionLocal, 'workcategoryId');
-
-        mzOption('optWdpProblemtypeId', refProblemtype, 'All Problem Type', 'problemtypeId', 'problemtypeDesc');
-        mzOption('optWdpWorktypeId', refWorktype, 'All Work Type', 'worktypeId', 'worktypeDesc');
+        mzOption('optWdpProblemtypeId', wdpRefProblemtype, 'All Problem Type', 'problemtypeId', 'problemtypeDesc');
+        mzOption('optWdpWorktypeId', wdpRefWorktype, 'All Work Type', 'worktypeId', 'worktypeDesc');
         mzDateFromTo('txtWdpDateFrom', 'txtWdpDateTo');
 
         // table Work Order List
@@ -29,6 +26,17 @@ function MainWorkorderNew() {
             },
             drawCallback: function () {
                 $('[data-toggle="tooltip"]').tooltip();
+                $('.lnkWdpWorkorderInfo').on('click', function () {
+                    const linkId = $(this).attr('id');
+                    console.log($(this).attr('id'));
+                    console.log(linkId.indexOf('_'));
+                    const linkIndex = linkId.indexOf('_');
+                    if (linkIndex > 0) {
+                        const rowId = linkId.substr(linkIndex+1);
+                        const currentRow = oTableWdpWorkorder.row(parseInt(rowId)).data();
+                        wdpTicketDetailsClass.load('wdp', currentRow['ticketId']);
+                    }
+                });
             },
             language: _DATATABLE_LANGUAGE,
             aoColumns:
@@ -36,31 +44,33 @@ function MainWorkorderNew() {
                     {mData: null, bSortable: false},
                     {mData: 'workorderNo'},
                     {mData: null, mRender: function (data, type, row){
-                            return row['problemtypeId'] !== '' ? refProblemtype[row['problemtypeId']]['problemtypeDesc'] : '';
+                            return row['problemtypeId'] !== '' ? wdpRefProblemtype[row['problemtypeId']]['problemtypeDesc'] : '';
                         }},
                     {mData: null, mRender: function (data, type, row){
-                            return row['workcategoryId'] !== '' ? refWorktype[refWorkcategory[row['workcategoryId']]['worktypeId']]['worktypeDesc'] : '';
+                            return row['workcategoryId'] !== '' ? wdpRefWorktype[wdpRefWorkcategory[row['workcategoryId']]['worktypeId']]['worktypeDesc'] : '';
                         }},
                     {mData: null, mRender: function (data, type, row){
-                            return row['workcategoryId'] !== '' ? refWorkcategory[row['workcategoryId']]['workcategoryDesc'] : '';
+                            return row['workcategoryId'] !== '' ? wdpRefWorkcategory[row['workcategoryId']]['workcategoryDesc'] : '';
                         }},
                     {mData: 'workorderTimeSubmit'},
                     {mData: 'checkpointDesc'},
                     {mData: null, bSortable: false, sClass: 'text-center',
-                        mRender: function (data, type, row) {
-                            return '<a><i class="fas fa-info-circle" onclick="ticketDetailsClass.load(\'wdp\', '+row['ticketId']+')" data-toggle="tooltip" data-placement="top" title="Details"></i></a>';
+                        mRender: function (data, type, row, meta) {
+                            return '<a><i class="fas fa-info-circle lnkWdpWorkorderInfo" id="lnkWdpWorkorderInfo_' + meta.row + '" data-toggle="tooltip" data-placement="top" title="Details"></i></a>';
+                            //return '<a><i class="fas fa-info-circle" onclick="wdpTicketDetailsClass.load(\'wdp\', '+row['ticketId']+')" data-toggle="tooltip" data-placement="top" title="Details"></i></a>';
                         }
                     },
                     {mData: 'workorderId', visible: false},
                     {mData: 'problemtypeId', visible: false},
                     {mData: 'workcategoryId', visible: false},
                     {mData: 'worktypeId', visible: false, mRender: function (data, type, row){
-                            return row['workcategoryId'] !== '' ? refWorkcategory[row['workcategoryId']]['worktypeId'] : '';
+                            return row['workcategoryId'] !== '' ? wdpRefWorkcategory[row['workcategoryId']]['worktypeId'] : '';
                         }},
                     {mData: 'workorderStatus', visible: false}
                 ]
 
         });
+
         $("#dtWdpWorkorder_filter").hide();
         $('#txtWdpWorkorderSearch').on('keyup change', function () {
             oTableDateSearch = true;
@@ -75,22 +85,6 @@ function MainWorkorderNew() {
             const worktypeId = $(this).val();
             oTableDateSearch = true;
             $(this).val() === '' ? oTableWdpWorkorder.column(11).search(worktypeId).draw() : oTableWdpWorkorder.column(11).search('^'+worktypeId+'$', true, false, true).draw();
-        });
-        $('#linkWdp12').on('click', function () {
-            oTableDateSearch = true;
-            oTableWdpWorkorder.column(13).search('12', false, true, false).draw();
-        });
-        $('#linkWdp13').on('click', function () {
-            oTableDateSearch = true;
-            oTableWdpWorkorder.column(13).search('13', false, true, false).draw();
-        });
-        $('#linkWdp14').on('click', function () {
-            oTableDateSearch = true;
-            oTableWdpWorkorder.column(13).search('14', false, true, false).draw();
-        });
-        $('#linkWdp15').on('click', function () {
-            oTableDateSearch = true;
-            oTableWdpWorkorder.column(13).search('15', false, true, false).draw();
         });
         $('#txtWdpDateFrom, #txtWdpDateTo').on('change', function () {
             oTableDateSearch = true;
@@ -171,6 +165,8 @@ function MainWorkorderNew() {
             }, 300);
         });
 
+
+
         this.genTableWdp();
     };
 
@@ -186,7 +182,7 @@ function MainWorkorderNew() {
 
         $.each(result, function (n, u) {
             const worktypeId = u['worktypeId'];
-            chartData.push({name:refWorktype[worktypeId]['worktypeDesc'], y:parseInt(u.total)});
+            chartData.push({name:wdpRefWorktype[worktypeId]['worktypeDesc'], y:parseInt(u.total)});
         });
 
         Highcharts.chart('chartWdpOpenByStatus', {
@@ -224,7 +220,23 @@ function MainWorkorderNew() {
         return wdpClassName;
     };
 
-    this.setVersionLocal = function (versionLocal) {
-        wdpVersionLocal = versionLocal;
+    this.setVersionLocal = function (_versionLocal) {
+        wdpVersionLocal = _versionLocal;
+    };
+
+    this.setWdpRefProblemtype = function (_refProblemtype) {
+        wdpRefProblemtype = _refProblemtype;
+    };
+
+    this.setWdpRefWorktype = function (_refWorktype) {
+        wdpRefWorktype = _refWorktype;
+    };
+
+    this.setWdpRefWorkcategory = function (_refWorkcategory) {
+        wdpRefWorkcategory = _refWorkcategory;
+    };
+
+    this.setTicketDetailsClass = function (_ticketDetailsClass) {
+        wdpTicketDetailsClass = _ticketDetailsClass;
     };
 }
