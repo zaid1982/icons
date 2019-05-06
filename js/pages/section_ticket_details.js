@@ -1,5 +1,6 @@
 function SectionTicketDetails() {
 
+    const tkdClassName = 'SectionTicketDetails';
     let tkdCallFrom = '';
     let tkdTicketId = '';
     let tkdWorkorderId = '';
@@ -7,6 +8,8 @@ function SectionTicketDetails() {
     let tkdRefProblemtype;
     let tkdRefWorktype;
     let tkdRefWorkcategory;
+    let tkdWorkOrderDetailsClass;
+
     let mapOptions = {
         center: new google.maps.LatLng(2.904485,101.681497),
         zoom: 13,
@@ -29,11 +32,6 @@ function SectionTicketDetails() {
 
     this.init = function () {
         $('.sectionTkdDetails').hide();
-        versionLocal = mzGetDataVersion();
-        tkdRefStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
-        tkdRefProblemtype = mzGetLocalArray('icon_problemtype', versionLocal, 'problemtypeId');
-        tkdRefWorktype = mzGetLocalArray('icon_worktype', versionLocal, 'worktypeId');
-        tkdRefWorkcategory = mzGetLocalArray('icon_workcategory', versionLocal, 'workcategoryId');
 
         $('#btnTcdBack').on('click', function () {
             $('.sectionTkdDetails, .sectionWorkOrderDetails').hide();
@@ -48,7 +46,7 @@ function SectionTicketDetails() {
         });
 
         $('#butTkdCreateWorkOrder').on('click', function () {
-            workOrderClass.load('tck', tkdWorkorderId, tkdTicketId);
+            tkdWorkOrderDetailsClass.load('tck', tkdWorkorderId, tkdTicketId);
         });
     };
 
@@ -67,7 +65,7 @@ function SectionTicketDetails() {
         ShowLoader();
         setTimeout(function () {
             try {
-                workOrderClass.hide();
+                tkdWorkOrderDetailsClass.hide();
                 const dataTkdDetTicket = mzAjaxRequest('ticket.php?ticketId='+tkdTicketId, 'GET');
                 mzSetFieldValue('TkdDetTicketNo', dataTkdDetTicket['ticketNo'], 'text');
                 mzSetFieldValue('TkdDetProblemType', tkdRefProblemtype[dataTkdDetTicket['problemtypeId']]['problemtypeDesc'], 'text');
@@ -84,7 +82,7 @@ function SectionTicketDetails() {
                 const ticketImages = dataTkdDetTicket['ticketImages'];
                 let html = '';
                 $.each(ticketImages, function (n, u) {
-                    html += '<div class=" carousel-item '+(n==0?'active':'')+' text-center">' +
+                    html += '<div class=" carousel-item '+(n===0?'active':'')+' text-center">' +
                             '<figure class="col-md-12 d-md-inline-block">' +
                                 '<a href="'+u['documentSrc']+'" data-size="1600x1067">' +
                                 '<img src="'+u['documentSrc']+'" class="img-fluid" style="min-height: 340px; object-fit: contain">' +
@@ -106,17 +104,17 @@ function SectionTicketDetails() {
                     if (tkdWorkorderId === '' && (mzIsRoleExist('1') || mzIsRoleExist('2') || mzIsRoleExist('4'))) {
                         $('#butTkdCreateWorkOrder').show();
                     } else if (tkdWorkorderId !== '') {
-                        workOrderClass.load('tck', tkdWorkorderId);
+                        tkdWorkOrderDetailsClass.load('tck', tkdWorkorderId);
                     }
                 } else if (tkdCallFrom === 'wdr') {
                     $('.sectionWdrMain').hide();
                     if (tkdWorkorderId !== '') {
-                        workOrderClass.load('wdr', tkdWorkorderId);
+                        tkdWorkOrderDetailsClass.load('wdr', tkdWorkorderId);
                     }
                 } else if (tkdCallFrom === 'wdp') {
                     $('.sectionWdpMain').hide();
                     if (tkdWorkorderId !== '') {
-                        workOrderClass.load('wdp', tkdWorkorderId);
+                        tkdWorkOrderDetailsClass.load('wdp', tkdWorkorderId);
                     }
                 }
 
@@ -129,5 +127,27 @@ function SectionTicketDetails() {
         }, 300);
     };
 
-    this.init();
+    this.getClassName = function () {
+        return tkdClassName;
+    };
+
+    this.setTkdRefStatus = function (_refStatus) {
+        tkdRefStatus = _refStatus;
+    };
+
+    this.setTkdRefProblemtype = function (_refProblemtype) {
+        tkdRefProblemtype = _refProblemtype;
+    };
+
+    this.setTkdRefWorktype = function (_refWorktype) {
+        tkdRefWorktype = _refWorktype;
+    };
+
+    this.setTkdRefWorkcategory = function (_refWorkcategory) {
+        tkdRefWorkcategory = _refWorkcategory;
+    };
+
+    this.setTkdWorkOrderDetailsClass = function (_tkdWorkOrderDetailsClass) {
+        tkdWorkOrderDetailsClass = _tkdWorkOrderDetailsClass;
+    };
 }

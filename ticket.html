@@ -212,6 +212,12 @@
                 refWorktype = mzGetLocalArray('icon_worktype', versionLocal, 'worktypeId');
                 refWorkcategory = mzGetLocalArray('icon_workcategory', versionLocal, 'workcategoryId');
 
+                ticketDetailsClass.setTkdRefStatus(refStatus);
+                ticketDetailsClass.setTkdRefProblemtype(refProblemtype);
+                ticketDetailsClass.setTkdRefWorktype(refWorktype);
+                ticketDetailsClass.setTkdRefWorkcategory(refWorkcategory);
+                ticketDetailsClass.init();
+
                 mzOption('optTckProblemtypeId', refProblemtype, 'All Problem Type', 'problemtypeId', 'problemtypeDesc');
                 mzOption('optTckWorktypeId', refWorktype, 'All Work Type', 'worktypeId', 'worktypeDesc');
                 mzDateFromTo('txtTckDateFrom', 'txtTckDateTo');

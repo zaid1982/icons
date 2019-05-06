@@ -10,7 +10,7 @@ function MainWorkorderNew() {
     let wdpRefWorkcategory;
     let wdpTicketDetailsClass;
 
-    this.load = function () {
+    this.init = function () {
         mzOption('optWdpProblemtypeId', wdpRefProblemtype, 'All Problem Type', 'problemtypeId', 'problemtypeDesc');
         mzOption('optWdpWorktypeId', wdpRefWorktype, 'All Work Type', 'worktypeId', 'worktypeDesc');
         mzDateFromTo('txtWdpDateFrom', 'txtWdpDateTo');
@@ -28,8 +28,6 @@ function MainWorkorderNew() {
                 $('[data-toggle="tooltip"]').tooltip();
                 $('.lnkWdpWorkorderInfo').on('click', function () {
                     const linkId = $(this).attr('id');
-                    console.log($(this).attr('id'));
-                    console.log(linkId.indexOf('_'));
                     const linkIndex = linkId.indexOf('_');
                     if (linkIndex > 0) {
                         const rowId = linkId.substr(linkIndex+1);
@@ -157,15 +155,13 @@ function MainWorkorderNew() {
             ShowLoader();
             setTimeout(function () {
                 try {
-                    getTableWdp();
+                    this.genTableWdp();
                 } catch (e) {
                     toastr['error'](e.message, _ALERT_TITLE_ERROR);
                 }
                 HideLoader();
             }, 300);
         });
-
-
 
         this.genTableWdp();
     };

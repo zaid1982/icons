@@ -201,16 +201,22 @@
         setTimeout(function () {
             try {
                 initiatePages();
+                versionLocal = mzGetDataVersion();
                 changePasswordClass = new ModalChangePassword();
                 ticketDetailsClass = new SectionTicketDetails();
                 workOrderClass = new SectionWorkOrderDetails();
 
-                versionLocal = mzGetDataVersion();
                 refStatus = mzGetLocalArray('icon_status', versionLocal, 'statusId');
                 refProblemtype = mzGetLocalArray('icon_problemtype', versionLocal, 'problemtypeId');
                 refWorktype = mzGetLocalArray('icon_worktype', versionLocal, 'worktypeId');
                 refWorkcategory = mzGetLocalArray('icon_workcategory', versionLocal, 'workcategoryId');
                 refContractor = mzGetLocalArray('icon_contractor', versionLocal, 'contractorId');
+
+                ticketDetailsClass.setTkdRefStatus(refStatus);
+                ticketDetailsClass.setTkdRefProblemtype(refProblemtype);
+                ticketDetailsClass.setTkdRefWorktype(refWorktype);
+                ticketDetailsClass.setTkdRefWorkcategory(refWorkcategory);
+                ticketDetailsClass.init();
 
                 mzOption('optWdrProblemtypeId', refProblemtype, 'All Problem Type', 'problemtypeId', 'problemtypeDesc');
                 mzOption('optWdrWorktypeId', refWorktype, 'All Work Type', 'worktypeId', 'worktypeDesc');
