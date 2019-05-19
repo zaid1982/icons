@@ -299,8 +299,8 @@ function MzValidate(name) {
             else if (u.type === 'checkSingle') {
                 fieldSelector.prop('checked', false);
             }
-            else if (u.type === 'check') {
-                fieldSelector.prop('checked',false);
+            else if (u.type === 'check' || u.type === 'radio') {
+                fieldSelector.prop('checked', false);
             }
             else if (u.type === 'file') {
                 fieldSelector.val('');
